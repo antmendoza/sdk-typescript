@@ -18,7 +18,7 @@ To build the project and run tests locally:
 ```sh
 git clone https://github.com/serverlessworkflow/sdk-typescript.git
 cd sdk-typescript
-npm install && npm run test
+npm install && npm run test && npm run build 
 ```
 
 
