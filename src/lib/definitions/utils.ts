@@ -27,14 +27,6 @@ export function overwriteScheduleValueIfObject(object: { schedule: string | Spec
 }
 
 /**
- * Modify the provided object, set the value to 'repeat' property as an instance of Specification.Repeat class
- * @param object to set/overwrite the property
- */
-export function overwriteRepeatValue(object: { repeat?: Specification.Repeat }): void {
-  object.repeat = object.repeat && new Specification.Repeat(object.repeat);
-}
-
-/**
  * Modify the provided object, set the value to 'end' property as an instance of Specification.End class, if the provided value is an object
  * @param object to set/overwrite the property
  */
@@ -65,11 +57,11 @@ export function overwriteTransitionValueIfObject(object: { transition?: string |
 }
 
 /**
- * Modify the provided object, set the value to 'default' property as an instance of Specification.Defaultdef class
+ * Modify the provided object, set the value to 'defaultCondition' property as an instance of Specification.Defaultconditiondef class
  * @param object to set/overwrite the property
  */
-export function overwriteDefaultValue(object: { default?: Specification.Defaultdef }): void {
-  object.default = object.default && new Specification.Defaultdef(object.default);
+export function overwriteDefaultValue(object: { defaultCondition?: Specification.Defaultconditiondef }): void {
+  object.defaultCondition = object.defaultCondition && new Specification.Defaultconditiondef(object.defaultCondition);
 }
 
 /**
@@ -156,8 +148,8 @@ export function overwriteMetadataValue(object: { metadata?: Specification.Metada
  * Modify the provided object, set the value to 'execTimeout' property as an instance of Specification.Exectimeout class
  * @param object to set/overwrite the property
  */
-export function overwriteExecTimeoutValue(object: { execTimeout?: Specification.Exectimeout }): void {
-  object.execTimeout = object.execTimeout && new Specification.Exectimeout(object.execTimeout);
+export function overwriteTimeoutsValue(object: { timeouts?: string | Specification.Timeouts }): void {
+  object.timeouts = object.timeouts && new Specification.Timeouts(object.timeouts);
 }
 
 /**
@@ -201,15 +193,21 @@ export function overwriteFunctionsValue(object: { functions?: Specification.Func
  * Throws an error if the value of the property type is not handler
  * @param object to set/overwrite the property
  */
+//
+
 export function overwriteStatesValue(object: { states: Specification.States }) {
   object.states =
     object.states &&
     ((object.states as Specification.States).map((v) => {
       switch (v.type) {
-        case 'inject':
-          return new Specification.Injectstate(v);
-        case 'subflow':
-          return new Specification.Subflowstate(v);
+        case 'delay':
+          return new Specification.Delaystate(v);
+        case 'event':
+          return new Specification.Eventstate(v);
+        case 'operation':
+          return new Specification.Operationstate(v);
+        case 'parallel':
+          return new Specification.Parallelstate(v);
         case 'switch':
           const switchState: any = v;
           if (switchState.dataConditions) {
@@ -219,16 +217,10 @@ export function overwriteStatesValue(object: { states: Specification.States }) {
             return new Specification.Eventbasedswitch(v);
           }
           throw new Error(`Unexpected switch type; \n state value= ${JSON.stringify(v, null, 4)}`);
-        case 'operation':
-          return new Specification.Operationstate(v);
-        case 'event':
-          return new Specification.Eventstate(v);
-        case 'parallel':
-          return new Specification.Parallelstate(v);
+        case 'inject':
+          return new Specification.Injectstate(v);
         case 'foreach':
           return new Specification.Foreachstate(v);
-        case 'delay':
-          return new Specification.Delaystate(v);
         case 'callback':
           return new Specification.Callbackstate(v);
         default:
@@ -299,7 +291,7 @@ export function overwriteProduceEventsValue(object: { produceEvents?: Specificat
  * Modify the provided object, set the value to 'functionRef' property as an instance of Specification.Functionref class
  * @param object to set/overwrite the property
  */
-export function overwriteFunctionRefValue(object: { functionRef: string | Specification.Functionref }): void {
+export function overwriteFunctionRefValue(object: { functionRef?: string | Specification.Functionref }): void {
   if (isObject(object.functionRef)) {
     object.functionRef = new Specification.Functionref(object.functionRef);
   }
@@ -373,33 +365,9 @@ export function normalizeCompletionTypeProperty(object: { completionType?: strin
   }
 }
 
-/**
- * Modify the provided object by normalizing the 'continueOnError' property, where the default value is 'false'.
- * @param object to be modified
- */
-export function normalizeContinueOnErrorProperty(object: { continueOnError?: boolean }) {
-  if (!object.continueOnError) {
-    delete object.continueOnError;
-  }
-}
 
-/**
- * Modify the provided object by normalizing the 'checkBefore' property, where the default value is 'false'.
- * @param object to be modified
- */
-export function normalizeCheckBeforeProperty(object: { checkBefore?: boolean }) {
-  if (!object.checkBefore) {
-    delete object.checkBefore;
-  }
-}
 
-/**
- * Modify the provided object by normalizing the 'repeat' property.
- * @param object to be modified
- */
-export function normalizeRepeatProperty(object: { repeat?: Specification.Repeat }) {
-  object.repeat = object.repeat && object.repeat.normalize();
-}
+
 
 /**
  * Modify the provided object by normalizing the 'usedForCompensation' property, where the default value is 'false'.
@@ -493,7 +461,7 @@ export function normalizeExclusiveProperty(object: { exclusive?: boolean }) {
  * Modify the provided object by normalizing the 'keepActive' property, where the default value is 'true'.
  * @param object to be modified
  */
-export function normalizeKeepActiveProperty(object: { keepActive?: boolean }) {
+export function normalizeKeepActive(object: { keepActive?: boolean }) {
   if (object.keepActive) {
     delete object.keepActive;
   }
@@ -503,7 +471,7 @@ export function normalizeKeepActiveProperty(object: { keepActive?: boolean }) {
  * Modify the provided object by normalizing the 'expressionLang' property, where the default value is 'jq'.
  * @param object to be modified
  */
-export function normalizeExpressionLangProperty(object: { expressionLang?: string }) {
+export function normalizeExpressionLang(object: { expressionLang?: string }) {
   if (object.expressionLang === 'jq') {
     delete object.expressionLang;
   }
@@ -577,6 +545,8 @@ export function normalizeEvents(object: { events?: Specification.Events }) {
  * Modify the provided object by normalizing the 'execTimeout' property.
  * @param object to be modified
  */
-export function normalizeExecTimeout(object: { execTimeout?: Specification.Exectimeout }) {
-  object.execTimeout = object.execTimeout && object.execTimeout.normalize();
+export function normalizeTimeouts(object: { timeouts?: string /* uri */ | Specification.Timeouts }) {
+  if (isObject(object.timeouts)) {
+    object.timeouts = object.timeouts && object.timeouts.normalize();
+  }
 }

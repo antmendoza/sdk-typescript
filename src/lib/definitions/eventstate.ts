@@ -20,19 +20,20 @@ import { Onevents } from './onevents';
 import { Statedatafilter } from './statedatafilter';
 import { Transition } from './transition';
 import {
-  setEndValueIfNoTransition,
+  normalizeEndProperty,
+  normalizeExclusiveProperty,
+  normalizeOnErrorsProperty,
+  normalizeOnEventsProperty,
+  normalizeTransitionProperty,
   overwriteEndValueIfObject,
   overwriteMetadataValue,
   overwriteOnErrorsValue,
   overwriteOnEventsValue,
   overwriteStateDataFilterValue,
   overwriteTransitionValueIfObject,
-  normalizeEndProperty,
-  normalizeTransitionProperty,
-  normalizeOnEventsProperty,
-  normalizeOnErrorsProperty,
-  normalizeExclusiveProperty,
+  setEndValueIfNoTransition,
 } from './utils';
+import { ActionExecTimeout, EventTimeout, StateExecTimeout } from './types';
 
 export class Eventstate /* This state is used to wait for events from event sources, then consumes them and invoke one or more actions to run in sequence or parallel */ {
   constructor(model: any) {
@@ -45,6 +46,8 @@ export class Eventstate /* This state is used to wait for events from event sour
     overwriteTransitionValueIfObject(this);
     overwriteEndValueIfObject(this);
     overwriteMetadataValue(this);
+
+    //TODO add timeouts
   }
 
   /**
@@ -68,9 +71,13 @@ export class Eventstate /* This state is used to wait for events from event sour
    */
   onEvents: Onevents[];
   /**
-   * Time period to wait for incoming events (ISO 8601 format)
+   * State specific timeouts
    */
-  timeout?: string;
+  timeouts?: {
+    stateExecTimeout?: /* State execution timeout duration (ISO 8601 duration format) */ StateExecTimeout;
+    actionExecTimeout?: /* Single actions definition execution timeout duration (ISO 8601 duration format) */ ActionExecTimeout;
+    eventTimeout?: /* Timeout duration to wait for consuming defined events (ISO 8601 duration format) */ EventTimeout;
+  };
   stateDataFilter?: Statedatafilter;
   /**
    * States error handling and retries definitions

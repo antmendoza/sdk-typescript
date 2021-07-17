@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { End } from './end';
 import { Error } from './error';
 import { Metadata } from './metadata';
@@ -30,6 +31,7 @@ import {
   overwriteTransitionValueIfObject,
   setEndValueIfNoTransition,
 } from './utils';
+import { StateExecTimeout } from './types';
 
 export class Delaystate {
   constructor(model: any) {
@@ -44,6 +46,8 @@ export class Delaystate {
     overwriteEndValueIfObject(this);
     overwriteTransitionValueIfObject(this);
     overwriteStateDataFilterValue(this);
+
+    //TODO add timeouts
   }
 
   /**
@@ -70,6 +74,12 @@ export class Delaystate {
    * Amount of time (ISO 8601 format) to delay
    */
   timeDelay?: string;
+  /**
+   * State specific timeouts
+   */
+  timeouts?: {
+    stateExecTimeout?: /* State execution timeout duration (ISO 8601 duration format) */ StateExecTimeout;
+  };
   /**
    * States error handling and retries definitions
    */

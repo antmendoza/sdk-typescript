@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { End } from './end';
 import { Metadata } from './metadata';
 import { Statedatafilter } from './statedatafilter';
@@ -27,6 +28,7 @@ import {
   overwriteTransitionValueIfObject,
   setEndValueIfNoTransition,
 } from './utils';
+import { StateExecTimeout } from './types';
 
 export class Injectstate {
   constructor(model: any) {
@@ -62,11 +64,17 @@ export class Injectstate {
     [key: string]: any;
   };
   /**
+   * State specific timeouts
+   */
+  timeouts?: {
+    stateExecTimeout?: /* State execution timeout duration (ISO 8601 duration format) */ StateExecTimeout;
+  };
+  /**
    * State data filter
    */
   stateDataFilter?: Statedatafilter;
   /**
-   * Next transition of the workflow after subflow has completed
+   * Next transition of the workflow after injection has completed
    */
   transition?: string | Transition;
   /**

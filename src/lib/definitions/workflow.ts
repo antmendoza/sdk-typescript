@@ -17,25 +17,24 @@ import { Specification } from '.';
 import * as yaml from 'js-yaml';
 
 import { validate } from '../utils';
-import { Events } from './events';
-import { Exectimeout } from './exectimeout';
 import { Metadata } from './metadata';
 import { Startdef } from './startdef';
-import { Functions, Retries, States } from './types';
+import { Events, Functions, Retries, Secrets, States } from './types';
 import {
   normalizeEvents,
-  normalizeExecTimeout,
-  normalizeExpressionLangProperty,
+  normalizeTimeouts,
+  normalizeExpressionLang,
   normalizeFunctions,
-  normalizeKeepActiveProperty,
+  normalizeKeepActive,
   normalizeStates,
   overwriteEventsValue,
-  overwriteExecTimeoutValue,
+  overwriteTimeoutsValue,
   overwriteFunctionsValue,
   overwriteMetadataValue,
   overwriteRetriesValue,
   overwriteStatesValue,
 } from './utils';
+import { Timeouts } from './timeouts';
 
 export class Workflow {
   constructor(model: any) {
@@ -50,14 +49,17 @@ export class Workflow {
     overwriteStatesValue(this);
     overwriteEventsValue(this);
     overwriteRetriesValue(this);
-    overwriteExecTimeoutValue(this);
+    overwriteTimeoutsValue(this);
     overwriteMetadataValue(this);
   }
-
   /**
    * Workflow unique identifier
    */
   id: string;
+  /**
+   * Domain-specific workflow identifier
+   */
+  key?: string;
   /**
    * Workflow name
    */
@@ -69,19 +71,41 @@ export class Workflow {
   /**
    * Workflow version
    */
-  version: string;
+  version?: string;
+  /**
+   * List of helpful terms describing the workflows intended purpose, subject areas, or other important qualities
+   */
+  annotations?: [string, ...string[]];
+  dataInputSchema?:
+    | string
+    | {
+        /**
+         * URI of the JSON Schema used to validate the workflow data input
+         */
+        schema: string;
+        /**
+         * Determines if workflow execution should continue if there are validation errors
+         */
+        failOnValidationErrors: boolean;
+      };
+  secrets?: Secrets;
+  constants?:
+    | string /* uri */
+    | {
+        [key: string]: any;
+      };
   start: string | Startdef;
   /**
    * Serverless Workflow schema version
    */
-  schemaVersion?: string;
+  specVersion: string;
   /**
    * Identifies the expression language used for workflow expressions. Default is 'jq'
    */
   expressionLang?: string;
-  execTimeout?: Exectimeout;
+  timeouts?: string /* uri */ | Timeouts;
   /**
-   * If 'true', workflow instances is not terminated when there are no active execution paths. Instance can be terminated via 'terminate end definition' or reaching defined 'execTimeout'
+   * If 'true', workflow instances is not terminated when there are no active execution paths. Instance can be terminated via 'terminate end definition' or reaching defined 'workflowExecTimeout'
    */
   keepActive?: boolean;
   metadata?: /* Metadata information */ Metadata;
@@ -92,23 +116,22 @@ export class Workflow {
    * State definitions
    */
   states: States;
-
   /**
    * Normalize the value of each property by recursively deleting properties whose value is equal to its default value. Does not modify the object state.
    * @returns {Specification.Workflow} without deleted properties.
    */
   normalize = (): Workflow => {
     const clone = new Workflow(this);
-    normalizeKeepActiveProperty(clone);
+    normalizeKeepActive(clone);
 
-    normalizeExpressionLangProperty(clone);
+    normalizeExpressionLang(clone);
 
     normalizeStates(clone);
     normalizeFunctions(clone);
 
     normalizeEvents(clone);
 
-    normalizeExecTimeout(clone);
+    normalizeTimeouts(clone);
     return clone;
   };
 

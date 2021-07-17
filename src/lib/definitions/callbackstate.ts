@@ -36,6 +36,7 @@ import {
   overwriteTransitionValueIfObject,
   setEndValueIfNoTransition,
 } from './utils';
+import { ActionExecTimeout, EventTimeout, StateExecTimeout } from './types';
 
 export class Callbackstate {
   constructor(model: any) {
@@ -49,6 +50,7 @@ export class Callbackstate {
     overwriteOnErrorsValue(this);
     overwriteStateDataFilterValue(this);
     overwriteTransitionValueIfObject(this);
+    //TODO add timeouts
   }
 
   /**
@@ -72,9 +74,13 @@ export class Callbackstate {
    */
   eventRef?: string;
   /**
-   * Time period to wait for incoming events (ISO 8601 format)
+   * State specific timeouts
    */
-  timeout?: string;
+  timeouts?: {
+    stateExecTimeout?: /* State execution timeout duration (ISO 8601 duration format) */ StateExecTimeout;
+    actionExecTimeout?: /* Single actions definition execution timeout duration (ISO 8601 duration format) */ ActionExecTimeout;
+    eventTimeout?: /* Timeout duration to wait for consuming defined events (ISO 8601 duration format) */ EventTimeout;
+  };
   /**
    * Event data filter
    */

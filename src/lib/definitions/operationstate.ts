@@ -33,6 +33,7 @@ import {
   overwriteTransitionValueIfObject,
   setEndValueIfNoTransition,
 } from './utils';
+import { ActionExecTimeout, StateExecTimeout } from './types';
 
 export class Operationstate {
   constructor(model: any) {
@@ -79,6 +80,13 @@ export class Operationstate {
    * Actions to be performed
    */
   actions?: Action[];
+  /**
+   * State specific timeouts
+   */
+  timeouts?: {
+    stateExecTimeout?: /* State execution timeout duration (ISO 8601 duration format) */ StateExecTimeout;
+    actionExecTimeout?: /* Single actions definition execution timeout duration (ISO 8601 duration format) */ ActionExecTimeout;
+  };
   /**
    * States error handling and retries definitions
    */

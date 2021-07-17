@@ -31,7 +31,7 @@ export class Onevents {
    */
   eventRefs: [string, ...string[]];
   /**
-   * Specifies how actions are to be performed (in sequence of parallel)
+   * Specifies how actions are to be performed (in sequence or in parallel)
    */
   actionMode?: 'sequential' | 'parallel';
   /**

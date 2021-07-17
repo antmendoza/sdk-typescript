@@ -29,4 +29,8 @@ export class Functionref {
   arguments?: {
     [key: string]: any;
   };
+  /**
+   * Only used if function type is 'graphql'. A string containing a valid GraphQL selection set
+   */
+  selectionSet?: string;
 }

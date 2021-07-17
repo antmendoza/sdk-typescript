@@ -13,6 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Eventdef } from './eventdef';
 
-export type Events = string /* uri */ | [Eventdef, ...Eventdef[]];
+export class WorkflowExecTimeout {
+  constructor(model: any) {
+    Object.assign(this, model);
+  }
+
+  /**
+   * Workflow execution timeout duration (ISO 8601 duration format). If not specified should be 'unlimited'
+   */
+  duration: string;
+  /**
+   * If `false`, workflow instance is allowed to finish current execution. If `true`, current workflow execution is abrupted.
+   */
+  interrupt?: boolean;
+  /**
+   * Name of a workflow state to be executed before workflow instance is terminated
+   */
+  runBefore?: string;
+}

@@ -14,17 +14,25 @@
  * limitations under the License.
  */
 
-export class Eventdatafilter {
+import { Specification } from './index';
+
+export class Subflowref {
   constructor(model: any) {
-    Object.assign(this, model);
+    const defaultModel = { waitForCompletion: true } as Specification.Subflowref;
+
+    Object.assign(this, defaultModel, model);
   }
 
   /**
-   * Workflow expression that filters the received event/payload (default: '${ . }')
+   * Workflow execution must wait for sub-workflow to finish before continuing
    */
-  data?: string;
+  waitForCompletion?: boolean;
   /**
-   *  Workflow expression that selects a state data element to which the filtered event should be added/merged into. If not specified, denotes, the top-level state data element.
+   * Unique id of the sub-workflow to be invoked
    */
-  toStateData?: string;
+  workflowId: string;
+  /**
+   * Version of the sub-workflow to be invoked
+   */
+  version?: string;
 }

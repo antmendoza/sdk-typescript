@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { Branch } from './branch';
 import { End } from './end';
 import { Error } from './error';
@@ -33,6 +34,7 @@ import {
   overwriteTransitionValueIfObject,
   setEndValueIfNoTransition,
 } from './utils';
+import { BranchExecTimeout, StateExecTimeout } from './types';
 
 export class Parallelstate {
   constructor(model: any) {
@@ -72,17 +74,24 @@ export class Parallelstate {
    */
   stateDataFilter?: Statedatafilter;
   /**
+   * State specific timeouts
+   */
+  timeouts?: {
+    stateExecTimeout?: /* State execution timeout duration (ISO 8601 duration format) */ StateExecTimeout;
+    branchExecTimeout?: /* Single branch execution timeout duration (ISO 8601 duration format) */ BranchExecTimeout;
+  };
+  /**
    * Branch Definitions
    */
   branches?: /* Branch Definition */ Branch[];
   /**
    * Option types on how to complete branch execution.
    */
-  completionType?: 'and' | 'xor' | 'n_of_m';
+  completionType?: 'allOf' | 'atLeast';
   /**
-   * Used when completionType is set to 'n_of_m' to specify the 'N' value
+   * Used when completionType is set to 'atLeast' to specify the minimum number of branches that must complete before the state will transition.
    */
-  n?: number | string;
+  numCompleted?: number | string;
   /**
    * States error handling and retries definitions
    */

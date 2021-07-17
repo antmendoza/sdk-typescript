@@ -32,6 +32,7 @@ import {
   overwriteTransitionValueIfObject,
   setEndValueIfNoTransition,
 } from './utils';
+import { ActionExecTimeout, StateExecTimeout } from './types';
 
 export class Foreachstate {
   constructor(model: any) {
@@ -83,9 +84,12 @@ export class Foreachstate {
    */
   actions?: Action[];
   /**
-   * Unique Id of a workflow to be executed for each of the elements of inputCollection
+   * State specific timeouts
    */
-  workflowId?: string;
+  timeouts?: {
+    stateExecTimeout?: /* State execution timeout duration (ISO 8601 duration format) */ StateExecTimeout;
+    actionExecTimeout?: /* Single actions definition execution timeout duration (ISO 8601 duration format) */ ActionExecTimeout;
+  };
   /**
    * State data filter
    */

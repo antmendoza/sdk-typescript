@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import { End } from './end';
 import { Transition } from './transition';
 import {
@@ -22,8 +23,7 @@ import {
   overwriteTransitionValueIfObject,
   setEndValueIfNoTransition,
 } from './utils';
-
-export class Defaultdef /* Default definition. Can be either a transition or end definition */ {
+export class Defaultconditiondef /* DefaultCondition definition. Can be either a transition or end definition */ {
   constructor(model: any) {
     Object.assign(this, model);
 
@@ -38,8 +38,8 @@ export class Defaultdef /* Default definition. Can be either a transition or end
    * Normalize the value of each property by recursively deleting properties whose value is equal to its default value. Does not modify the object state.
    * @returns {Specification.Defaultdef} without deleted properties.
    */
-  normalize = (): Defaultdef => {
-    const clone = new Defaultdef(this);
+  normalize = (): Defaultconditiondef => {
+    const clone = new Defaultconditiondef(this);
 
     normalizeEndProperty(clone);
     normalizeTransitionProperty(clone);

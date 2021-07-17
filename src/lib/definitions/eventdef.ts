@@ -26,6 +26,8 @@ export class Eventdef {
 
     overwriteMetadataValue(this);
     overwriteCorrelationValue(this);
+
+    //TODO add dataOnly
   }
 
   /**
@@ -48,6 +50,11 @@ export class Eventdef {
    * CloudEvent correlation definitions
    */
   correlation?: CorrelationDefs;
+
+  /**
+   * If `true`, only the Event payload is accessible to consuming Workflow states. If `false`, both event payload and context attributes should be accessible
+   */
+  dataOnly?: boolean;
   /**
    * Metadata information
    */

@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Defaultdef } from './defaultdef';
+
+import { Defaultconditiondef } from './defaultconditiondef';
 import { Error } from './error';
 import { Metadata } from './metadata';
 import { Statedatafilter } from './statedatafilter';
@@ -27,7 +28,7 @@ import {
   overwriteOnErrorsValue,
   overwriteStateDataFilterValue,
 } from './utils';
-import { Datacondition } from './types';
+import { Datacondition, StateExecTimeout } from './types';
 
 export class Databasedswitch {
   constructor(model: any) {
@@ -39,6 +40,7 @@ export class Databasedswitch {
     overwriteDataConditionsValue(this);
     overwriteDefaultValue(this);
     overwriteStateDataFilterValue(this);
+    //TODO add timeouts
   }
 
   /**
@@ -58,6 +60,12 @@ export class Databasedswitch {
    */
   stateDataFilter?: Statedatafilter;
   /**
+   * State specific timeouts
+   */
+  timeouts?: {
+    stateExecTimeout?: /* State execution timeout duration (ISO 8601 duration format) */ StateExecTimeout;
+  };
+  /**
    * Defines conditions evaluated against state data
    */
   dataConditions: Datacondition[];
@@ -68,7 +76,7 @@ export class Databasedswitch {
   /**
    * Default transition of the workflow if there is no matching data conditions. Can include a transition or end definition
    */
-  default?: /* Default definition. Can be either a transition or end definition */ Defaultdef;
+  defaultCondition?: /* DefaultCondition definition. Can be either a transition or end definition */ Defaultconditiondef;
   /**
    * Unique Name of a workflow state which is responsible for compensation of this state
    */

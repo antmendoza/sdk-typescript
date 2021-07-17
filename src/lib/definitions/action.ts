@@ -17,7 +17,7 @@ import { Actiondatafilter } from './actiondatafilter';
 import { Eventref } from './eventref';
 import { Functionref } from './functionref';
 import { overwriteActionDataFilterValue, overwriteEventRefValue, overwriteFunctionRefValue } from './utils';
-
+import { Subflowref } from './subflowref';
 export class Action {
   constructor(model: any) {
     Object.assign(this, model);
@@ -25,17 +25,16 @@ export class Action {
     overwriteFunctionRefValue(this);
     overwriteEventRefValue(this);
     overwriteActionDataFilterValue(this);
+
+    //TODO Add subflow
   }
 
   /**
    * Unique action definition name
    */
   name?: string;
-  functionRef: string | Functionref;
+  functionRef?: string | Functionref;
   eventRef?: /* Event References */ Eventref;
-  /**
-   * Time period to wait for function execution to complete
-   */
-  timeout?: string;
+  subFlowRef?: string | Subflowref;
   actionDataFilter?: Actiondatafilter;
 }
