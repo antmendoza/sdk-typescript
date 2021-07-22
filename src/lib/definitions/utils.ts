@@ -301,7 +301,7 @@ export function overwriteProduceEvents(object: { produceEvents?: Specification.P
 }
 
 /**
- * Modify the provided object, set the value to 'functionRef' property as an instance of Specification.Functionref class
+ * Modify the provided object, set the value to 'functionRef' property as an instance of Specification.Functionref class, if the provided value is an object
  * @param object to set/overwrite the property
  */
 export function overwriteFunctionRefIfObject(object: { functionRef?: string | Specification.Functionref }): void {
@@ -311,7 +311,7 @@ export function overwriteFunctionRefIfObject(object: { functionRef?: string | Sp
 }
 
 /**
- * Modify the provided object, set the value to 'subFlowRef' property as an instance of Specification.Subflowref class
+ * Modify the provided object, set the value to 'subFlowRef' property as an instance of Specification.Subflowref class, if the provided value is an object
  * @param object to set/overwrite the property
  */
 export function overwriteSubFlowRefIfObject(object: { subFlowRef?: string | Specification.Subflowref }): void {
