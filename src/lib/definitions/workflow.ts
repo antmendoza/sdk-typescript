@@ -16,23 +16,26 @@
 import { Specification } from '.';
 import * as yaml from 'js-yaml';
 
-import { validate } from '../utils';
+import { isObject, validate } from '../utils';
 import { Metadata } from './metadata';
 import { Startdef } from './startdef';
 import { Events, Functions, Retries, Secrets, States } from './types';
 import {
   normalizeEvents,
-  normalizeTimeouts,
   normalizeExpressionLang,
   normalizeFunctions,
   normalizeKeepActive,
   normalizeStates,
-  overwriteEventsValue,
-  overwriteTimeoutsValue,
-  overwriteFunctionsValue,
-  overwriteMetadataValue,
-  overwriteRetriesValue,
-  overwriteStatesValue,
+  normalizeTimeoutsIfObject,
+  overwriteConstantsIfObjectAsPlainType,
+  overwriteDataInputSchemaIfObjectAsPlainType,
+  overwriteEvents,
+  overwriteFunctions,
+  overwriteMetadata,
+  overwriteRetries,
+  overwriteStartIfObject,
+  overwriteStates,
+  overwriteTimeoutsIfObject,
 } from './utils';
 import { Timeouts } from './timeouts';
 
@@ -43,15 +46,24 @@ export class Workflow {
       keepActive: true,
     } as Specification.Workflow;
 
+    //TODO
+    if (model.dataInputSchema && isObject(model.dataInputSchema)) {
+      //defaultModel!.dataInputSchema!.failOnValidationErrors = true
+    }
+
     Object.assign(this, defaultModel, model);
 
-    overwriteFunctionsValue(this);
-    overwriteStatesValue(this);
-    overwriteEventsValue(this);
-    overwriteRetriesValue(this);
-    overwriteTimeoutsValue(this);
-    overwriteMetadataValue(this);
+    overwriteDataInputSchemaIfObjectAsPlainType(this);
+    overwriteConstantsIfObjectAsPlainType(this);
+    overwriteStartIfObject(this);
+    overwriteTimeoutsIfObject(this);
+    overwriteMetadata(this);
+    overwriteEvents(this);
+    overwriteFunctions(this);
+    overwriteRetries(this);
+    overwriteStates(this);
   }
+
   /**
    * Workflow unique identifier
    */
@@ -122,16 +134,14 @@ export class Workflow {
    */
   normalize = (): Workflow => {
     const clone = new Workflow(this);
-    normalizeKeepActive(clone);
 
     normalizeExpressionLang(clone);
-
-    normalizeStates(clone);
-    normalizeFunctions(clone);
-
+    normalizeTimeoutsIfObject(clone);
+    normalizeKeepActive(clone);
     normalizeEvents(clone);
+    normalizeFunctions(clone);
+    normalizeStates(clone);
 
-    normalizeTimeouts(clone);
     return clone;
   };
 

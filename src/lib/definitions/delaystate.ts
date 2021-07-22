@@ -20,15 +20,16 @@ import { Metadata } from './metadata';
 import { Statedatafilter } from './statedatafilter';
 import { Transition } from './transition';
 import {
-  normalizeEndProperty,
-  normalizeOnErrorsProperty,
-  normalizeTransitionProperty,
-  normalizeUsedForCompensationProperty,
-  overwriteEndValueIfObject,
-  overwriteMetadataValue,
-  overwriteOnErrorsValue,
-  overwriteStateDataFilterValue,
-  overwriteTransitionValueIfObject,
+  normalizeEndIfObject,
+  normalizeOnErrors,
+  normalizeTransitionIfObject,
+  normalizeUsedForCompensation,
+  overwriteEndIfObject,
+  overwriteMetadata,
+  overwriteOnErrors,
+  overwriteStateDataFilter,
+  overwriteTimeoutsAsPlainType,
+  overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
 import { StateExecTimeout } from './types';
@@ -41,13 +42,12 @@ export class Delaystate {
     };
     Object.assign(this, defaultModel, model);
 
-    overwriteMetadataValue(this);
-    overwriteOnErrorsValue(this);
-    overwriteEndValueIfObject(this);
-    overwriteTransitionValueIfObject(this);
-    overwriteStateDataFilterValue(this);
-
-    //TODO add timeouts
+    overwriteEndIfObject(this);
+    overwriteStateDataFilter(this);
+    overwriteTimeoutsAsPlainType(this);
+    overwriteOnErrors(this);
+    overwriteTransitionIfObject(this);
+    overwriteMetadata(this);
   }
 
   /**
@@ -105,10 +105,10 @@ export class Delaystate {
   normalize = (): Delaystate => {
     const clone = new Delaystate(this);
 
-    normalizeUsedForCompensationProperty(clone);
-    normalizeEndProperty(clone);
-    normalizeOnErrorsProperty(clone);
-    normalizeTransitionProperty(clone);
+    normalizeEndIfObject(clone);
+    normalizeOnErrors(clone);
+    normalizeTransitionIfObject(clone);
+    normalizeUsedForCompensation(clone);
     setEndValueIfNoTransition(clone);
     return clone;
   };

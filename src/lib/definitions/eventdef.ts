@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 import { Metadata } from './metadata';
-import { normalizeKindProperty, overwriteCorrelationValue, overwriteMetadataValue } from './utils';
+import { normalizeDataOnly, normalizeKind, overwriteCorrelation, overwriteMetadata } from './utils';
 import { CorrelationDefs } from './types';
 
 export class Eventdef {
   constructor(model: any) {
     const defaultModel = {
       kind: 'consumed',
+      dataOnly: true,
     };
     Object.assign(this, defaultModel, model);
 
-    overwriteMetadataValue(this);
-    overwriteCorrelationValue(this);
-
-    //TODO add dataOnly
+    overwriteCorrelation(this);
+    overwriteMetadata(this);
   }
 
   /**
@@ -67,7 +66,8 @@ export class Eventdef {
   normalize = (): Eventdef => {
     const clone = new Eventdef(this);
 
-    normalizeKindProperty(clone);
+    normalizeKind(clone);
+    normalizeDataOnly(clone);
 
     return clone;
   };

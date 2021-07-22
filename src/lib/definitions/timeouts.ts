@@ -15,10 +15,12 @@
  */
 import { WorkflowExecTimeout } from './workflowExecTimeout';
 import { ActionExecTimeout, BranchExecTimeout, EventTimeout, StateExecTimeout } from './types';
+import { normalizeWorkflowExecTimeout, overwriteWorkflowExecTimeout } from './utils';
 
 export class Timeouts {
   constructor(model: any) {
     Object.assign(this, model);
+    overwriteWorkflowExecTimeout(this);
   }
 
   workflowExecTimeout?: WorkflowExecTimeout;
@@ -33,7 +35,7 @@ export class Timeouts {
    */
   normalize = (): Timeouts => {
     const clone = new Timeouts(this);
-
+    normalizeWorkflowExecTimeout(clone);
     return clone;
   };
 }

@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
+import { overwriteContextAttributesAsPlainType, overwriteDataIfObjectAsPlainType } from './utils';
+
 export class Produceeventdef {
   constructor(model: any) {
     Object.assign(this, model);
+    overwriteDataIfObjectAsPlainType(this);
+    overwriteContextAttributesAsPlainType(this);
   }
 
   /**

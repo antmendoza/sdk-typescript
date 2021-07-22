@@ -53,3 +53,4 @@ export * from './workflow';
 export * from './workflowExecTimeout';
 export * from './types';
 export { Timeouts } from './timeouts';
+export { overwriteTimeoutsAsPlainType } from './utils';

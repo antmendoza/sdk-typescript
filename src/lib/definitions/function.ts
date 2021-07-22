@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { normalizeTypeRestProperty } from './utils';
+import { normalizeType } from './utils';
 
 export class Function {
   constructor(model: any) {
@@ -43,7 +43,7 @@ export class Function {
   normalize = (): Function => {
     const clone = new Function(this);
 
-    normalizeTypeRestProperty(clone);
+    normalizeType(clone);
 
     return clone;
   };

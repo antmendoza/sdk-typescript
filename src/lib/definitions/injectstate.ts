@@ -19,13 +19,15 @@ import { Metadata } from './metadata';
 import { Statedatafilter } from './statedatafilter';
 import { Transition } from './transition';
 import {
-  normalizeEndProperty,
-  normalizeTransitionProperty,
-  normalizeUsedForCompensationProperty,
-  overwriteEndValueIfObject,
-  overwriteMetadataValue,
-  overwriteStateDataFilterValue,
-  overwriteTransitionValueIfObject,
+  normalizeEndIfObject,
+  normalizeTransitionIfObject,
+  normalizeUsedForCompensation,
+  overwriteDataAsPlainType,
+  overwriteEndIfObject,
+  overwriteMetadata,
+  overwriteStateDataFilter,
+  overwriteTimeoutsAsPlainType,
+  overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
 import { StateExecTimeout } from './types';
@@ -35,10 +37,12 @@ export class Injectstate {
     const defaultModel = { type: 'inject', usedForCompensation: false };
     Object.assign(this, defaultModel, model);
 
-    overwriteEndValueIfObject(this);
-    overwriteStateDataFilterValue(this);
-    overwriteTransitionValueIfObject(this);
-    overwriteMetadataValue(this);
+    overwriteEndIfObject(this);
+    overwriteDataAsPlainType(this);
+    overwriteTimeoutsAsPlainType(this);
+    overwriteStateDataFilter(this);
+    overwriteTransitionIfObject(this);
+    overwriteMetadata(this);
   }
 
   /**
@@ -94,10 +98,9 @@ export class Injectstate {
   normalize = (): Injectstate => {
     const clone = new Injectstate(this);
 
-    normalizeUsedForCompensationProperty(clone);
-    normalizeEndProperty(clone);
-    normalizeTransitionProperty(clone);
-
+    normalizeEndIfObject(clone);
+    normalizeTransitionIfObject(clone);
+    normalizeUsedForCompensation(clone);
     setEndValueIfNoTransition(clone);
 
     return clone;

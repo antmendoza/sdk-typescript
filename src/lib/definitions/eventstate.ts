@@ -20,17 +20,18 @@ import { Onevents } from './onevents';
 import { Statedatafilter } from './statedatafilter';
 import { Transition } from './transition';
 import {
-  normalizeEndProperty,
-  normalizeExclusiveProperty,
-  normalizeOnErrorsProperty,
-  normalizeOnEventsProperty,
-  normalizeTransitionProperty,
-  overwriteEndValueIfObject,
-  overwriteMetadataValue,
-  overwriteOnErrorsValue,
-  overwriteOnEventsValue,
-  overwriteStateDataFilterValue,
-  overwriteTransitionValueIfObject,
+  normalizeEndIfObject,
+  normalizeExclusive,
+  normalizeOnErrors,
+  normalizeOnEvents,
+  normalizeTransitionIfObject,
+  overwriteEndIfObject,
+  overwriteMetadata,
+  overwriteOnErrors,
+  overwriteOnEvents,
+  overwriteStateDataFilter,
+  overwriteTimeoutsAsPlainType,
+  overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
 import { ActionExecTimeout, EventTimeout, StateExecTimeout } from './types';
@@ -40,14 +41,13 @@ export class Eventstate /* This state is used to wait for events from event sour
     const defaultModel = { type: 'event', exclusive: true };
     Object.assign(this, defaultModel, model);
 
-    overwriteOnEventsValue(this);
-    overwriteStateDataFilterValue(this);
-    overwriteOnErrorsValue(this);
-    overwriteTransitionValueIfObject(this);
-    overwriteEndValueIfObject(this);
-    overwriteMetadataValue(this);
-
-    //TODO add timeouts
+    overwriteOnEvents(this);
+    overwriteTimeoutsAsPlainType(this);
+    overwriteStateDataFilter(this);
+    overwriteOnErrors(this);
+    overwriteTransitionIfObject(this);
+    overwriteEndIfObject(this);
+    overwriteMetadata(this);
   }
 
   /**
@@ -98,11 +98,11 @@ export class Eventstate /* This state is used to wait for events from event sour
   normalize = (): Eventstate => {
     const clone = new Eventstate(this);
 
-    normalizeExclusiveProperty(clone);
-    normalizeOnEventsProperty(clone);
-    normalizeOnErrorsProperty(clone);
-    normalizeEndProperty(clone);
-    normalizeTransitionProperty(clone);
+    normalizeExclusive(clone);
+    normalizeOnEvents(clone);
+    normalizeOnErrors(clone);
+    normalizeTransitionIfObject(clone);
+    normalizeEndIfObject(clone);
     setEndValueIfNoTransition(clone);
 
     return clone;

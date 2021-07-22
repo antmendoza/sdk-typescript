@@ -15,6 +15,7 @@
  */
 
 import { Specification } from './index';
+import { normalizeWaitForCompletion } from './utils';
 
 export class Subflowref {
   constructor(model: any) {
@@ -35,4 +36,16 @@ export class Subflowref {
    * Version of the sub-workflow to be invoked
    */
   version?: string;
+
+  /**
+   * Normalize the value of each property by recursively deleting properties whose value is equal to its default value. Does not modify the object state.
+   * @returns {Specification.Subflowref} without deleted properties.
+   */
+  normalize = (): Subflowref => {
+    const clone = new Subflowref(this);
+
+    normalizeWaitForCompletion(clone);
+
+    return clone;
+  };
 }

@@ -15,15 +15,15 @@
  */
 import { Action } from './action';
 import { Eventdatafilter } from './eventdatafilter';
-import { normalizeActionModeParallelProperty, overwriteActionsValue, overwriteEventDataFilterValue } from './utils';
+import { normalizeActionMode, normalizeActions, overwriteActions, overwriteEventDataFilter } from './utils';
 
 export class Onevents {
   constructor(model: any) {
-    const defaultModel = { actionMode: 'parallel' };
+    const defaultModel = { actionMode: 'sequential' };
     Object.assign(this, defaultModel, model);
 
-    overwriteEventDataFilterValue(this);
-    overwriteActionsValue(this);
+    overwriteActions(this);
+    overwriteEventDataFilter(this);
   }
 
   /**
@@ -50,7 +50,8 @@ export class Onevents {
   normalize = (): Onevents => {
     const clone = new Onevents(this);
 
-    normalizeActionModeParallelProperty(clone);
+    normalizeActionMode(clone);
+    normalizeActions(clone);
 
     return clone;
   };

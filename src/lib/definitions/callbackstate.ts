@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Specification } from '.';
 
 import { Action } from './action';
 import { End } from './end';
@@ -23,34 +22,36 @@ import { Metadata } from './metadata';
 import { Statedatafilter } from './statedatafilter';
 import { Transition } from './transition';
 import {
-  normalizeEndProperty,
-  normalizeOnErrorsProperty,
-  normalizeTransitionProperty,
-  normalizeUsedForCompensationProperty,
-  overwriteActionValue,
-  overwriteEndValueIfObject,
-  overwriteEventDataFilterValue,
-  overwriteMetadataValue,
-  overwriteOnErrorsValue,
-  overwriteStateDataFilterValue,
-  overwriteTransitionValueIfObject,
+  normalizeAction,
+  normalizeEndIfObject,
+  normalizeOnErrors,
+  normalizeTransitionIfObject,
+  normalizeUsedForCompensation,
+  overwriteAction,
+  overwriteEndIfObject,
+  overwriteEventDataFilter,
+  overwriteMetadata,
+  overwriteOnErrors,
+  overwriteStateDataFilter,
+  overwriteTimeoutsAsPlainType,
+  overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
 import { ActionExecTimeout, EventTimeout, StateExecTimeout } from './types';
 
 export class Callbackstate {
   constructor(model: any) {
-    const defaultModel = { type: 'callback' } as Specification.Callbackstate;
+    const defaultModel = { type: 'callback', usedForCompensation: false };
     Object.assign(this, defaultModel, model);
 
-    overwriteActionValue(this);
-    overwriteEndValueIfObject(this);
-    overwriteEventDataFilterValue(this);
-    overwriteMetadataValue(this);
-    overwriteOnErrorsValue(this);
-    overwriteStateDataFilterValue(this);
-    overwriteTransitionValueIfObject(this);
-    //TODO add timeouts
+    overwriteAction(this);
+    overwriteTimeoutsAsPlainType(this);
+    overwriteEventDataFilter(this);
+    overwriteStateDataFilter(this);
+    overwriteOnErrors(this);
+    overwriteTransitionIfObject(this);
+    overwriteEndIfObject(this);
+    overwriteMetadata(this);
   }
 
   /**
@@ -118,11 +119,11 @@ export class Callbackstate {
   normalize = (): Callbackstate => {
     const clone = new Callbackstate(this);
 
-    normalizeUsedForCompensationProperty(clone);
-    normalizeEndProperty(clone);
-    normalizeTransitionProperty(clone);
-    normalizeOnErrorsProperty(clone);
-
+    normalizeAction(clone);
+    normalizeOnErrors(clone);
+    normalizeTransitionIfObject(clone);
+    normalizeEndIfObject(clone);
+    normalizeUsedForCompensation(clone);
     setEndValueIfNoTransition(clone);
 
     return clone;

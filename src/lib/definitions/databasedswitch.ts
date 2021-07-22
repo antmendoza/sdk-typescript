@@ -19,14 +19,16 @@ import { Error } from './error';
 import { Metadata } from './metadata';
 import { Statedatafilter } from './statedatafilter';
 import {
-  normalizeDataConditionsProperty,
-  normalizeOnErrorsProperty,
-  normalizeUsedForCompensationProperty,
-  overwriteDataConditionsValue,
-  overwriteDefaultValue,
-  overwriteMetadataValue,
-  overwriteOnErrorsValue,
-  overwriteStateDataFilterValue,
+  normalizeDataConditions,
+  normalizeDefaultCondition,
+  normalizeOnErrors,
+  normalizeUsedForCompensation,
+  overwriteDataConditions,
+  overwriteDefaultCondition,
+  overwriteMetadata,
+  overwriteOnErrors,
+  overwriteStateDataFilter,
+  overwriteTimeoutsAsPlainType,
 } from './utils';
 import { Datacondition, StateExecTimeout } from './types';
 
@@ -35,12 +37,12 @@ export class Databasedswitch {
     const defaultModel = { type: 'switch', usedForCompensation: false };
     Object.assign(this, defaultModel, model);
 
-    overwriteMetadataValue(this);
-    overwriteOnErrorsValue(this);
-    overwriteDataConditionsValue(this);
-    overwriteDefaultValue(this);
-    overwriteStateDataFilterValue(this);
-    //TODO add timeouts
+    overwriteStateDataFilter(this);
+    overwriteTimeoutsAsPlainType(this);
+    overwriteDataConditions(this);
+    overwriteOnErrors(this);
+    overwriteDefaultCondition(this);
+    overwriteMetadata(this);
   }
 
   /**
@@ -94,9 +96,10 @@ export class Databasedswitch {
   normalize = (): Databasedswitch => {
     const clone = new Databasedswitch(this);
 
-    normalizeUsedForCompensationProperty(clone);
-    normalizeOnErrorsProperty(clone);
-    normalizeDataConditionsProperty(clone);
+    normalizeDataConditions(clone);
+    normalizeOnErrors(clone);
+    normalizeDefaultCondition(clone);
+    normalizeUsedForCompensation(clone);
 
     return clone;
   };

@@ -21,17 +21,19 @@ import { Metadata } from './metadata';
 import { Statedatafilter } from './statedatafilter';
 import { Transition } from './transition';
 import {
-  normalizeCompletionTypeProperty,
-  normalizeEndProperty,
-  normalizeOnErrorsProperty,
-  normalizeTransitionProperty,
-  normalizeUsedForCompensationProperty,
-  overwriteBranchesValue,
-  overwriteEndValueIfObject,
-  overwriteMetadataValue,
-  overwriteOnErrorsValue,
-  overwriteStateDataFilterValue,
-  overwriteTransitionValueIfObject,
+  normalizeBranches,
+  normalizeCompletionType,
+  normalizeEndIfObject,
+  normalizeOnErrors,
+  normalizeTransitionIfObject,
+  normalizeUsedForCompensation,
+  overwriteBranches,
+  overwriteEndIfObject,
+  overwriteMetadata,
+  overwriteOnErrors,
+  overwriteStateDataFilter,
+  overwriteTimeoutsAsPlainType,
+  overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
 import { BranchExecTimeout, StateExecTimeout } from './types';
@@ -40,17 +42,18 @@ export class Parallelstate {
   constructor(model: any) {
     const defaultModel = {
       type: 'parallel',
-      completionType: 'and',
+      completionType: 'allOf',
       usedForCompensation: false,
     };
     Object.assign(this, defaultModel, model);
 
-    overwriteEndValueIfObject(this);
-    overwriteStateDataFilterValue(this);
-    overwriteBranchesValue(this);
-    overwriteOnErrorsValue(this);
-    overwriteTransitionValueIfObject(this);
-    overwriteMetadataValue(this);
+    overwriteEndIfObject(this);
+    overwriteStateDataFilter(this);
+    overwriteTimeoutsAsPlainType(this);
+    overwriteBranches(this);
+    overwriteOnErrors(this);
+    overwriteTransitionIfObject(this);
+    overwriteMetadata(this);
   }
 
   /**
@@ -117,12 +120,12 @@ export class Parallelstate {
   normalize = (): Parallelstate => {
     const clone = new Parallelstate(this);
 
-    normalizeCompletionTypeProperty(clone);
-    normalizeOnErrorsProperty(clone);
-    normalizeUsedForCompensationProperty(clone);
-    normalizeEndProperty(clone);
-    normalizeTransitionProperty(clone);
-
+    normalizeEndIfObject(clone);
+    normalizeBranches(clone);
+    normalizeCompletionType(clone);
+    normalizeOnErrors(clone);
+    normalizeTransitionIfObject(clone);
+    normalizeUsedForCompensation(clone);
     setEndValueIfNoTransition(clone);
 
     return clone;

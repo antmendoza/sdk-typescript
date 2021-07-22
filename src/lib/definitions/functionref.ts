@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
+import { overwriteArgumentsAsPlainType } from './utils';
+
 export class Functionref {
   constructor(model: any) {
     Object.assign(this, model);
+    overwriteArgumentsAsPlainType(this);
   }
 
   /**

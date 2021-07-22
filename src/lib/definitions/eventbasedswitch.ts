@@ -19,14 +19,16 @@ import { Error } from './error';
 import { Metadata } from './metadata';
 import { Statedatafilter } from './statedatafilter';
 import {
-  normalizeEventConditionsProperty,
-  normalizeOnErrorsProperty,
-  normalizeUsedForCompensationProperty,
-  overwriteDefaultValue,
-  overwriteEventConditionsValue,
-  overwriteMetadataValue,
-  overwriteOnErrorsValue,
-  overwriteStateDataFilterValue,
+  normalizeDefaultCondition,
+  normalizeEventConditions,
+  normalizeOnErrors,
+  normalizeUsedForCompensation,
+  overwriteDefaultCondition,
+  overwriteEventConditions,
+  overwriteMetadata,
+  overwriteOnErrors,
+  overwriteStateDataFilter,
+  overwriteTimeoutsAsPlainType,
 } from './utils';
 import { Eventcondition, EventTimeout, StateExecTimeout } from './types';
 
@@ -38,13 +40,12 @@ export class Eventbasedswitch {
     };
     Object.assign(this, defaultModel, model);
 
-    overwriteMetadataValue(this);
-    overwriteOnErrorsValue(this);
-    overwriteEventConditionsValue(this);
-    overwriteDefaultValue(this);
-    overwriteStateDataFilterValue(this);
-
-    //TODO add timeouts
+    overwriteStateDataFilter(this);
+    overwriteTimeoutsAsPlainType(this);
+    overwriteEventConditions(this);
+    overwriteOnErrors(this);
+    overwriteDefaultCondition(this);
+    overwriteMetadata(this);
   }
 
   /**
@@ -99,9 +100,10 @@ export class Eventbasedswitch {
   normalize = (): Eventbasedswitch => {
     const clone = new Eventbasedswitch(this);
 
-    normalizeUsedForCompensationProperty(clone);
-    normalizeOnErrorsProperty(clone);
-    normalizeEventConditionsProperty(clone);
+    normalizeEventConditions(clone);
+    normalizeOnErrors(clone);
+    normalizeDefaultCondition(clone);
+    normalizeUsedForCompensation(clone);
 
     return clone;
   };

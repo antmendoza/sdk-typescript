@@ -20,9 +20,19 @@ import { isObject } from '../utils';
  * Modify the provided object, set the value to 'schedule' property as an instance of Specification.Schedule class, if the provided value is an object
  * @param object to set/overwrite the property
  */
-export function overwriteScheduleValueIfObject(object: { schedule: string | Specification.Schedule }): void {
+export function overwriteScheduleIfObject(object: { schedule: string | Specification.Schedule }): void {
   if (isObject(object.schedule)) {
     object.schedule = new Specification.Schedule(object.schedule);
+  }
+}
+
+/**
+ * Modify the provided object, set the value to 'start' property as an instance of Specification.Startdef class, if the provided value is an object
+ * @param object to set/overwrite the property
+ */
+export function overwriteStartIfObject(object: { start: string | Specification.Startdef }): void {
+  if (isObject(object.start)) {
+    object.start = new Specification.Startdef(object.start);
   }
 }
 
@@ -30,7 +40,7 @@ export function overwriteScheduleValueIfObject(object: { schedule: string | Spec
  * Modify the provided object, set the value to 'end' property as an instance of Specification.End class, if the provided value is an object
  * @param object to set/overwrite the property
  */
-export function overwriteEndValueIfObject(object: { end?: boolean | Specification.End }): void {
+export function overwriteEndIfObject(object: { end?: boolean | Specification.End }): void {
   if (isObject(object.end)) {
     object.end = new Specification.End(object.end);
   }
@@ -40,7 +50,7 @@ export function overwriteEndValueIfObject(object: { end?: boolean | Specificatio
  * Modify the provided object, set the value to 'cron' property as an instance of Specification.Crondef class, if the provided value is an object
  * @param object to set/overwrite the property
  */
-export function overwriteCronValueIfObject(object: { cron?: string | Specification.Crondef }): void {
+export function overwriteCronIfObject(object: { cron?: string | Specification.Crondef }): void {
   if (isObject(object.cron)) {
     object.cron = new Specification.Crondef(object.cron);
   }
@@ -50,7 +60,7 @@ export function overwriteCronValueIfObject(object: { cron?: string | Specificati
  * Modify the provided object, set the value to 'transition' property as an instance of Specification.Transition class, if the provided value is an object
  * @param object to set/overwrite the property
  */
-export function overwriteTransitionValueIfObject(object: { transition?: string | Specification.Transition }): void {
+export function overwriteTransitionIfObject(object: { transition?: string | Specification.Transition }): void {
   if (isObject(object.transition)) {
     object.transition = new Specification.Transition(object.transition);
   }
@@ -60,7 +70,7 @@ export function overwriteTransitionValueIfObject(object: { transition?: string |
  * Modify the provided object, set the value to 'defaultCondition' property as an instance of Specification.Defaultconditiondef class
  * @param object to set/overwrite the property
  */
-export function overwriteDefaultValue(object: { defaultCondition?: Specification.Defaultconditiondef }): void {
+export function overwriteDefaultCondition(object: { defaultCondition?: Specification.Defaultconditiondef }): void {
   object.defaultCondition = object.defaultCondition && new Specification.Defaultconditiondef(object.defaultCondition);
 }
 
@@ -69,7 +79,7 @@ export function overwriteDefaultValue(object: { defaultCondition?: Specification
  * Throws an error if provided value is neither a Transitioneventcondition nor a Enddeventcondition
  * @param object to set/overwrite the property
  */
-export function overwriteEventConditionsValue(object: { eventConditions: Specification.Eventcondition[] }): void {
+export function overwriteEventConditions(object: { eventConditions: Specification.Eventcondition[] }): void {
   if (Array.isArray(object.eventConditions)) {
     object.eventConditions = object.eventConditions.map((eventCondition: any) => {
       if (eventCondition.transition) {
@@ -92,7 +102,7 @@ export function overwriteEventConditionsValue(object: { eventConditions: Specifi
  * Throws an error if provided value is neither a Transitiondatacondition nor a Enddatacondition
  * @param object to set/overwrite the property
  */
-export function overwriteDataConditionsValue(object: { dataConditions: Specification.Datacondition[] }): void {
+export function overwriteDataConditions(object: { dataConditions: Specification.Datacondition[] }): void {
   if (Array.isArray(object.dataConditions)) {
     object.dataConditions = object.dataConditions.map((dataCondition: any) => {
       if (dataCondition.transition) {
@@ -114,7 +124,7 @@ export function overwriteDataConditionsValue(object: { dataConditions: Specifica
  * Modify the provided object, set the value to 'actions' property as an instance of Specification.Action[] class
  * @param object to set/overwrite the property
  */
-export function overwriteActionsValue(object: { actions?: Specification.Action[] }): void {
+export function overwriteActions(object: { actions?: Specification.Action[] }): void {
   if (Array.isArray(object.actions)) {
     object.actions = object.actions.map((v) => new Specification.Action(v));
   }
@@ -124,7 +134,7 @@ export function overwriteActionsValue(object: { actions?: Specification.Action[]
  * Modify the provided object, set the value to 'onEvents' property as an instance of Specification.Onevents[] class
  * @param object to set/overwrite the property
  */
-export function overwriteOnEventsValue(object: { onEvents: Specification.Onevents[] }): void {
+export function overwriteOnEvents(object: { onEvents: Specification.Onevents[] }): void {
   object.onEvents = object.onEvents.map((event) => new Specification.Onevents(event));
 }
 
@@ -132,7 +142,7 @@ export function overwriteOnEventsValue(object: { onEvents: Specification.Onevent
  * Modify the provided object, set the value to 'stateDataFilter' property as an instance of Specification.Statedatafilter class
  * @param object to set/overwrite the property
  */
-export function overwriteStateDataFilterValue(object: { stateDataFilter?: Specification.Statedatafilter }): void {
+export function overwriteStateDataFilter(object: { stateDataFilter?: Specification.Statedatafilter }): void {
   object.stateDataFilter = object.stateDataFilter && new Specification.Statedatafilter(object.stateDataFilter);
 }
 
@@ -140,23 +150,15 @@ export function overwriteStateDataFilterValue(object: { stateDataFilter?: Specif
  * Modify the provided object, set the value to 'metadata' property as an instance of Specification.Metadata class
  * @param object to set/overwrite the property
  */
-export function overwriteMetadataValue(object: { metadata?: Specification.Metadata }): void {
+export function overwriteMetadata(object: { metadata?: Specification.Metadata }): void {
   object.metadata = object.metadata && new Specification.Metadata(object.metadata);
-}
-
-/**
- * Modify the provided object, set the value to 'execTimeout' property as an instance of Specification.Exectimeout class
- * @param object to set/overwrite the property
- */
-export function overwriteTimeoutsValue(object: { timeouts?: string | Specification.Timeouts }): void {
-  object.timeouts = object.timeouts && new Specification.Timeouts(object.timeouts);
 }
 
 /**
  * Modify the provided object, set the value to 'retries' property as an instance of Specification.Retries class
  * @param object to set/overwrite the property
  */
-export function overwriteRetriesValue(object: { retries?: Specification.Retries }) {
+export function overwriteRetries(object: { retries?: Specification.Retries }) {
   if (Array.isArray(object.retries)) {
     object.retries = (object.retries as Specification.Retrydef[]).map(
       (f) => new Specification.Retrydef(f)
@@ -168,7 +170,7 @@ export function overwriteRetriesValue(object: { retries?: Specification.Retries 
  * Modify the provided object, set the value to 'events' property as an instance of Specification.Events class
  * @param object to set/overwrite the property
  */
-export function overwriteEventsValue(object: { events?: Specification.Events }) {
+export function overwriteEvents(object: { events?: Specification.Events }) {
   if (Array.isArray(object.events)) {
     object.events = (object.events as Specification.Eventdef[]).map(
       (f) => new Specification.Eventdef(f)
@@ -180,7 +182,7 @@ export function overwriteEventsValue(object: { events?: Specification.Events }) 
  * Modify the provided object, set the value to 'functions' property as an instance of Specification.Functions class
  * @param object to set/overwrite the property
  */
-export function overwriteFunctionsValue(object: { functions?: Specification.Functions }) {
+export function overwriteFunctions(object: { functions?: Specification.Functions }) {
   if (Array.isArray(object.functions)) {
     object.functions = (object.functions as Specification.Function[]).map(
       (f) => new Specification.Function(f)
@@ -195,7 +197,7 @@ export function overwriteFunctionsValue(object: { functions?: Specification.Func
  */
 //
 
-export function overwriteStatesValue(object: { states: Specification.States }) {
+export function overwriteStates(object: { states: Specification.States }) {
   object.states =
     object.states &&
     ((object.states as Specification.States).map((v) => {
@@ -233,7 +235,7 @@ export function overwriteStatesValue(object: { states: Specification.States }) {
  * Modify the provided object, set the value to 'correlation' property as an instance of Specification.CorrelationDefs class
  * @param object to set/overwrite the property
  */
-export function overwriteCorrelationValue(object: { correlation?: Specification.CorrelationDefs }): void {
+export function overwriteCorrelation(object: { correlation?: Specification.CorrelationDefs }): void {
   if (Array.isArray(object.correlation)) {
     object.correlation = object.correlation.map(
       (correlation) => new Specification.CorrelationDef(correlation)
@@ -245,15 +247,26 @@ export function overwriteCorrelationValue(object: { correlation?: Specification.
  * Modify the provided object, set the value to 'action' property as an instance of Specification.Action class
  * @param object to set/overwrite the property
  */
-export function overwriteActionValue(object: { action?: Specification.Action }): void {
+export function overwriteAction(object: { action?: Specification.Action }): void {
   object.action = object.action && new Specification.Action(object.action);
+}
+
+/**
+ * Modify the provided object, set the value to 'workflowExecTimeout' property as an instance of Specification.WorkflowExecTimeout class
+ * @param object to set/overwrite the property
+ */
+export function overwriteWorkflowExecTimeout(object: {
+  workflowExecTimeout?: Specification.WorkflowExecTimeout;
+}): void {
+  object.workflowExecTimeout =
+    object.workflowExecTimeout && new Specification.WorkflowExecTimeout(object.workflowExecTimeout);
 }
 
 /**
  * Modify the provided object, set the value to 'eventDataFilter' property as an instance of Specification.Eventdatafilter class
  * @param object to set/overwrite the property
  */
-export function overwriteEventDataFilterValue(object: { eventDataFilter?: Specification.Eventdatafilter }): void {
+export function overwriteEventDataFilter(object: { eventDataFilter?: Specification.Eventdatafilter }): void {
   object.eventDataFilter = object.eventDataFilter && new Specification.Eventdatafilter(object.eventDataFilter);
 }
 
@@ -261,7 +274,7 @@ export function overwriteEventDataFilterValue(object: { eventDataFilter?: Specif
  * Modify the provided object, set the value to 'onErrors' property as an instance of Specification.Error[] class
  * @param object to set/overwrite the property
  */
-export function overwriteOnErrorsValue(object: { onErrors?: Specification.Error[] }): void {
+export function overwriteOnErrors(object: { onErrors?: Specification.Error[] }): void {
   if (Array.isArray(object.onErrors)) {
     object.onErrors = object.onErrors.map((error) => new Specification.Error(error));
   }
@@ -271,7 +284,7 @@ export function overwriteOnErrorsValue(object: { onErrors?: Specification.Error[
  * Modify the provided object, set the value to 'branches' property as an instance of Specification.Branch[] class
  * @param object to set/overwrite the property
  */
-export function overwriteBranchesValue(object: { branches?: Specification.Branch[] }): void {
+export function overwriteBranches(object: { branches?: Specification.Branch[] }): void {
   if (Array.isArray(object.branches)) {
     object.branches = object.branches.map((v) => new Specification.Branch(v));
   }
@@ -281,7 +294,7 @@ export function overwriteBranchesValue(object: { branches?: Specification.Branch
  * Modify the provided object, set the value to 'produceEvents' property as an instance of Specification.Produceeventdef[] class
  * @param object to set/overwrite the property
  */
-export function overwriteProduceEventsValue(object: { produceEvents?: Specification.Produceeventdef[] }): void {
+export function overwriteProduceEvents(object: { produceEvents?: Specification.Produceeventdef[] }): void {
   if (Array.isArray(object.produceEvents)) {
     object.produceEvents = object.produceEvents.map((produceEvent) => new Specification.Produceeventdef(produceEvent));
   }
@@ -291,9 +304,19 @@ export function overwriteProduceEventsValue(object: { produceEvents?: Specificat
  * Modify the provided object, set the value to 'functionRef' property as an instance of Specification.Functionref class
  * @param object to set/overwrite the property
  */
-export function overwriteFunctionRefValue(object: { functionRef?: string | Specification.Functionref }): void {
+export function overwriteFunctionRefIfObject(object: { functionRef?: string | Specification.Functionref }): void {
   if (isObject(object.functionRef)) {
     object.functionRef = new Specification.Functionref(object.functionRef);
+  }
+}
+
+/**
+ * Modify the provided object, set the value to 'subFlowRef' property as an instance of Specification.Subflowref class
+ * @param object to set/overwrite the property
+ */
+export function overwriteSubFlowRefIfObject(object: { subFlowRef?: string | Specification.Subflowref }): void {
+  if (isObject(object.subFlowRef)) {
+    object.subFlowRef = new Specification.Subflowref(object.subFlowRef);
   }
 }
 
@@ -301,7 +324,7 @@ export function overwriteFunctionRefValue(object: { functionRef?: string | Speci
  * Modify the provided object, set the value to 'eventRef' property as an instance of Specification.Eventref class
  * @param object to set/overwrite the property
  */
-export function overwriteEventRefValue(object: { eventRef?: Specification.Eventref }): void {
+export function overwriteEventRef(object: { eventRef?: Specification.Eventref }): void {
   object.eventRef = object.eventRef && new Specification.Eventref(object.eventRef);
 }
 
@@ -309,7 +332,7 @@ export function overwriteEventRefValue(object: { eventRef?: Specification.Eventr
  * Modify the provided object, set the value to 'actionDataFilter' property as an instance of Specification.Actiondatafilter class
  * @param object to set/overwrite the property
  */
-export function overwriteActionDataFilterValue(object: { actionDataFilter?: Specification.Actiondatafilter }): void {
+export function overwriteActionDataFilter(object: { actionDataFilter?: Specification.Actiondatafilter }): void {
   object.actionDataFilter = object.actionDataFilter && new Specification.Actiondatafilter(object.actionDataFilter);
 }
 
@@ -330,18 +353,162 @@ export function setEndValueIfNoTransition(object: {
  * Modify the provided object by normalizing the 'end' property.
  * @param object to be modified
  */
-export function normalizeEndProperty(object: { end?: boolean | Specification.End }) {
+export function normalizeEndIfObject(object: { end?: boolean | Specification.End }) {
   if (isObject(object.end)) {
     object.end = (object.end as Specification.End).normalize();
   }
 }
+
 /**
- * Modify the provided object by normalizing the 'actionMode' property, where the default value is 'parallel'.
+ * Modify the provided object, set the value to 'timeouts' property as plain type
+ * @param object to set/overwrite the property
+ */
+export function overwriteTimeoutsAsPlainType(object: { timeouts?: any }): void {
+  if (object.timeouts) {
+    Object.assign(object, { timeouts: JSON.parse(JSON.stringify(object.timeouts)) });
+  }
+}
+
+/**
+ * Modify the provided object, set the value to 'data' property as plain type
+ * @param object to set/overwrite the property
+ */
+export function overwriteDataIfObjectAsPlainType(object: {
+  data?:
+    | string
+    | {
+        [key: string]: any;
+      };
+}): void {
+  if (isObject(object.data)) {
+    Object.assign(object, { data: JSON.parse(JSON.stringify(object.data)) });
+  }
+}
+
+/**
+ * Modify the provided object, set the value to 'constants' property as plain type
+ * @param object to set/overwrite the property
+ */
+export function overwriteConstantsIfObjectAsPlainType(object: {
+  constants?:
+    | string /* uri */
+    | {
+        [key: string]: any;
+      };
+}): void {
+  if (isObject(object.constants)) {
+    Object.assign(object, { constants: JSON.parse(JSON.stringify(object.constants)) });
+  }
+}
+
+/**
+ * Modify the provided object, set the value to 'data' property as plain type
+ * @param object to set/overwrite the property
+ */
+export function overwriteDataAsPlainType(object: {
+  data?: {
+    [key: string]: any;
+  };
+}): void {
+  if (object.data) {
+    Object.assign(object, { data: JSON.parse(JSON.stringify(object.data)) });
+  }
+}
+
+/**
+ * Modify the provided object, set the value to 'contextAttributes' property as plain type
+ * @param object to set/overwrite the property
+ */
+export function overwriteContextAttributesAsPlainType(object: {
+  contextAttributes?: {
+    [name: string]: string;
+  };
+}): void {
+  if (object.contextAttributes) {
+    Object.assign(object, { contextAttributes: JSON.parse(JSON.stringify(object.contextAttributes)) });
+  }
+}
+
+/**
+ * Modify the provided object, set the value to 'dataInputSchema' property as plain type
+ * @param object to set/overwrite the property
+ */
+export function overwriteDataInputSchemaIfObjectAsPlainType(object: {
+  dataInputSchema?:
+    | string
+    | {
+        /**
+         * URI of the JSON Schema used to validate the workflow data input
+         */
+        schema: string;
+        /**
+         * Determines if workflow execution should continue if there are validation errors
+         */
+        failOnValidationErrors: boolean;
+      };
+}): void {
+  if (isObject(object.dataInputSchema)) {
+    Object.assign(object, { dataInputSchema: JSON.parse(JSON.stringify(object.dataInputSchema)) });
+  }
+}
+
+/**
+ * Modify the provided object, set the value to 'arguments' property as plain type
+ * @param object to set/overwrite the property
+ */
+export function overwriteArgumentsAsPlainType(object: {
+  arguments?: {
+    [key: string]: any;
+  };
+}): void {
+  if (object.arguments) {
+    Object.assign(object, { arguments: JSON.parse(JSON.stringify(object.arguments)) });
+  }
+}
+
+/**
+ * Modify the provided object, set the value to 'timeouts' property as an instance of Specification.Timeouts class
+ * @param object to set/overwrite the property
+ */
+export function overwriteTimeoutsIfObject(object: { timeouts?: string | Specification.Timeouts }): void {
+  if (isObject(object.timeouts)) {
+    object.timeouts = object.timeouts && new Specification.Timeouts(object.timeouts);
+  }
+}
+
+/**
+ * Modify the provided object by normalizing the 'end' property.
  * @param object to be modified
  */
-export function normalizeActionModeParallelProperty(object: { actionMode?: string }) {
-  if (object.actionMode === 'parallel') {
-    delete object.actionMode;
+export function normalizeSubFlowRefIfObject(object: { subFlowRef?: string | Specification.Subflowref }) {
+  if (isObject(object.subFlowRef)) {
+    object.subFlowRef = (object.subFlowRef as Specification.Subflowref).normalize();
+  }
+}
+
+/**
+ * Modify the provided object by normalizing the 'defaultCondition' property.
+ * @param object to be modified
+ */
+export function normalizeDefaultCondition(object: { defaultCondition?: Specification.Defaultconditiondef }) {
+  object.defaultCondition = object.defaultCondition && object.defaultCondition.normalize();
+}
+
+/**
+ * Modify the provided object by normalizing the 'workflowExecTimeout' property.
+ * @param object to be modified
+ */
+export function normalizeWorkflowExecTimeout(object: { workflowExecTimeout?: Specification.WorkflowExecTimeout }) {
+  object.workflowExecTimeout = object.workflowExecTimeout && object.workflowExecTimeout.normalize();
+}
+
+/**
+ * Modify the provided object by normalizing the 'waitForCompletion' property, where the default value is 'true'.
+ * @param object to be modified
+ */
+export function normalizeWaitForCompletion(object: { waitForCompletion?: boolean }) {
+  if (object.waitForCompletion) {
+    delete object.waitForCompletion;
   }
 }
 
@@ -349,31 +516,27 @@ export function normalizeActionModeParallelProperty(object: { actionMode?: strin
  * Modify the provided object by normalizing the 'actionMode' property, where the default value is 'sequential'.
  * @param object to be modified
  */
-export function normalizeActionModeSequentialProperty(object: { actionMode?: string }) {
+export function normalizeActionMode(object: { actionMode?: string }) {
   if (object.actionMode === 'sequential') {
     delete object.actionMode;
   }
 }
 
 /**
- * Modify the provided object by normalizing the 'completionType' property, where the default value is 'and'.
+ * Modify the provided object by normalizing the 'completionType' property, where the default value is 'allOf'.
  * @param object to be modified
  */
-export function normalizeCompletionTypeProperty(object: { completionType?: string }) {
-  if (object.completionType === 'and') {
+export function normalizeCompletionType(object: { completionType?: string }) {
+  if (object.completionType === 'allOf') {
     delete object.completionType;
   }
 }
-
-
-
-
 
 /**
  * Modify the provided object by normalizing the 'usedForCompensation' property, where the default value is 'false'.
  * @param object to be modified
  */
-export function normalizeUsedForCompensationProperty(object: { usedForCompensation?: boolean }) {
+export function normalizeUsedForCompensation(object: { usedForCompensation?: boolean }) {
   if (!object.usedForCompensation) {
     delete object.usedForCompensation;
   }
@@ -383,7 +546,7 @@ export function normalizeUsedForCompensationProperty(object: { usedForCompensati
  * Modify the provided object by normalizing the 'onEvents' property.
  * @param object to be modified
  */
-export function normalizeOnEventsProperty(object: { onEvents: Specification.Onevents[] }) {
+export function normalizeOnEvents(object: { onEvents: Specification.Onevents[] }) {
   object.onEvents = object.onEvents && object.onEvents.map((onEvent) => onEvent.normalize());
 }
 
@@ -391,17 +554,45 @@ export function normalizeOnEventsProperty(object: { onEvents: Specification.Onev
  * Modify the provided object by normalizing the 'onErrors' property.
  * @param object to be modified
  */
-export function normalizeOnErrorsProperty(object: { onErrors?: Specification.Error[] }): void {
+export function normalizeOnErrors(object: { onErrors?: Specification.Error[] }): void {
   if (Array.isArray(object.onErrors)) {
     object.onErrors = object.onErrors.map((error) => error.normalize());
   }
 }
 
 /**
+ * Modify the provided object by normalizing the 'branches' property.
+ * @param object to be modified
+ */
+export function normalizeBranches(object: { branches?: Specification.Branch[] }): void {
+  if (Array.isArray(object.branches)) {
+    object.branches = object.branches.map((branch) => branch.normalize());
+  }
+}
+
+/**
+ * Modify the provided object by normalizing the 'actions' property.
+ * @param object to be modified
+ */
+export function normalizeActions(object: { actions?: Specification.Action[] }): void {
+  if (Array.isArray(object.actions)) {
+    object.actions = object.actions.map((action) => action.normalize());
+  }
+}
+
+/**
+ * Modify the provided object by normalizing the 'action' property.
+ * @param object to be modified
+ */
+export function normalizeAction(object: { action?: Specification.Action }): void {
+  object.action = object.action && object.action.normalize();
+}
+
+/**
  * Modify the provided object by normalizing the 'dataConditions' property.
  * @param object to be modified
  */
-export function normalizeDataConditionsProperty(object: { dataConditions?: Specification.Datacondition[] }): void {
+export function normalizeDataConditions(object: { dataConditions?: Specification.Datacondition[] }): void {
   if (Array.isArray(object.dataConditions)) {
     object.dataConditions = object.dataConditions.map((dc) => dc.normalize());
   }
@@ -411,7 +602,7 @@ export function normalizeDataConditionsProperty(object: { dataConditions?: Speci
  * Modify the provided object by normalizing the 'eventConditions' property.
  * @param object to be modified
  */
-export function normalizeEventConditionsProperty(object: { eventConditions?: Specification.Eventcondition[] }): void {
+export function normalizeEventConditions(object: { eventConditions?: Specification.Eventcondition[] }): void {
   if (Array.isArray(object.eventConditions)) {
     object.eventConditions = object.eventConditions.map((event) => event.normalize());
   }
@@ -421,7 +612,7 @@ export function normalizeEventConditionsProperty(object: { eventConditions?: Spe
  * Modify the provided object by normalizing the 'transition' property if property type is Specification.Transition.
  * @param object to be modified
  */
-export function normalizeTransitionProperty(object: { transition?: string | Specification.Transition }) {
+export function normalizeTransitionIfObject(object: { transition?: string | Specification.Transition }) {
   if (isObject(object.transition)) {
     object.transition = (object.transition as Specification.Transition).normalize();
   }
@@ -431,7 +622,7 @@ export function normalizeTransitionProperty(object: { transition?: string | Spec
  * Modify the provided object by normalizing the 'compensate' property, where the default value is 'false'.
  * @param object to be modified
  */
-export function normalizeCompensateProperty(object: { compensate?: boolean }) {
+export function normalizeCompensate(object: { compensate?: boolean }) {
   if (!object.compensate) {
     delete object.compensate;
   }
@@ -441,7 +632,7 @@ export function normalizeCompensateProperty(object: { compensate?: boolean }) {
  * Modify the provided object by normalizing the 'terminate' property, where the default value is 'false'.
  * @param object to be modified
  */
-export function normalizeTerminateProperty(object: { terminate?: boolean }) {
+export function normalizeTerminate(object: { terminate?: boolean }) {
   if (!object.terminate) {
     delete object.terminate;
   }
@@ -451,7 +642,7 @@ export function normalizeTerminateProperty(object: { terminate?: boolean }) {
  * Modify the provided object by normalizing the 'exclusive' property, where the default value is 'true'.
  * @param object to be modified
  */
-export function normalizeExclusiveProperty(object: { exclusive?: boolean }) {
+export function normalizeExclusive(object: { exclusive?: boolean }) {
   if (object.exclusive) {
     delete object.exclusive;
   }
@@ -478,11 +669,11 @@ export function normalizeExpressionLang(object: { expressionLang?: string }) {
 }
 
 /**
- * Modify the provided object by normalizing the 'interrupt' property, where the default value is 'false'.
+ * Modify the provided object by normalizing the 'interrupt' property, where the default value is 'true'.
  * @param object to be modified
  */
-export function normalizeInterruptProperty(object: { interrupt?: boolean }) {
-  if (!object.interrupt) {
+export function normalizeInterrupt(object: { interrupt?: boolean }) {
+  if (object.interrupt) {
     delete object.interrupt;
   }
 }
@@ -491,7 +682,7 @@ export function normalizeInterruptProperty(object: { interrupt?: boolean }) {
  * Modify the provided object by normalizing the 'type' property, where the default value is 'rest'.
  * @param object to be modified
  */
-export function normalizeTypeRestProperty(object: { type?: string }) {
+export function normalizeType(object: { type?: string }) {
   if (object.type === 'rest') {
     delete object.type;
   }
@@ -501,9 +692,19 @@ export function normalizeTypeRestProperty(object: { type?: string }) {
  * Modify the provided object by normalizing the 'kind' property, where the default value is 'consumed'.
  * @param object to be modified
  */
-export function normalizeKindProperty(object: { kind?: string }) {
+export function normalizeKind(object: { kind?: string }) {
   if (object.kind === 'consumed') {
     delete object.kind;
+  }
+}
+
+/**
+ * Modify the provided object by normalizing the 'dataOnly' property, where the default value is 'true'.
+ * @param object to be modified
+ */
+export function normalizeDataOnly(object: { dataOnly?: boolean }) {
+  if (object.dataOnly) {
+    delete object.dataOnly;
   }
 }
 
@@ -542,10 +743,10 @@ export function normalizeEvents(object: { events?: Specification.Events }) {
 }
 
 /**
- * Modify the provided object by normalizing the 'execTimeout' property.
+ * Modify the provided object by normalizing the 'timeouts' property.
  * @param object to be modified
  */
-export function normalizeTimeouts(object: { timeouts?: string /* uri */ | Specification.Timeouts }) {
+export function normalizeTimeoutsIfObject(object: { timeouts?: string /* uri */ | Specification.Timeouts }) {
   if (isObject(object.timeouts)) {
     object.timeouts = object.timeouts && object.timeouts.normalize();
   }

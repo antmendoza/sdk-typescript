@@ -20,17 +20,19 @@ import { Metadata } from './metadata';
 import { Statedatafilter } from './statedatafilter';
 import { Transition } from './transition';
 import {
-  normalizeActionModeSequentialProperty,
-  normalizeEndProperty,
-  normalizeOnErrorsProperty,
-  normalizeTransitionProperty,
-  normalizeUsedForCompensationProperty,
-  overwriteActionsValue,
-  overwriteEndValueIfObject,
-  overwriteMetadataValue,
-  overwriteOnErrorsValue,
-  overwriteStateDataFilterValue,
-  overwriteTransitionValueIfObject,
+  normalizeActionMode,
+  normalizeActions,
+  normalizeEndIfObject,
+  normalizeOnErrors,
+  normalizeTransitionIfObject,
+  normalizeUsedForCompensation,
+  overwriteActions,
+  overwriteEndIfObject,
+  overwriteMetadata,
+  overwriteOnErrors,
+  overwriteStateDataFilter,
+  overwriteTimeoutsAsPlainType,
+  overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
 import { ActionExecTimeout, StateExecTimeout } from './types';
@@ -44,12 +46,13 @@ export class Operationstate {
     };
     Object.assign(this, defaultModel, model);
 
-    overwriteEndValueIfObject(this);
-    overwriteActionsValue(this);
-    overwriteStateDataFilterValue(this);
-    overwriteOnErrorsValue(this);
-    overwriteTransitionValueIfObject(this);
-    overwriteMetadataValue(this);
+    overwriteEndIfObject(this);
+    overwriteStateDataFilter(this);
+    overwriteActions(this);
+    overwriteTimeoutsAsPlainType(this);
+    overwriteOnErrors(this);
+    overwriteTransitionIfObject(this);
+    overwriteMetadata(this);
   }
 
   /**
@@ -112,11 +115,12 @@ export class Operationstate {
   normalize = (): Operationstate => {
     const clone = new Operationstate(this);
 
-    normalizeActionModeSequentialProperty(clone);
-    normalizeUsedForCompensationProperty(clone);
-    normalizeEndProperty(clone);
-    normalizeTransitionProperty(clone);
-    normalizeOnErrorsProperty(clone);
+    normalizeEndIfObject(clone);
+    normalizeActionMode(clone);
+    normalizeActions(clone);
+    normalizeOnErrors(clone);
+    normalizeTransitionIfObject(clone);
+    normalizeUsedForCompensation(clone);
     setEndValueIfNoTransition(clone);
 
     return clone;

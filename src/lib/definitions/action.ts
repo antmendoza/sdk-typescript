@@ -17,11 +17,11 @@ import { Actiondatafilter } from './actiondatafilter';
 import { Eventref } from './eventref';
 import { Functionref } from './functionref';
 import {
-  normalizeSubflowref,
+  normalizeSubFlowRefIfObject,
   overwriteActionDataFilter,
   overwriteEventRef,
-  overwriteFunctionRef,
-  overwriteSubflowref,
+  overwriteFunctionRefIfObject,
+  overwriteSubFlowRefIfObject,
 } from './utils';
 import { Subflowref } from './subflowref';
 
@@ -29,9 +29,9 @@ export class Action {
   constructor(model: any) {
     Object.assign(this, model);
 
-    overwriteFunctionRef(this);
+    overwriteFunctionRefIfObject(this);
     overwriteEventRef(this);
-    overwriteSubflowref(this);
+    overwriteSubFlowRefIfObject(this);
     overwriteActionDataFilter(this);
   }
 
@@ -50,7 +50,7 @@ export class Action {
    */
   normalize = (): Action => {
     const clone = new Action(this);
-    normalizeSubflowref(clone);
+    normalizeSubFlowRefIfObject(clone);
 
     return clone;
   };

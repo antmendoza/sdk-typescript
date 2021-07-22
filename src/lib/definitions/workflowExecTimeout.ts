@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
+import { normalizeInterrupt } from './utils';
+
 export class WorkflowExecTimeout {
   constructor(model: any) {
-    Object.assign(this, model);
+    const defaultModel = { interrupt: true };
+    Object.assign(this, defaultModel, model);
   }
 
   /**
@@ -31,4 +34,17 @@ export class WorkflowExecTimeout {
    * Name of a workflow state to be executed before workflow instance is terminated
    */
   runBefore?: string;
+
+  /**
+   * Normalize the value of each property by recursively deleting properties whose value is equal to its default value. Does not modify the object state.
+   * @returns {Specification.WorkflowExecTimeout} without deleted properties.
+   */
+
+  normalize = (): WorkflowExecTimeout => {
+    const clone = new WorkflowExecTimeout(this);
+
+    normalizeInterrupt(clone);
+
+    return clone;
+  };
 }

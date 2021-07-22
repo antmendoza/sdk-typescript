@@ -12,23 +12,22 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
+ *
  */
-import { Schedule } from './schedule';
-import { overwriteScheduleIfObject } from './utils';
+import { Subflowref } from '../../../src/lib/definitions/subflowref';
 
-export class Startdef {
-  constructor(model: any) {
-    Object.assign(this, model);
+describe('Subflowref ', () => {
+  it('normalize should unset properties whose value is equal to its default value', () => {
+    const object = new Subflowref({ workflowId: 'startApplicationWorkflowId' });
+    expect(object.waitForCompletion).toBeTrue();
+    const serializedObject = object.normalize();
 
-    overwriteScheduleIfObject(this);
-  }
+    expect(JSON.stringify(serializedObject)).toBe(
+      JSON.stringify({
+        workflowId: 'startApplicationWorkflowId',
+      })
+    );
 
-  /**
-   * Name of the starting workflow state
-   */
-  stateName: string;
-  /**
-   * Define the time/repeating intervals or cron at which workflow instances should be automatically started.
-   */
-  schedule: string | Schedule;
-}
+    expect(serializedObject.waitForCompletion).toBeUndefined();
+  });
+});

@@ -17,18 +17,18 @@
 import { End } from './end';
 import { Transition } from './transition';
 import {
-  normalizeEndProperty,
-  normalizeTransitionProperty,
-  overwriteEndValueIfObject,
-  overwriteTransitionValueIfObject,
+  normalizeEndIfObject,
+  normalizeTransitionIfObject,
+  overwriteEndIfObject,
+  overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
 export class Defaultconditiondef /* DefaultCondition definition. Can be either a transition or end definition */ {
   constructor(model: any) {
     Object.assign(this, model);
 
-    overwriteTransitionValueIfObject(this);
-    overwriteEndValueIfObject(this);
+    overwriteTransitionIfObject(this);
+    overwriteEndIfObject(this);
   }
 
   transition: string | Transition;
@@ -41,8 +41,8 @@ export class Defaultconditiondef /* DefaultCondition definition. Can be either a
   normalize = (): Defaultconditiondef => {
     const clone = new Defaultconditiondef(this);
 
-    normalizeEndProperty(clone);
-    normalizeTransitionProperty(clone);
+    normalizeEndIfObject(clone);
+    normalizeTransitionIfObject(clone);
     setEndValueIfNoTransition(clone);
 
     return clone;

@@ -15,14 +15,14 @@
  */
 import { End } from './end';
 import { Metadata } from './metadata';
-import { normalizeEndProperty, overwriteEndValueIfObject, overwriteMetadataValue } from './utils';
+import { normalizeEndIfObject, overwriteEndIfObject, overwriteMetadata } from './utils';
 
 export class Enddatacondition {
   constructor(model: any) {
     Object.assign(this, model);
 
-    overwriteMetadataValue(this);
-    overwriteEndValueIfObject(this);
+    overwriteEndIfObject(this);
+    overwriteMetadata(this);
   }
 
   /**
@@ -46,7 +46,7 @@ export class Enddatacondition {
   normalize = (): Enddatacondition => {
     const clone = new Enddatacondition(this);
 
-    normalizeEndProperty(clone);
+    normalizeEndIfObject(clone);
 
     return clone;
   };
