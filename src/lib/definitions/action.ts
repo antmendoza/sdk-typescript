@@ -25,7 +25,11 @@ import {
 } from './utils';
 import { Subflowref } from './subflowref';
 
-export class Action {
+export interface Normalizable<T> {
+  normalize(): T;
+}
+
+export class Action implements Normalizable<Action> {
   constructor(model: any) {
     Object.assign(this, model);
 

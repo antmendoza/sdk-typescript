@@ -27,11 +27,10 @@ import {
   normalizeKeepActive,
   normalizeStates,
   normalizeTimeoutsIfObject,
-  overwriteConstantsIfObjectAsPlainType,
-  overwriteDataInputSchemaIfObjectAsPlainType,
   overwriteEvents,
   overwriteFunctions,
   overwriteMetadata,
+  overwritePropertyAsPlainType,
   overwriteRetries,
   overwriteStartIfObject,
   overwriteStates,
@@ -48,8 +47,8 @@ export class Workflow {
 
     Object.assign(this, defaultModel, model);
 
-    overwriteDataInputSchemaIfObjectAsPlainType(this);
-    overwriteConstantsIfObjectAsPlainType(this);
+    overwritePropertyAsPlainType('dataInputSchema', this);
+    overwritePropertyAsPlainType('constants', this);
     overwriteStartIfObject(this);
     overwriteTimeoutsIfObject(this);
     overwriteMetadata(this);

@@ -15,7 +15,7 @@
  *
  */
 
-import { overwriteDataIfObjectAsPlainType, overwriteTimeoutsAsPlainType } from '../../../src/lib/definitions/utils';
+import { overwritePropertyAsPlainType } from '../../../src/lib/definitions/utils';
 
 describe('Util ', () => {
   describe('overwriteTimeoutsAsPlainType  ', () => {
@@ -34,7 +34,7 @@ describe('Util ', () => {
 
       const target = {} as HasTimeouts;
       Object.assign(target, source);
-      overwriteTimeoutsAsPlainType(target);
+      overwritePropertyAsPlainType('timeouts', target);
 
       expect(target.timeouts!.key).toBe('action');
       source.timeouts!.key = 'action2';
@@ -60,7 +60,7 @@ describe('Util ', () => {
 
       const target = {} as HasData;
       Object.assign(target, source);
-      overwriteDataIfObjectAsPlainType(target);
+      overwritePropertyAsPlainType('data', target);
 
       // @ts-ignore
       expect(target!.data['key1']).toBe('value1');

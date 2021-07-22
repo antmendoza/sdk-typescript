@@ -30,7 +30,7 @@ import {
   overwriteMetadata,
   overwriteOnErrors,
   overwriteStateDataFilter,
-  overwriteTimeoutsAsPlainType,
+  overwritePropertyAsPlainType,
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
@@ -43,7 +43,7 @@ export class Foreachstate {
 
     overwriteEndIfObject(this);
     overwriteActions(this);
-    overwriteTimeoutsAsPlainType(this);
+    overwritePropertyAsPlainType('timeouts', this);
     overwriteStateDataFilter(this);
     overwriteOnErrors(this);
     overwriteTransitionIfObject(this);

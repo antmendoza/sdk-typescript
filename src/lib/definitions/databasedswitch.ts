@@ -28,7 +28,7 @@ import {
   overwriteMetadata,
   overwriteOnErrors,
   overwriteStateDataFilter,
-  overwriteTimeoutsAsPlainType,
+  overwritePropertyAsPlainType,
 } from './utils';
 import { Datacondition, StateExecTimeout } from './types';
 
@@ -38,7 +38,7 @@ export class Databasedswitch {
     Object.assign(this, defaultModel, model);
 
     overwriteStateDataFilter(this);
-    overwriteTimeoutsAsPlainType(this);
+    overwritePropertyAsPlainType('timeouts', this);
     overwriteDataConditions(this);
     overwriteOnErrors(this);
     overwriteDefaultCondition(this);

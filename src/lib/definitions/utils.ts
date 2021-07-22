@@ -360,109 +360,13 @@ export function normalizeEndIfObject(object: { end?: boolean | Specification.End
 }
 
 /**
- * Modify the provided object, set the value to 'timeouts' property as plain type
+ * Modify the provided object, deep cloning the value of the provided property
+ * @param property to be cloned
  * @param object to set/overwrite the property
  */
-export function overwriteTimeoutsAsPlainType(object: { timeouts?: any }): void {
-  if (object.timeouts) {
-    Object.assign(object, { timeouts: JSON.parse(JSON.stringify(object.timeouts)) });
-  }
-}
-
-/**
- * Modify the provided object, set the value to 'data' property as plain type
- * @param object to set/overwrite the property
- */
-export function overwriteDataIfObjectAsPlainType(object: {
-  data?:
-    | string
-    | {
-        [key: string]: any;
-      };
-}): void {
-  if (isObject(object.data)) {
-    Object.assign(object, { data: JSON.parse(JSON.stringify(object.data)) });
-  }
-}
-
-/**
- * Modify the provided object, set the value to 'constants' property as plain type
- * @param object to set/overwrite the property
- */
-export function overwriteConstantsIfObjectAsPlainType(object: {
-  constants?:
-    | string /* uri */
-    | {
-        [key: string]: any;
-      };
-}): void {
-  if (isObject(object.constants)) {
-    Object.assign(object, { constants: JSON.parse(JSON.stringify(object.constants)) });
-  }
-}
-
-/**
- * Modify the provided object, set the value to 'data' property as plain type
- * @param object to set/overwrite the property
- */
-export function overwriteDataAsPlainType(object: {
-  data?: {
-    [key: string]: any;
-  };
-}): void {
-  if (object.data) {
-    Object.assign(object, { data: JSON.parse(JSON.stringify(object.data)) });
-  }
-}
-
-/**
- * Modify the provided object, set the value to 'contextAttributes' property as plain type
- * @param object to set/overwrite the property
- */
-export function overwriteContextAttributesAsPlainType(object: {
-  contextAttributes?: {
-    [name: string]: string;
-  };
-}): void {
-  if (object.contextAttributes) {
-    Object.assign(object, { contextAttributes: JSON.parse(JSON.stringify(object.contextAttributes)) });
-  }
-}
-
-/**
- * Modify the provided object, set the value to 'dataInputSchema' property as plain type
- * @param object to set/overwrite the property
- */
-export function overwriteDataInputSchemaIfObjectAsPlainType(object: {
-  dataInputSchema?:
-    | string
-    | {
-        /**
-         * URI of the JSON Schema used to validate the workflow data input
-         */
-        schema: string;
-        /**
-         * Determines if workflow execution should continue if there are validation errors
-         */
-        failOnValidationErrors: boolean;
-      };
-}): void {
-  if (isObject(object.dataInputSchema)) {
-    Object.assign(object, { dataInputSchema: JSON.parse(JSON.stringify(object.dataInputSchema)) });
-  }
-}
-
-/**
- * Modify the provided object, set the value to 'arguments' property as plain type
- * @param object to set/overwrite the property
- */
-export function overwriteArgumentsAsPlainType(object: {
-  arguments?: {
-    [key: string]: any;
-  };
-}): void {
-  if (object.arguments) {
-    Object.assign(object, { arguments: JSON.parse(JSON.stringify(object.arguments)) });
+export function overwritePropertyAsPlainType(property: string, object: any): void {
+  if (isObject(object[property])) {
+    Object.assign(object, { [property]: JSON.parse(JSON.stringify(object[property])) });
   }
 }
 

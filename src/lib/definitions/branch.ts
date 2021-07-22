@@ -15,14 +15,14 @@
  */
 
 import { Action } from './action';
-import { normalizeActions, overwriteActions, overwriteTimeoutsAsPlainType } from './utils';
+import { normalizeActions, overwriteActions, overwritePropertyAsPlainType } from './utils';
 import { ActionExecTimeout, BranchExecTimeout } from './types';
 
 export class Branch /* Branch Definition */ {
   constructor(model: any) {
     Object.assign(this, model);
     overwriteActions(this);
-    overwriteTimeoutsAsPlainType(this);
+    overwritePropertyAsPlainType('timeouts', this);
   }
 
   /**

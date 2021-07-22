@@ -32,7 +32,7 @@ import {
   overwriteMetadata,
   overwriteOnErrors,
   overwriteStateDataFilter,
-  overwriteTimeoutsAsPlainType,
+  overwritePropertyAsPlainType,
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
@@ -49,7 +49,7 @@ export class Parallelstate {
 
     overwriteEndIfObject(this);
     overwriteStateDataFilter(this);
-    overwriteTimeoutsAsPlainType(this);
+    overwritePropertyAsPlainType('timeouts', this);
     overwriteBranches(this);
     overwriteOnErrors(this);
     overwriteTransitionIfObject(this);

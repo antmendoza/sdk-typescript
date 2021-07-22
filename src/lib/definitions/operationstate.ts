@@ -31,7 +31,7 @@ import {
   overwriteMetadata,
   overwriteOnErrors,
   overwriteStateDataFilter,
-  overwriteTimeoutsAsPlainType,
+  overwritePropertyAsPlainType,
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
@@ -49,7 +49,7 @@ export class Operationstate {
     overwriteEndIfObject(this);
     overwriteStateDataFilter(this);
     overwriteActions(this);
-    overwriteTimeoutsAsPlainType(this);
+    overwritePropertyAsPlainType('timeouts', this);
     overwriteOnErrors(this);
     overwriteTransitionIfObject(this);
     overwriteMetadata(this);

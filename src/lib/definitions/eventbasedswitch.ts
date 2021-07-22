@@ -28,7 +28,7 @@ import {
   overwriteMetadata,
   overwriteOnErrors,
   overwriteStateDataFilter,
-  overwriteTimeoutsAsPlainType,
+  overwritePropertyAsPlainType,
 } from './utils';
 import { Eventcondition, EventTimeout, StateExecTimeout } from './types';
 
@@ -41,7 +41,7 @@ export class Eventbasedswitch {
     Object.assign(this, defaultModel, model);
 
     overwriteStateDataFilter(this);
-    overwriteTimeoutsAsPlainType(this);
+    overwritePropertyAsPlainType('timeouts', this);
     overwriteEventConditions(this);
     overwriteOnErrors(this);
     overwriteDefaultCondition(this);

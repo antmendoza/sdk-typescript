@@ -22,11 +22,10 @@ import {
   normalizeEndIfObject,
   normalizeTransitionIfObject,
   normalizeUsedForCompensation,
-  overwriteDataAsPlainType,
   overwriteEndIfObject,
   overwriteMetadata,
+  overwritePropertyAsPlainType,
   overwriteStateDataFilter,
-  overwriteTimeoutsAsPlainType,
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
@@ -38,8 +37,8 @@ export class Injectstate {
     Object.assign(this, defaultModel, model);
 
     overwriteEndIfObject(this);
-    overwriteDataAsPlainType(this);
-    overwriteTimeoutsAsPlainType(this);
+    overwritePropertyAsPlainType('data', this);
+    overwritePropertyAsPlainType('timeouts', this);
     overwriteStateDataFilter(this);
     overwriteTransitionIfObject(this);
     overwriteMetadata(this);

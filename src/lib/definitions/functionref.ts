@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { overwriteArgumentsAsPlainType } from './utils';
+import { overwritePropertyAsPlainType } from './utils';
 
 export class Functionref {
   constructor(model: any) {
     Object.assign(this, model);
-    overwriteArgumentsAsPlainType(this);
+    overwritePropertyAsPlainType('arguments', this);
   }
 
   /**
