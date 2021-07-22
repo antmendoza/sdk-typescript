@@ -46,7 +46,6 @@ export class Workflow {
       keepActive: true,
     } as Specification.Workflow;
 
-
     Object.assign(this, defaultModel, model);
 
     overwriteDataInputSchemaIfObjectAsPlainType(this);
