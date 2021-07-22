@@ -85,11 +85,11 @@ export function overwriteEventConditions(object: { eventConditions: Specificatio
       if (eventCondition.transition) {
         return new Specification.Transitioneventcondition(eventCondition);
       }
-
+      
       if (eventCondition.end) {
         return new Specification.Enddeventcondition(eventCondition);
       }
-
+      
       throw new Error(
         `Provided value is neither Transitioneventcondition nor Enddeventcondition \n data= ${eventCondition} `
       );
@@ -108,11 +108,11 @@ export function overwriteDataConditions(object: { dataConditions: Specification.
       if (dataCondition.transition) {
         return new Specification.Transitiondatacondition(dataCondition);
       }
-
+      
       if (dataCondition.end) {
         return new Specification.Enddatacondition(dataCondition);
       }
-
+      
       throw new Error(
         `Provided value is neither Transitiondatacondition nor Enddatacondition \n data= ${dataCondition} `
       );
@@ -482,6 +482,20 @@ export function normalizeActions(object: { actions?: Specification.Action[] }): 
   if (Array.isArray(object.actions)) {
     object.actions = object.actions.map((action) => action.normalize());
   }
+}
+
+
+export function normalizeProperty(property: string, object: any): void {
+  
+  const objectElement = object[property];
+  if (isObject(objectElement)) {
+    object[property] = objectElement.normalize();
+  }
+  
+  if (Array.isArray(objectElement)) {
+    object[property] = objectElement.map((el) => el.normalize());
+  }
+  
 }
 
 /**

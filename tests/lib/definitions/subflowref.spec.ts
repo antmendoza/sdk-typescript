@@ -20,6 +20,7 @@ describe('Subflowref ', () => {
   it('normalize should unset properties whose value is equal to its default value', () => {
     const object = new Subflowref({ workflowId: 'startApplicationWorkflowId' });
     expect(object.waitForCompletion).toBeTrue();
+    
     const serializedObject = object.normalize();
 
     expect(JSON.stringify(serializedObject)).toBe(

@@ -24,7 +24,8 @@ describe('Branch ', () => {
     };
 
     const model = new Branch(data);
-
+  
+    model.normalize();
     expect(model.actions![0].constructor.name).toBe('Action');
   });
 });

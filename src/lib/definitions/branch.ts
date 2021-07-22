@@ -24,7 +24,7 @@ export class Branch /* Branch Definition */ {
     overwriteActions(this);
     overwritePropertyAsPlainType('timeouts', this);
   }
-
+  
   /**
    * Branch name
    */
@@ -40,7 +40,7 @@ export class Branch /* Branch Definition */ {
    * Actions to be executed in this branch
    */
   actions: Action[];
-
+  
   /**
    * Normalize the value of each property by recursively deleting properties whose value is equal to its default value. Does not modify the object state.
    * @returns {Specification.Action} without deleted properties.
@@ -48,7 +48,6 @@ export class Branch /* Branch Definition */ {
   normalize = (): Branch => {
     const clone = new Branch(this);
     normalizeActions(clone);
-
     return clone;
   };
 }
