@@ -16,7 +16,7 @@
 import { Specification } from '.';
 import * as yaml from 'js-yaml';
 
-import { isObject, validate } from '../utils';
+import { validate } from '../utils';
 import { Metadata } from './metadata';
 import { Startdef } from './startdef';
 import { Events, Functions, Retries, Secrets, States } from './types';
@@ -46,10 +46,6 @@ export class Workflow {
       keepActive: true,
     } as Specification.Workflow;
 
-    //TODO
-    if (model.dataInputSchema && isObject(model.dataInputSchema)) {
-      //defaultModel!.dataInputSchema!.failOnValidationErrors = true
-    }
 
     Object.assign(this, defaultModel, model);
 
