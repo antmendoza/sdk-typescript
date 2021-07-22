@@ -16,17 +16,23 @@
 import { Actiondatafilter } from './actiondatafilter';
 import { Eventref } from './eventref';
 import { Functionref } from './functionref';
-import { overwriteActionDataFilterValue, overwriteEventRefValue, overwriteFunctionRefValue } from './utils';
+import {
+  normalizeSubflowref,
+  overwriteActionDataFilter,
+  overwriteEventRef,
+  overwriteFunctionRef,
+  overwriteSubflowref,
+} from './utils';
 import { Subflowref } from './subflowref';
+
 export class Action {
   constructor(model: any) {
     Object.assign(this, model);
 
-    overwriteFunctionRefValue(this);
-    overwriteEventRefValue(this);
-    overwriteActionDataFilterValue(this);
-
-    //TODO Add subflow
+    overwriteFunctionRef(this);
+    overwriteEventRef(this);
+    overwriteSubflowref(this);
+    overwriteActionDataFilter(this);
   }
 
   /**
@@ -37,4 +43,15 @@ export class Action {
   eventRef?: /* Event References */ Eventref;
   subFlowRef?: string | Subflowref;
   actionDataFilter?: Actiondatafilter;
+
+  /**
+   * Normalize the value of each property by recursively deleting properties whose value is equal to its default value. Does not modify the object state.
+   * @returns {Specification.Action} without deleted properties.
+   */
+  normalize = (): Action => {
+    const clone = new Action(this);
+    normalizeSubflowref(clone);
+
+    return clone;
+  };
 }
