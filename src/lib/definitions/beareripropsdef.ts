@@ -16,6 +16,10 @@
 
 import { Metadata } from './metadata';
 export class Beareripropsdef {
+  constructor(model: any) {
+    Object.assign(this, model);
+  }
+
   /**
    * String or a workflow expression. Contains the token
    */

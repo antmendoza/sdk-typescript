@@ -37,7 +37,8 @@ import {
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
-import { ActionExecTimeout, EventTimeout, StateExecTimeout } from './types';
+import { ActionExecTimeout, EventTimeout } from './types';
+import {StateExecTimeout} from "./stateExecTimeout";
 
 export class Callbackstate {
   constructor(model: any) {

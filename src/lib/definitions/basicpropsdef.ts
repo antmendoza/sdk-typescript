@@ -16,6 +16,12 @@
 
 import { Metadata } from './metadata';
 export class Basicpropsdef {
+
+  constructor(model: any) {
+    Object.assign(this, model);
+
+  }
+
   /**
    * String or a workflow expression. Contains the user name
    */

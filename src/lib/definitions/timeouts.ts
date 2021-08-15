@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 import { WorkflowExecTimeout } from './workflowExecTimeout';
-import { ActionExecTimeout, BranchExecTimeout, EventTimeout, StateExecTimeout } from './types';
+import { ActionExecTimeout, BranchExecTimeout, EventTimeout } from './types';
 import { normalizeWorkflowExecTimeout, overwriteWorkflowExecTimeout } from './utils';
+import {StateExecTimeout} from "./stateExecTimeout";
 
 export class Timeouts {
   constructor(model: any) {

@@ -34,7 +34,8 @@ import {
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
-import { ActionExecTimeout, StateExecTimeout } from './types';
+import { ActionExecTimeout } from './types';
+import {StateExecTimeout} from "./stateExecTimeout";
 
 export class Foreachstate {
   constructor(model: any) {

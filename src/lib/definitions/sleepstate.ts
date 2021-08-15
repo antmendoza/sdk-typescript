@@ -32,7 +32,7 @@ import {
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
-import { StateExecTimeout } from './types';
+import {StateExecTimeout} from "./stateExecTimeout";
 
 export class Sleepstate {
   constructor(model: any) {

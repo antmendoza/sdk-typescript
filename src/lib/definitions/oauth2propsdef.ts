@@ -16,6 +16,10 @@
 
 import { Metadata } from './metadata';
 export class Oauth2propsdef {
+  constructor(model: any) {
+    Object.assign(this, model);
+  }
+
   /**
    * String or a workflow expression. Contains the authority information
    */

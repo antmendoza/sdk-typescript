@@ -30,7 +30,8 @@ import {
   overwriteStateDataFilter,
   overwritePropertyAsPlainType,
 } from './utils';
-import { Eventcondition, EventTimeout, StateExecTimeout } from './types';
+import { Eventcondition, EventTimeout } from './types';
+import {StateExecTimeout} from "./stateExecTimeout";
 
 export class Eventbasedswitch {
   constructor(model: any) {

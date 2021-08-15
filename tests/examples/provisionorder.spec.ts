@@ -59,9 +59,9 @@ describe('provisionorder workflow example', () => {
           .stateDataFilter(statedatafilterBuilder().output('${ .exceptions }').build())
           .transition('ApplyOrder')
           .onErrors([
-            errorBuilder().error('Missing order id').transition('MissingId').build(),
-            errorBuilder().error('Missing order item').transition('MissingItem').build(),
-            errorBuilder().error('Missing order quantity').transition('MissingQuantity').build(),
+            errorBuilder().errorRef('Missing order id').transition('MissingId').build(),
+            errorBuilder().errorRef('Missing order item').transition('MissingItem').build(),
+            errorBuilder().errorRef('Missing order quantity').transition('MissingQuantity').build(),
           ])
           .build(),
         operationstateBuilder()

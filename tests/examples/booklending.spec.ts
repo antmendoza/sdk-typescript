@@ -16,17 +16,16 @@
  */
 import * as fs from 'fs';
 import {
-  actionBuilder,
-  databasedswitchBuilder,
-  delaystateBuilder,
-  eventbasedswitchBuilder,
-  eventstateBuilder,
-  oneventsBuilder,
-  operationstateBuilder,
-  transitiondataconditionBuilder,
-  transitioneventconditionBuilder,
-  workflowBuilder,
-  functionrefBuilder,
+    actionBuilder,
+    databasedswitchBuilder,
+    eventbasedswitchBuilder,
+    eventstateBuilder,
+    oneventsBuilder,
+    operationstateBuilder,
+    transitiondataconditionBuilder,
+    transitioneventconditionBuilder,
+    workflowBuilder,
+    functionrefBuilder, sleepstateBuilder,
 } from '../../src';
 
 describe('booklending workflow example', () => {
@@ -123,7 +122,7 @@ describe('booklending workflow example', () => {
           ])
           .transition('Wait two weeks')
           .build(),
-        delaystateBuilder().name('Wait two weeks').timeDelay('PT2W').transition('Get Book Status').build(),
+        sleepstateBuilder().name('Wait two weeks').duration('PT2W').transition('Get Book Status').build(),
         operationstateBuilder()
           .name('Check Out Book')
           .actions([

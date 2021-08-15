@@ -15,6 +15,12 @@
  */
 
 export class Errordef {
+
+  constructor(model: any) {
+    Object.assign(this, model);
+  }
+
+
   /**
    * Domain-specific error name
    */

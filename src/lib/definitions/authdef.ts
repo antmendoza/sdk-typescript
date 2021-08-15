@@ -14,17 +14,24 @@
  * limitations under the License.
  */
 
-import { Oauth2propsdef } from './oauth2propsdef';
-import { Basicpropsdef } from './basicpropsdef';
-import { Beareripropsdef } from './beareripropsdef';
+import {Oauth2propsdef} from './oauth2propsdef';
+import {Basicpropsdef} from './basicpropsdef';
+import {Beareripropsdef} from './beareripropsdef';
+
 export class Authdef {
-  /**
-   * Unique auth definition name
-   */
-  name: string;
-  /**
-   * Defines the auth type
-   */
-  scheme?: 'basic' | 'bearer' | 'oauth2';
-  properties: string | Basicpropsdef | Beareripropsdef | Oauth2propsdef;
+
+    constructor(model: any) {
+        Object.assign(this, model);
+
+    }
+    /**
+     * Unique auth definition name
+     */
+    name: string;
+    /**
+     * Defines the auth type
+     */
+    scheme?: 'basic' | 'bearer' | 'oauth2';
+    properties: string | Basicpropsdef | Beareripropsdef | Oauth2propsdef;
+
 }

@@ -44,7 +44,7 @@ describe('checkcarvitals workflow example', () => {
           .name('DoCarVitalsChecks')
           .actions([
             actionBuilder()
-              .subFlowRef(subflowrefBuilder().workflowId('vitalscheck').waitForCompletion(false).build())
+              .subFlowRef(subflowrefBuilder().workflowId('vitalscheck').build())
               .build(),
           ])
           .transition('WaitForCarStopped')

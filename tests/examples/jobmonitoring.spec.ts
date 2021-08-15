@@ -16,18 +16,17 @@
 
 import * as fs from 'fs';
 import {
-  actionBuilder,
-  actiondatafilterBuilder,
-  databasedswitchBuilder,
-  delaystateBuilder,
-  errorBuilder,
-  functionBuilder,
-  functionrefBuilder,
-  operationstateBuilder,
-  statedatafilterBuilder,
-  transitiondataconditionBuilder,
-  workflowBuilder,
-  defaultconditiondefBuilder,
+    actionBuilder,
+    actiondatafilterBuilder,
+    databasedswitchBuilder,
+    errorBuilder,
+    functionBuilder,
+    functionrefBuilder,
+    operationstateBuilder,
+    statedatafilterBuilder,
+    transitiondataconditionBuilder,
+    workflowBuilder,
+    defaultconditiondefBuilder, sleepstateBuilder,
 } from '../../src';
 
 describe('jobmonitoring workflow example', () => {
@@ -65,7 +64,7 @@ describe('jobmonitoring workflow example', () => {
               .actionDataFilter(actiondatafilterBuilder().results('${ .jobuid }').build())
               .build(),
           ])
-          .onErrors([errorBuilder().error('*').transition('SubmitError').build()])
+          .onErrors([errorBuilder().errorRef('*').transition('SubmitError').build()])
           .stateDataFilter(statedatafilterBuilder().output('${ .jobuid }').build())
           .transition('WaitForCompletion')
           .build(),
@@ -74,7 +73,7 @@ describe('jobmonitoring workflow example', () => {
           .name('SubmitError')
           .actions([actionBuilder().subFlowRef('handleJobSubmissionErrorWorkflow').build()])
           .build(),
-        delaystateBuilder().name('WaitForCompletion').timeDelay('PT5S').transition('GetJobStatus').build(),
+        sleepstateBuilder().name('WaitForCompletion').duration('PT5S').transition('GetJobStatus').build(),
         operationstateBuilder()
           .name('GetJobStatus')
           .actionMode('sequential')

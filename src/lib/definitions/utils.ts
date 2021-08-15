@@ -202,8 +202,8 @@ export function overwriteStates(object: { states: Specification.States }) {
     object.states &&
     ((object.states as Specification.States).map((v) => {
       switch (v.type) {
-        case 'delay':
-          return new Specification.Delaystate(v);
+        case 'sleep':
+          return new Specification.Sleep(v);
         case 'event':
           return new Specification.Eventstate(v);
         case 'operation':
@@ -406,15 +406,6 @@ export function normalizeWorkflowExecTimeout(object: { workflowExecTimeout?: Spe
   object.workflowExecTimeout = object.workflowExecTimeout && object.workflowExecTimeout.normalize();
 }
 
-/**
- * Modify the provided object by normalizing the 'waitForCompletion' property, where the default value is 'true'.
- * @param object to be modified
- */
-export function normalizeWaitForCompletion(object: { waitForCompletion?: boolean }) {
-  if (object.waitForCompletion) {
-    delete object.waitForCompletion;
-  }
-}
 
 /**
  * Modify the provided object by normalizing the 'actionMode' property, where the default value is 'sequential'.

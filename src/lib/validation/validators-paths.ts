@@ -1,25 +1,25 @@
 /*
-* Copyright 2021-Present The Serverless Workflow Specification Authors
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* oUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*
-*/
+ * Copyright 2021-Present The Serverless Workflow Specification Authors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 /**
-* A map of type names and their corresponding schema
-*/
+ * A map of type names and their corresponding schema
+ */
 export const validatorsPaths: [string, string][] = [
   ['Workflow', 'https://serverlessworkflow.io/schemas/0.7/workflow.json'],
+  ['Sleep', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/sleep'],
   ['Crondef', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/crondef'],
   ['Transition', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/transition'],
   ['Error', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/error'],
@@ -29,7 +29,7 @@ export const validatorsPaths: [string, string][] = [
   ['Eventref', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/eventref'],
   ['Subflowref', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/subflowref'],
   ['Branch', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/branch'],
-  ['Delaystate', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/delaystate'],
+  ['Sleepstate', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/sleepstate'],
   ['Eventstate', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/eventstate'],
   ['Operationstate', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/operationstate'],
   ['Parallelstate', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/parallelstate'],
@@ -59,19 +59,26 @@ export const validatorsPaths: [string, string][] = [
   ['Statedatafilter', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/statedatafilter'],
   ['Eventdatafilter', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/eventdatafilter'],
   ['Actiondatafilter', 'https://serverlessworkflow.io/schemas/0.7/workflow.json#/definitions/actiondatafilter'],
+  ['Metadata', 'https://serverlessworkflow.io/schemas/0.7/common.json#/definitions/metadata'],
+  ['Eventdef', 'https://serverlessworkflow.io/schemas/0.7/events.json#/definitions/eventdef'],
+  ['CorrelationDef', 'https://serverlessworkflow.io/schemas/0.7/events.json#/definitions/correlationDef'],
   ['WorkflowExecTimeout', 'https://serverlessworkflow.io/schemas/0.7/timeouts.json#/definitions/workflowExecTimeout'],
   ['StateExecTimeout', 'https://serverlessworkflow.io/schemas/0.7/timeouts.json#/definitions/stateExecTimeout'],
   ['ActionExecTimeout', 'https://serverlessworkflow.io/schemas/0.7/timeouts.json#/definitions/actionExecTimeout'],
   ['BranchExecTimeout', 'https://serverlessworkflow.io/schemas/0.7/timeouts.json#/definitions/branchExecTimeout'],
   ['EventTimeout', 'https://serverlessworkflow.io/schemas/0.7/timeouts.json#/definitions/eventTimeout'],
-  ['Eventdef', 'https://serverlessworkflow.io/schemas/0.7/events.json#/definitions/eventdef'],
-  ['CorrelationDef', 'https://serverlessworkflow.io/schemas/0.7/events.json#/definitions/correlationDef'],
+  ['Errordef', 'https://serverlessworkflow.io/schemas/0.7/errors.json#/definitions/errordef'],
   ['Function', 'https://serverlessworkflow.io/schemas/0.7/functions.json#/definitions/function'],
   ['Retrydef', 'https://serverlessworkflow.io/schemas/0.7/retries.json#/definitions/retrydef'],
-  ['Metadata', 'https://serverlessworkflow.io/schemas/0.7/common.json#/definitions/metadata'],
+  ['Authdef', 'https://serverlessworkflow.io/schemas/0.7/auth.json#/definitions/authdef'],
+  ['Basicpropsdef', 'https://serverlessworkflow.io/schemas/0.7/auth.json#/definitions/basicpropsdef'],
+  ['Beareripropsdef', 'https://serverlessworkflow.io/schemas/0.7/auth.json#/definitions/beareripropsdef'],
+  ['Oauth2propsdef', 'https://serverlessworkflow.io/schemas/0.7/auth.json#/definitions/oauth2propsdef'],
   ['Secrets', 'https://serverlessworkflow.io/schemas/0.7/secrets.json#/secrets'],
   ['Timeouts', 'https://serverlessworkflow.io/schemas/0.7/timeouts.json#/timeouts'],
+  ['Errors', 'https://serverlessworkflow.io/schemas/0.7/errors.json#/errors'],
   ['Events', 'https://serverlessworkflow.io/schemas/0.7/events.json#/events'],
   ['Functions', 'https://serverlessworkflow.io/schemas/0.7/functions.json#/functions'],
   ['Retries', 'https://serverlessworkflow.io/schemas/0.7/retries.json#/retries'],
-]
+  ['Auth', 'https://serverlessworkflow.io/schemas/0.7/auth.json#/auth'],
+];
