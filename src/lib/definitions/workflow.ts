@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { Specification } from '.';
-import * as yaml from 'js-yaml';
 
-import { validate } from '../utils';
 import { Metadata } from './metadata';
 import { Startdef } from './startdef';
-import { Events, Functions, Retries, Secrets, States } from './types';
+import { Timeouts } from './timeouts';
+import * as yaml from 'js-yaml';
+
+import { Specification } from '.';
+
+import { validate } from '../utils';
 import {
   normalizeEvents,
   normalizeExpressionLang,
@@ -36,7 +38,7 @@ import {
   overwriteStates,
   overwriteTimeoutsIfObject,
 } from './utils';
-import { Timeouts } from './timeouts';
+import { Auth, Errors, Events, Functions, Retries, Secrets, States } from './types';
 
 export class Workflow {
   constructor(model: any) {
@@ -57,7 +59,6 @@ export class Workflow {
     overwriteRetries(this);
     overwriteStates(this);
   }
-
   /**
    * Workflow unique identifier
    */
@@ -110,6 +111,7 @@ export class Workflow {
    */
   expressionLang?: string;
   timeouts?: string /* uri */ | Timeouts;
+  errors?: Errors;
   /**
    * If 'true', workflow instances is not terminated when there are no active execution paths. Instance can be terminated via 'terminate end definition' or reaching defined 'workflowExecTimeout'
    */
@@ -117,7 +119,12 @@ export class Workflow {
   metadata?: /* Metadata information */ Metadata;
   events?: Events;
   functions?: Functions;
+  /**
+   * If set to true, actions should automatically be retried on unchecked errors. Default is false
+   */
+  autoRetries?: boolean;
   retries?: Retries;
+  auth?: Auth;
   /**
    * State definitions
    */

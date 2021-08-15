@@ -23,11 +23,6 @@ export class Subflowref {
 
     Object.assign(this, defaultModel, model);
   }
-
-  /**
-   * Workflow execution must wait for sub-workflow to finish before continuing
-   */
-  waitForCompletion?: boolean;
   /**
    * Unique id of the sub-workflow to be invoked
    */

@@ -68,7 +68,7 @@ export class Eventbasedswitch {
    * State specific timeouts
    */
   timeouts?: {
-    stateExecTimeout?: /* State execution timeout duration (ISO 8601 duration format) */ StateExecTimeout;
+    stateExecTimeout?: StateExecTimeout;
     eventTimeout?: /* Timeout duration to wait for consuming defined events (ISO 8601 duration format) */ EventTimeout;
   };
   /**
@@ -76,7 +76,7 @@ export class Eventbasedswitch {
    */
   eventConditions: Eventcondition[];
   /**
-   * States error handling and retries definitions
+   * States error handling definitions
    */
   onErrors?: Error[];
   /**

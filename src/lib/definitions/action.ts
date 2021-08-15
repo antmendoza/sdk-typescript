@@ -24,6 +24,7 @@ import {
   overwriteSubFlowRefIfObject,
 } from './utils';
 import { Subflowref } from './subflowref';
+import { Sleep } from './sleep';
 
 export class Action {
   constructor(model: any) {
@@ -42,6 +43,19 @@ export class Action {
   functionRef?: string | Functionref;
   eventRef?: /* Event References */ Eventref;
   subFlowRef?: string | Subflowref;
+  sleep?: Sleep;
+  /**
+   * References a defined workflow retry definition. If not defined the default retry policy is assumed
+   */
+  retryRef?: string;
+  /**
+   * List of unique references to defined workflow errors for which the action should not be retried. Used only when `autoRetries` is set to `true`
+   */
+  nonRetryableErrors?: [string, ...string[]];
+  /**
+   * List of unique references to defined workflow errors for which the action should be retried. Used only when `autoRetries` is set to `false`
+   */
+  retryableErrors?: [string, ...string[]];
   actionDataFilter?: Actiondatafilter;
 
   /**
