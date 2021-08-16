@@ -35,7 +35,7 @@ import {
   setEndValueIfNoTransition,
 } from './utils';
 import { ActionExecTimeout, EventTimeout } from './types';
-import {StateExecTimeout} from "./stateExecTimeout";
+import { StateExecTimeout } from './stateExecTimeout';
 
 export class Eventstate /* This state is used to wait for events from event sources, then consumes them and invoke one or more actions to run in sequence or parallel */ {
   constructor(model: any) {

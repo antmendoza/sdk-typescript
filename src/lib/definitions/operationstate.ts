@@ -36,7 +36,7 @@ import {
   setEndValueIfNoTransition,
 } from './utils';
 import { ActionExecTimeout } from './types';
-import {StateExecTimeout} from "./stateExecTimeout";
+import { StateExecTimeout } from './stateExecTimeout';
 
 export class Operationstate {
   constructor(model: any) {

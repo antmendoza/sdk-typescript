@@ -14,33 +14,27 @@
  * limitations under the License.
  */
 
-
 export class Subflowref {
+  constructor(model: any) {
+    Object.assign(this, model);
+  }
 
-    constructor(model: any) {
-        Object.assign(this, model);
+  /**
+   * Unique id of the sub-workflow to be invoked
+   */
+  workflowId: string;
+  /**
+   * Version of the sub-workflow to be invoked
+   */
+  version?: string;
 
-    }
+  /**
+   * Normalize the value of each property by recursively deleting properties whose value is equal to its default value. Does not modify the object state.
+   * @returns {Specification.Subflowref} without deleted properties.
+   */
+  normalize = (): Subflowref => {
+    const clone = new Subflowref(this);
 
-
-    /**
-     * Unique id of the sub-workflow to be invoked
-     */
-    workflowId: string;
-    /**
-     * Version of the sub-workflow to be invoked
-     */
-    version?: string;
-
-
-    /**
-     * Normalize the value of each property by recursively deleting properties whose value is equal to its default value. Does not modify the object state.
-     * @returns {Specification.Subflowref} without deleted properties.
-     */
-    normalize = (): Subflowref => {
-        const clone = new Subflowref(this);
-
-
-        return clone;
-    };
+    return clone;
+  };
 }

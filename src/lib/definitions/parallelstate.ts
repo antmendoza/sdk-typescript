@@ -37,7 +37,7 @@ import {
   setEndValueIfNoTransition,
 } from './utils';
 import { BranchExecTimeout } from './types';
-import {StateExecTimeout} from "./stateExecTimeout";
+import { StateExecTimeout } from './stateExecTimeout';
 
 export class Parallelstate {
   constructor(model: any) {

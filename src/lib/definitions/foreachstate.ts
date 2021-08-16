@@ -33,13 +33,14 @@ import {
   overwritePropertyAsPlainType,
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
+  normalizeMode,
 } from './utils';
 import { ActionExecTimeout } from './types';
-import {StateExecTimeout} from "./stateExecTimeout";
+import { StateExecTimeout } from './stateExecTimeout';
 
 export class Foreachstate {
   constructor(model: any) {
-    const defaultModel = { type: 'foreach', usedForCompensation: false };
+    const defaultModel = { type: 'foreach', usedForCompensation: false, mode: 'parallel' };
     Object.assign(this, defaultModel, model);
 
     overwriteEndIfObject(this);
@@ -115,7 +116,6 @@ export class Foreachstate {
    */
   usedForCompensation?: boolean;
 
-  //TODO mode default parrallel
   /**
    * Specifies how iterations are to be performed (sequentially or in parallel)
    */
@@ -134,6 +134,7 @@ export class Foreachstate {
     normalizeOnErrors(clone);
     normalizeTransitionIfObject(clone);
     normalizeUsedForCompensation(clone);
+    normalizeMode(clone);
     setEndValueIfNoTransition(clone);
 
     return clone;

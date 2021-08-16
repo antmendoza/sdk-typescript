@@ -15,11 +15,12 @@
  */
 
 import { Metadata } from './metadata';
+import { overwriteMetadata } from './utils';
 export class Basicpropsdef {
-
   constructor(model: any) {
     Object.assign(this, model);
 
+    overwriteMetadata(this);
   }
 
   /**

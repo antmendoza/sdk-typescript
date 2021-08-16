@@ -23,6 +23,7 @@ import {
   statedatafilterBuilder,
   workflowBuilder,
   functionrefBuilder,
+  errordefBuilder,
 } from '../../src';
 
 describe('provisionorder workflow example', () => {
@@ -39,6 +40,11 @@ describe('provisionorder workflow example', () => {
           .name('provisionOrderFunction')
           .operation('http://myapis.org/provisioningapi.json#doProvision')
           .build(),
+      ])
+      .errors([
+        errordefBuilder().name('Missing order id').build(),
+        errordefBuilder().name('Missing order item').build(),
+        errordefBuilder().name('Missing order quantity').build(),
       ])
       .states([
         operationstateBuilder()

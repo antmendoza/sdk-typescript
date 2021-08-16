@@ -14,24 +14,35 @@
  * limitations under the License.
  */
 
-import {Oauth2propsdef} from './oauth2propsdef';
-import {Basicpropsdef} from './basicpropsdef';
-import {Beareripropsdef} from './beareripropsdef';
+import { normalizeScheme, overwritePropertiesIfObject } from './utils';
+import { Properties } from './types';
 
 export class Authdef {
+  constructor(model: any) {
+    const defaultModel = { scheme: 'basic' };
+    Object.assign(this, defaultModel, model);
 
-    constructor(model: any) {
-        Object.assign(this, model);
+    overwritePropertiesIfObject(this);
+  }
+  /**
+   * Unique auth definition name
+   */
+  name: string;
+  /**
+   * Defines the auth type
+   */
+  scheme?: 'basic' | 'bearer' | 'oauth2';
+  properties: string | Properties;
 
-    }
-    /**
-     * Unique auth definition name
-     */
-    name: string;
-    /**
-     * Defines the auth type
-     */
-    scheme?: 'basic' | 'bearer' | 'oauth2';
-    properties: string | Basicpropsdef | Beareripropsdef | Oauth2propsdef;
+  /**
+   * Normalize the value of each property by recursively deleting properties whose value is equal to its default value. Does not modify the object state.
+   * @returns {Specification.Authdef} without deleted properties.
+   */
+  normalize = (): Authdef => {
+    const clone = new Authdef(this);
 
+    normalizeScheme(clone);
+
+    return clone;
+  };
 }

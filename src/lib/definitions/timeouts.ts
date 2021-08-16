@@ -15,13 +15,14 @@
  */
 import { WorkflowExecTimeout } from './workflowExecTimeout';
 import { ActionExecTimeout, BranchExecTimeout, EventTimeout } from './types';
-import { normalizeWorkflowExecTimeout, overwriteWorkflowExecTimeout } from './utils';
-import {StateExecTimeout} from "./stateExecTimeout";
+import { normalizeWorkflowExecTimeout, overwriteStateExecTimeout, overwriteWorkflowExecTimeout } from './utils';
+import { StateExecTimeout } from './stateExecTimeout';
 
 export class Timeouts {
   constructor(model: any) {
     Object.assign(this, model);
     overwriteWorkflowExecTimeout(this);
+    overwriteStateExecTimeout(this);
   }
 
   workflowExecTimeout?: WorkflowExecTimeout;

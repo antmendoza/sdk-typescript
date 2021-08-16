@@ -19,7 +19,6 @@ export class Sleep {
     Object.assign(this, model);
   }
 
-
   /**
    * Amount of time (ISO 8601 duration format) to sleep before function/subflow invocation. Does not apply if 'eventRef' is defined.
    */

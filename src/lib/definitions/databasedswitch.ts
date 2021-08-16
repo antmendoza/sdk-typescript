@@ -31,7 +31,7 @@ import {
   overwritePropertyAsPlainType,
 } from './utils';
 import { Datacondition } from './types';
-import {StateExecTimeout} from "./stateExecTimeout";
+import { StateExecTimeout } from './stateExecTimeout';
 
 export class Databasedswitch {
   constructor(model: any) {

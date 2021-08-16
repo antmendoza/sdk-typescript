@@ -17,9 +17,7 @@
 export class StateExecTimeout {
   constructor(model: any) {
     Object.assign(this, model);
-
   }
-
 
   /**
    * Single state execution timeout, not including retries (ISO 8601 duration format)

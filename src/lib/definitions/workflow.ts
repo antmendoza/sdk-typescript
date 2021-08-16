@@ -23,12 +23,15 @@ import { Specification } from '.';
 
 import { validate } from '../utils';
 import {
+  normalizeAuth,
   normalizeEvents,
   normalizeExpressionLang,
   normalizeFunctions,
   normalizeKeepActive,
   normalizeStates,
   normalizeTimeoutsIfObject,
+  overwriteAuth,
+  overwriteErrors,
   overwriteEvents,
   overwriteFunctions,
   overwriteMetadata,
@@ -53,10 +56,12 @@ export class Workflow {
     overwritePropertyAsPlainType('constants', this);
     overwriteStartIfObject(this);
     overwriteTimeoutsIfObject(this);
+    overwriteErrors(this);
     overwriteMetadata(this);
     overwriteEvents(this);
     overwriteFunctions(this);
     overwriteRetries(this);
+    overwriteAuth(this);
     overwriteStates(this);
   }
   /**
@@ -141,6 +146,7 @@ export class Workflow {
     normalizeKeepActive(clone);
     normalizeEvents(clone);
     normalizeFunctions(clone);
+    normalizeAuth(clone);
     normalizeStates(clone);
 
     return clone;

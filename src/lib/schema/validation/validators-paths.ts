@@ -76,7 +76,7 @@ export const validatorsPaths: [string, string][] = [
   ['Oauth2propsdef', 'https://serverlessworkflow.io/schemas/0.7/auth.json#/definitions/oauth2propsdef'],
   ['Secrets', 'https://serverlessworkflow.io/schemas/0.7/secrets.json#/secrets'],
   ['Timeouts', 'https://serverlessworkflow.io/schemas/0.7/timeouts.json#/timeouts'],
-  //['Errors', 'https://serverlessworkflow.io/schemas/0.7/errors.json#/errors'],
+  ['Errors', 'https://serverlessworkflow.io/schemas/0.7/errors.json#/errors'],
   ['Events', 'https://serverlessworkflow.io/schemas/0.7/events.json#/events'],
   ['Functions', 'https://serverlessworkflow.io/schemas/0.7/functions.json#/functions'],
   ['Retries', 'https://serverlessworkflow.io/schemas/0.7/retries.json#/retries'],

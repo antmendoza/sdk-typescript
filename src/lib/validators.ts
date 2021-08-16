@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import Ajv, {ValidateFunction} from 'ajv';
+import Ajv, { ValidateFunction } from 'ajv';
 import authSchema from './schema/auth.json';
 import commonSchema from './schema/common.json';
 import errorsSchema from './schema/errors.json';
@@ -24,29 +24,29 @@ import retriesSchema from './schema/retries.json';
 import secretsSchema from './schema/secrets.json';
 import timeoutsSchema from './schema/timeouts.json';
 import workflowSchema from './schema/workflow.json';
-import {validatorsPaths} from './validation/validators-paths';
+import { validatorsPaths } from './validation/validators-paths';
 
 const schemas: any[] = [
-    authSchema,
-    commonSchema,
-    eventsSchema,
-    errorsSchema,
-    functionsSchema,
-    retriesSchema,
-    secretsSchema,
-    timeoutsSchema,
-    workflowSchema,
+  authSchema,
+  commonSchema,
+  eventsSchema,
+  errorsSchema,
+  functionsSchema,
+  retriesSchema,
+  secretsSchema,
+  timeoutsSchema,
+  workflowSchema,
 ];
 const strict: boolean = false;
-const ajv = new Ajv({schemas, strict});
+const ajv = new Ajv({ schemas, strict });
 ajv.addFormat('uri', (uri: string): boolean => true);
 /**
  * A Map of validation functions, where the key is the name of the schema to validate with
  */
 export const validators: Map<string, ValidateFunction> = new Map<string, ValidateFunction>(
-    validatorsPaths.map(([dataType, schemaPath]) => {
-        const validate = ajv.getSchema(schemaPath);
-        if (!validate) throw `Unable to find schema '${schemaPath}' for type '${dataType}'`;
-        return [dataType, validate as ValidateFunction];
-    })
+  validatorsPaths.map(([dataType, schemaPath]) => {
+    const validate = ajv.getSchema(schemaPath);
+    if (!validate) throw `Unable to find schema '${schemaPath}' for type '${dataType}'`;
+    return [dataType, validate as ValidateFunction];
+  })
 );

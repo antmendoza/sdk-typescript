@@ -179,6 +179,30 @@ export function overwriteEvents(object: { events?: Specification.Events }) {
 }
 
 /**
+ * Modify the provided object, set the value to 'errors' property as an instance of Specification.Errors class
+ * @param object to set/overwrite the property
+ */
+export function overwriteErrors(object: { errors?: Specification.Errors }) {
+  if (Array.isArray(object.errors)) {
+    object.errors = (object.errors as Specification.Errordef[]).map(
+      (f) => new Specification.Errordef(f)
+    ) as Specification.Errors;
+  }
+}
+
+/**
+ * Modify the provided object, set the value to 'auth' property as an instance of Specification.Auth class
+ * @param object to set/overwrite the property
+ */
+export function overwriteAuth(object: { auth?: Specification.Auth }) {
+  if (Array.isArray(object.auth)) {
+    object.auth = (object.auth as Specification.Authdef[]).map(
+      (f) => new Specification.Authdef(f)
+    ) as Specification.Auth;
+  }
+}
+
+/**
  * Modify the provided object, set the value to 'functions' property as an instance of Specification.Functions class
  * @param object to set/overwrite the property
  */
@@ -195,8 +219,6 @@ export function overwriteFunctions(object: { functions?: Specification.Functions
  * Throws an error if the value of the property type is not handler
  * @param object to set/overwrite the property
  */
-//
-
 export function overwriteStates(object: { states: Specification.States }) {
   object.states =
     object.states &&
@@ -232,6 +254,29 @@ export function overwriteStates(object: { states: Specification.States }) {
 }
 
 /**
+ * Modify the provided object, set the value to 'properties' property as an instance of Specification.Properties class, if the provided value is an object
+ * Throws an error if the value of the property type is not handler
+ * @param object to set/overwrite the property
+ */
+export function overwritePropertiesIfObject(object: { properties: string | Specification.Properties }) {
+  if (isObject(object.properties)) {
+    const properties: any = object.properties;
+
+    if (properties.username && properties.password) {
+      object.properties = new Specification.Basicpropsdef(object);
+    }
+
+    if (properties.token) {
+      object.properties = new Specification.Beareripropsdef(object);
+    }
+
+    if (properties.grantType) {
+      object.properties = new Specification.Oauth2propsdef(object);
+    }
+  }
+}
+
+/**
  * Modify the provided object, set the value to 'correlation' property as an instance of Specification.CorrelationDefs class
  * @param object to set/overwrite the property
  */
@@ -260,6 +305,14 @@ export function overwriteWorkflowExecTimeout(object: {
 }): void {
   object.workflowExecTimeout =
     object.workflowExecTimeout && new Specification.WorkflowExecTimeout(object.workflowExecTimeout);
+}
+
+/**
+ * Modify the provided object, set the value to 'stateExecTimeout' property as an instance of Specification.StateExecTimeout class
+ * @param object to set/overwrite the property
+ */
+export function overwriteStateExecTimeout(object: { stateExecTimeout?: Specification.StateExecTimeout }): void {
+  object.stateExecTimeout = object.stateExecTimeout && new Specification.StateExecTimeout(object.stateExecTimeout);
 }
 
 /**
@@ -326,6 +379,14 @@ export function overwriteSubFlowRefIfObject(object: { subFlowRef?: string | Spec
  */
 export function overwriteEventRef(object: { eventRef?: Specification.Eventref }): void {
   object.eventRef = object.eventRef && new Specification.Eventref(object.eventRef);
+}
+
+/**
+ * Modify the provided object, set the value to 'sleep' property as an instance of Specification.Sleep class
+ * @param object to set/overwrite the property
+ */
+export function overwriteSleep(object: { sleep?: Specification.Sleep }): void {
+  object.sleep = object.sleep && new Specification.Sleep(object.sleep);
 }
 
 /**
@@ -406,7 +467,6 @@ export function normalizeWorkflowExecTimeout(object: { workflowExecTimeout?: Spe
   object.workflowExecTimeout = object.workflowExecTimeout && object.workflowExecTimeout.normalize();
 }
 
-
 /**
  * Modify the provided object by normalizing the 'actionMode' property, where the default value is 'sequential'.
  * @param object to be modified
@@ -434,6 +494,16 @@ export function normalizeCompletionType(object: { completionType?: string }) {
 export function normalizeUsedForCompensation(object: { usedForCompensation?: boolean }) {
   if (!object.usedForCompensation) {
     delete object.usedForCompensation;
+  }
+}
+
+/**
+ * Modify the provided object by normalizing the 'mode' property, where the default value is 'parallel'.
+ * @param object to be modified
+ */
+export function normalizeMode(object: { mode?: string }) {
+  if (object.mode === 'parallel') {
+    delete object.mode;
   }
 }
 
@@ -520,6 +590,16 @@ export function normalizeTransitionIfObject(object: { transition?: string | Spec
 export function normalizeCompensate(object: { compensate?: boolean }) {
   if (!object.compensate) {
     delete object.compensate;
+  }
+}
+
+/**
+ * Modify the provided object by normalizing the 'scheme' property, where the default value is 'basic'.
+ * @param object to be modified
+ */
+export function normalizeScheme(object: { scheme?: string }) {
+  if (object.scheme === 'basic') {
+    delete object.scheme;
   }
 }
 
@@ -611,6 +691,18 @@ export function normalizeStates(object: { states: Specification.States }) {
   object.states = object.states.map((state) => {
     return state.normalize();
   }) as Specification.States;
+}
+
+/**
+ * Modify the provided object by normalizing the 'auth' property.
+ * @param object to be modified
+ */
+export function normalizeAuth(object: { auth?: Specification.Auth }) {
+  if (Array.isArray(object.auth)) {
+    object.auth = object.auth.map((auth) => {
+      return auth.normalize();
+    }) as Specification.Auth;
+  }
 }
 
 /**

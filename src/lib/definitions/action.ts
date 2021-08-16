@@ -21,6 +21,7 @@ import {
   overwriteActionDataFilter,
   overwriteEventRef,
   overwriteFunctionRefIfObject,
+  overwriteSleep,
   overwriteSubFlowRefIfObject,
 } from './utils';
 import { Subflowref } from './subflowref';
@@ -33,6 +34,7 @@ export class Action {
     overwriteFunctionRefIfObject(this);
     overwriteEventRef(this);
     overwriteSubFlowRefIfObject(this);
+    overwriteSleep(this);
     overwriteActionDataFilter(this);
   }
 

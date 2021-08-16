@@ -15,9 +15,11 @@
  */
 
 import { Metadata } from './metadata';
+import { overwriteMetadata } from './utils';
 export class Oauth2propsdef {
   constructor(model: any) {
     Object.assign(this, model);
+    overwriteMetadata(this);
   }
 
   /**

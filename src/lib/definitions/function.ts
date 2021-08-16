@@ -13,13 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { normalizeType } from './utils';
+import { normalizeType, overwriteMetadata } from './utils';
 
 import { Metadata } from './metadata';
 export class Function {
   constructor(model: any) {
     const defaultModel = { type: 'rest' };
     Object.assign(this, defaultModel, model);
+    overwriteMetadata(this);
   }
 
   /**

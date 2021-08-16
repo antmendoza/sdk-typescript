@@ -32,6 +32,7 @@ import { Eventdef } from './eventdef';
 import { Sleepstate } from './sleepstate';
 import { Authdef } from './authdef';
 import { Errordef } from './errordef';
+import { Specification } from './index';
 
 export type CorrelationDefs = [
   /* CloudEvent correlation definition */ CorrelationDef,
@@ -99,3 +100,5 @@ export type Events = string /* uri */ | [Eventdef, ...Eventdef[]];
 export type Auth = string /* uri */ | [Authdef, ...Authdef[]];
 
 export type Errors = string /* uri */ | [Errordef, ...Errordef[]];
+
+export type Properties = Specification.Basicpropsdef | Specification.Beareripropsdef | Specification.Oauth2propsdef;

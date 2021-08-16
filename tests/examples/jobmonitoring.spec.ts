@@ -16,17 +16,17 @@
 
 import * as fs from 'fs';
 import {
-    actionBuilder,
-    actiondatafilterBuilder,
-    databasedswitchBuilder,
-    errorBuilder,
-    functionBuilder,
-    functionrefBuilder,
-    operationstateBuilder,
-    statedatafilterBuilder,
-    transitiondataconditionBuilder,
-    workflowBuilder,
-    defaultconditiondefBuilder, sleepstateBuilder,
+  actionBuilder,
+  actiondatafilterBuilder,
+  databasedswitchBuilder,
+  functionBuilder,
+  functionrefBuilder,
+  operationstateBuilder,
+  statedatafilterBuilder,
+  transitiondataconditionBuilder,
+  workflowBuilder,
+  defaultconditiondefBuilder,
+  sleepstateBuilder,
 } from '../../src';
 
 describe('jobmonitoring workflow example', () => {
@@ -64,14 +64,8 @@ describe('jobmonitoring workflow example', () => {
               .actionDataFilter(actiondatafilterBuilder().results('${ .jobuid }').build())
               .build(),
           ])
-          .onErrors([errorBuilder().errorRef('*').transition('SubmitError').build()])
           .stateDataFilter(statedatafilterBuilder().output('${ .jobuid }').build())
           .transition('WaitForCompletion')
-          .build(),
-
-        operationstateBuilder()
-          .name('SubmitError')
-          .actions([actionBuilder().subFlowRef('handleJobSubmissionErrorWorkflow').build()])
           .build(),
         sleepstateBuilder().name('WaitForCompletion').duration('PT5S').transition('GetJobStatus').build(),
         operationstateBuilder()
@@ -119,7 +113,6 @@ describe('jobmonitoring workflow example', () => {
               )
               .build(),
           ])
-
           .build(),
         operationstateBuilder()
           .name('JobFailed')

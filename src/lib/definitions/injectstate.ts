@@ -29,7 +29,7 @@ import {
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
-import {StateExecTimeout} from "./stateExecTimeout";
+import { StateExecTimeout } from './stateExecTimeout';
 
 export class Injectstate {
   constructor(model: any) {
