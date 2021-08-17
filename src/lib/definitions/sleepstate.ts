@@ -35,7 +35,6 @@ import {
 import { StateExecTimeout } from './stateExecTimeout';
 
 export class Sleepstate {
-
   constructor(model: any) {
     const defaultModel = {
       type: 'sleep',
