@@ -412,6 +412,30 @@ export interface Callbackstate {
   usedForCompensation?: boolean;
   metadata?: /* Metadata information */ Metadata;
 }
+export type Continueasdef =
+  | string
+  | {
+      /**
+       * Unique id of the workflow to continue execution as
+       */
+      workflowId: string;
+      /**
+       * Version of the workflow to continue execution as
+       */
+      version?: string;
+      /**
+       * If string type, an expression which selects parts of the states data output to become the workflow data input of continued execution. If object type, a custom object to become the workflow data input of the continued execution
+       */
+      data?:
+        | string
+        | {
+            [key: string]: any;
+          };
+      /**
+       * Workflow execution timeout to be used by the workflow continuing execution. Overwrites any specific settings set by that workflow
+       */
+      workflowExecTimeout?: WorkflowExecTimeout;
+    };
 /**
  * CloudEvent correlation definition
  */
@@ -515,6 +539,7 @@ export type End =
        * If set to true, triggers workflow compensation. Default is false
        */
       compensate?: boolean;
+      continueAs?: Continueasdef;
     };
 /**
  * Switch state data based condition

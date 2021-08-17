@@ -22,6 +22,7 @@ export * from './basicpropsdef';
 export * from './beareripropsdef';
 export * from './branch';
 export * from './callbackstate';
+export * from './continueasdef';
 export * from './correlationDef';
 export * from './crondef';
 export * from './databasedswitch';

@@ -15,6 +15,7 @@
  */
 import { Specification } from './index';
 import { isObject } from '../utils';
+import { StateExecTimeout } from './stateExecTimeout';
 
 /**
  * Modify the provided object, set the value to 'schedule' property as an instance of Specification.Schedule class, if the provided value is an object
@@ -364,6 +365,16 @@ export function overwriteFunctionRefIfObject(object: { functionRef?: string | Sp
 }
 
 /**
+ * Modify the provided object, set the value to 'continueAs' property as an instance of Specification. Continueasdef, if the provided value is an object
+ * @param object to set/overwrite the property
+ */
+export function overwriteContinueAsIfObject(object: { continueAs?: string | Specification.Continueasdef }): void {
+  if (isObject(object.continueAs)) {
+    object.continueAs = new Specification.Continueasdef(object.continueAs);
+  }
+}
+
+/**
  * Modify the provided object, set the value to 'subFlowRef' property as an instance of Specification.Subflowref class, if the provided value is an object
  * @param object to set/overwrite the property
  */
@@ -432,6 +443,24 @@ export function overwritePropertyAsPlainType(property: string, object: any): voi
 }
 
 /**
+ * Modify the provided object, set the value to 'timeouts.stateExecTimeout' property as an instance of Specification.StateExecTimeout class,
+ * for the rest of the properties the value is cloned
+ * @param object to set/overwrite the property
+ */
+export function overwriteTimeoutWithStateExecTimeout(object: {
+  timeouts?: {
+    stateExecTimeout?: StateExecTimeout;
+  };
+}): void {
+  overwritePropertyAsPlainType('timeouts', object);
+
+  const timeouts = object.timeouts!;
+  if (isObject(timeouts.stateExecTimeout)) {
+    timeouts.stateExecTimeout = new Specification.StateExecTimeout(timeouts.stateExecTimeout);
+  }
+}
+
+/**
  * Modify the provided object, set the value to 'timeouts' property as an instance of Specification.Timeouts class
  * @param object to set/overwrite the property
  */
@@ -442,12 +471,22 @@ export function overwriteTimeoutsIfObject(object: { timeouts?: string | Specific
 }
 
 /**
- * Modify the provided object by normalizing the 'end' property.
+ * Modify the provided object by normalizing the 'subFlowRef' property.
  * @param object to be modified
  */
 export function normalizeSubFlowRefIfObject(object: { subFlowRef?: string | Specification.Subflowref }) {
   if (isObject(object.subFlowRef)) {
     object.subFlowRef = (object.subFlowRef as Specification.Subflowref).normalize();
+  }
+}
+
+/**
+ * Modify the provided object by normalizing the 'continueAs' property.
+ * @param object to be modified
+ */
+export function normalizeContinueAsIfObject(object: { continueAs?: string | Specification.Continueasdef }) {
+  if (isObject(object.continueAs)) {
+    object.continueAs = (object.continueAs as Specification.Continueasdef).normalize();
   }
 }
 
