@@ -28,13 +28,14 @@ import {
   overwriteMetadata,
   overwriteOnErrors,
   overwriteStateDataFilter,
-  overwritePropertyAsPlainType,
+  overwriteTimeoutWithStateExecTimeout,
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
 import { StateExecTimeout } from './stateExecTimeout';
 
 export class Sleepstate {
+
   constructor(model: any) {
     const defaultModel = {
       type: 'sleep',
@@ -44,7 +45,7 @@ export class Sleepstate {
 
     overwriteEndIfObject(this);
     overwriteStateDataFilter(this);
-    overwritePropertyAsPlainType('timeouts', this);
+    overwriteTimeoutWithStateExecTimeout(this);
     overwriteOnErrors(this);
     overwriteTransitionIfObject(this);
     overwriteMetadata(this);

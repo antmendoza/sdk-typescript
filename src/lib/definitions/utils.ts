@@ -455,7 +455,7 @@ export function overwriteTimeoutWithStateExecTimeout(object: {
   overwritePropertyAsPlainType('timeouts', object);
 
   const timeouts = object.timeouts!;
-  if (isObject(timeouts.stateExecTimeout)) {
+  if (timeouts && isObject(timeouts.stateExecTimeout)) {
     timeouts.stateExecTimeout = new Specification.StateExecTimeout(timeouts.stateExecTimeout);
   }
 }

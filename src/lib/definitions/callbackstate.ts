@@ -32,8 +32,8 @@ import {
   overwriteEventDataFilter,
   overwriteMetadata,
   overwriteOnErrors,
-  overwritePropertyAsPlainType,
   overwriteStateDataFilter,
+  overwriteTimeoutWithStateExecTimeout,
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
 } from './utils';
@@ -46,7 +46,7 @@ export class Callbackstate {
     Object.assign(this, defaultModel, model);
 
     overwriteAction(this);
-    overwritePropertyAsPlainType('timeouts', this);
+    overwriteTimeoutWithStateExecTimeout(this);
     overwriteEventDataFilter(this);
     overwriteStateDataFilter(this);
     overwriteOnErrors(this);

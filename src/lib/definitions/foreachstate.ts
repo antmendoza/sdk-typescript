@@ -30,10 +30,10 @@ import {
   overwriteMetadata,
   overwriteOnErrors,
   overwriteStateDataFilter,
-  overwritePropertyAsPlainType,
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
   normalizeMode,
+  overwriteTimeoutWithStateExecTimeout,
 } from './utils';
 import { ActionExecTimeout } from './types';
 import { StateExecTimeout } from './stateExecTimeout';
@@ -45,7 +45,7 @@ export class Foreachstate {
 
     overwriteEndIfObject(this);
     overwriteActions(this);
-    overwritePropertyAsPlainType('timeouts', this);
+    overwriteTimeoutWithStateExecTimeout(this);
     overwriteStateDataFilter(this);
     overwriteOnErrors(this);
     overwriteTransitionIfObject(this);

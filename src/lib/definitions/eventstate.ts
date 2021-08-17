@@ -30,9 +30,9 @@ import {
   overwriteOnErrors,
   overwriteOnEvents,
   overwriteStateDataFilter,
-  overwritePropertyAsPlainType,
   overwriteTransitionIfObject,
   setEndValueIfNoTransition,
+  overwriteTimeoutWithStateExecTimeout,
 } from './utils';
 import { ActionExecTimeout, EventTimeout } from './types';
 import { StateExecTimeout } from './stateExecTimeout';
@@ -43,7 +43,7 @@ export class Eventstate /* This state is used to wait for events from event sour
     Object.assign(this, defaultModel, model);
 
     overwriteOnEvents(this);
-    overwritePropertyAsPlainType('timeouts', this);
+    overwriteTimeoutWithStateExecTimeout(this);
     overwriteStateDataFilter(this);
     overwriteOnErrors(this);
     overwriteTransitionIfObject(this);
