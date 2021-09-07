@@ -18,69 +18,6 @@ import {Workflow} from '../../../src/lib/definitions/workflow';
 import {Transitiondatacondition} from '../../../src/lib/definitions/transitiondatacondition';
 import {End} from '../../../src/lib/definitions/end';
 
-function validWorkflow(): Specification.Workflow {
-    return Workflow.fromSource(
-        '{\n' +
-        '  "id": "applicantrequest",\n' +
-        '  "version": "1.0",\n' +
-        '  "specVersion": "0.7",\n' +
-        '  "name": "Applicant Request Decision Workflow",\n' +
-        '  "description": "Determine if applicant request is valid",\n' +
-        '  "start": "CheckApplication",\n' +
-        '  "functions": [\n' +
-        '    {\n' +
-        '      "name": "sendRejectionEmailFunction",\n' +
-        '      "operation": "http://myapis.org/applicationapi.json#emailRejection"\n' +
-        '    }\n' +
-        '  ],\n' +
-        '  "states":[\n' +
-        '    {\n' +
-        '      "type":"switch",\n' +
-        '      "name":"CheckApplication",\n' +
-        '      "dataConditions": [\n' +
-        '        {\n' +
-        '          "condition": "${ .applicants | .age >= 18 }",\n' +
-        '          "transition": "StartApplication"\n' +
-        '        },\n' +
-        '        {\n' +
-        '          "condition": "${ .applicants | .age < 18 }",\n' +
-        '          "transition": "RejectApplication"\n' +
-        '        }\n' +
-        '      ],\n' +
-        '      "defaultCondition": {\n' +
-        '        "transition": "RejectApplication"\n' +
-        '      }\n' +
-        '    },\n' +
-        '    {\n' +
-        '      "type": "operation",\n' +
-        '      "name": "StartApplication",\n' +
-        '      "actions": [\n' +
-        '        {\n' +
-        '          "subFlowRef": "startApplicationWorkflowId"\n' +
-        '        }\n' +
-        '      ],\n' +
-        '      "end": true\n' +
-        '    },\n' +
-        '    {\n' +
-        '      "type":"operation",\n' +
-        '      "name":"RejectApplication",\n' +
-        '      "actions":[\n' +
-        '        {\n' +
-        '          "functionRef": {\n' +
-        '            "refName": "sendRejectionEmailFunction",\n' +
-        '            "arguments": {\n' +
-        '              "applicant": "${ .applicant }"\n' +
-        '            }\n' +
-        '          }\n' +
-        '        }\n' +
-        '      ],\n' +
-        '      "end": true\n' +
-        '    }\n' +
-        '  ]\n' +
-        '}\n'
-    );
-}
-
 class MermaidState {
     constructor(
         protected isFirstState: boolean,
@@ -93,7 +30,8 @@ class MermaidState {
     }
 
     definition(): string {
-        return this.state.name + ' : ' + this.state.name + '\n\n';
+        return this.state.name + ' : ' + this.state.name + '\n' +
+            this.state.name + ' : type = ' + this.state.type  + '\n\n';
     }
 
     transitions(): string {
@@ -140,13 +78,75 @@ class WorkflowToMermaid {
 describe('mermaid', () => {
     fit('should generate basic output', () => {
 
-        expect(new WorkflowToMermaid().transform(validWorkflow())).toBe(
+        expect(new WorkflowToMermaid().transform(Workflow.fromSource(
+            '{\n' +
+            '  "id": "applicantrequest",\n' +
+            '  "version": "1.0",\n' +
+            '  "specVersion": "0.7",\n' +
+            '  "name": "Applicant Request Decision Workflow",\n' +
+            '  "description": "Determine if applicant request is valid",\n' +
+            '  "start": "CheckApplication",\n' +
+            '  "functions": [\n' +
+            '    {\n' +
+            '      "name": "sendRejectionEmailFunction",\n' +
+            '      "operation": "http://myapis.org/applicationapi.json#emailRejection"\n' +
+            '    }\n' +
+            '  ],\n' +
+            '  "states":[\n' +
+            '    {\n' +
+            '      "type":"switch",\n' +
+            '      "name":"CheckApplication",\n' +
+            '      "dataConditions": [\n' +
+            '        {\n' +
+            '          "condition": "${ .applicants | .age >= 18 }",\n' +
+            '          "transition": "StartApplication"\n' +
+            '        },\n' +
+            '        {\n' +
+            '          "condition": "${ .applicants | .age < 18 }",\n' +
+            '          "transition": "RejectApplication"\n' +
+            '        }\n' +
+            '      ],\n' +
+            '      "defaultCondition": {\n' +
+            '        "transition": "RejectApplication"\n' +
+            '      }\n' +
+            '    },\n' +
+            '    {\n' +
+            '      "type": "operation",\n' +
+            '      "name": "StartApplication",\n' +
+            '      "actions": [\n' +
+            '        {\n' +
+            '          "subFlowRef": "startApplicationWorkflowId"\n' +
+            '        }\n' +
+            '      ],\n' +
+            '      "end": true\n' +
+            '    },\n' +
+            '    {\n' +
+            '      "type":"operation",\n' +
+            '      "name":"RejectApplication",\n' +
+            '      "actions":[\n' +
+            '        {\n' +
+            '          "functionRef": {\n' +
+            '            "refName": "sendRejectionEmailFunction",\n' +
+            '            "arguments": {\n' +
+            '              "applicant": "${ .applicant }"\n' +
+            '            }\n' +
+            '          }\n' +
+            '        }\n' +
+            '      ],\n' +
+            '      "end": true\n' +
+            '    }\n' +
+            '  ]\n' +
+            '}\n'
+        ))).toBe(
             `stateDiagram-v2
 CheckApplication : CheckApplication
+CheckApplication : type = switch
 
 StartApplication : StartApplication
+StartApplication : type = operation
 
 RejectApplication : RejectApplication
+RejectApplication : type = operation
 
 [*] --> CheckApplication
 CheckApplication --> StartApplication : \${ .applicants | .age >= 18 }
@@ -177,6 +177,6 @@ RejectApplication --> [*]
     });
 
     xit('should validate workflow before doing the transformation', () => {
-        expect(new WorkflowToMermaid().transform(validWorkflow())).toBe('');
+
     });
 });
