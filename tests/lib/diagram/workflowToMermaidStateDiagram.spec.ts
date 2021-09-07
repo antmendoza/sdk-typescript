@@ -313,7 +313,6 @@ CheckContinueVitalChecks : type = switch
 [*] --> WhenCarIsOn
 WhenCarIsOn --> DoCarVitalChecks
 DoCarVitalChecks --> CheckContinueVitalChecks
-CarTurnedOffEvent --> CheckContinueVitalChecks : Car Turned Off Condition
 CheckContinueVitalChecks --> [*]
 `
     );

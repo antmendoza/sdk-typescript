@@ -21,8 +21,8 @@ import { Enddeventcondition } from '../definitions/enddeventcondition';
 
 export class MermaidState {
   constructor(
-    protected isFirstState: boolean,
-    protected state: {
+    private isFirstState: boolean,
+    private state: {
       name?: string;
       type?: string;
       transition?: string | Transition;
@@ -52,7 +52,7 @@ export class MermaidState {
     const eventBasedSwitchState = this.state as { eventConditions: Enddeventcondition[] };
     if (eventBasedSwitchState.eventConditions) {
       eventBasedSwitchState.eventConditions.forEach((eventCondition) => {
-        transitions += eventCondition.eventRef + ' --> ' + stateName + ' : ' + eventCondition.name + '\n';
+        //transitions += eventCondition.eventRef + ' --> ' + stateName + ' : ' + eventCondition.name + '\n';
         if (eventCondition.end) {
           transitions += stateName + ' --> ' + '[*]' + '\n';
         }
