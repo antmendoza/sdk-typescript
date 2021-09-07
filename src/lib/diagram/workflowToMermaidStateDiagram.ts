@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Specification} from "../definitions";
-import {MermaidState} from "./mermaidState";
+import { Specification } from '../definitions';
+import { MermaidState } from './mermaidState';
 
 export class WorkflowToMermaidStateDiagram {
-    transform(workflow: Specification.Workflow) {
-        const states = workflow.states.map((state, index) => {
-            const isFirstState = index === 0;
-            return new MermaidState(isFirstState, state);
-        });
+  transform(workflow: Specification.Workflow) {
+    const states = workflow.states.map((state, index) => {
+      const isFirstState = index === 0;
+      return new MermaidState(isFirstState, state);
+    });
 
-        let stateDefinitions = '';
-        let transitions = '';
-        states.forEach((state: MermaidState) => {
-            stateDefinitions += state.definition();
-            transitions += state.transitions();
-        });
+    let stateDefinitions = '';
+    let transitions = '';
+    states.forEach((state: MermaidState) => {
+      stateDefinitions += state.definition();
+      transitions += state.transitions();
+    });
 
-        const mermaidStateDiagramVersion = 'stateDiagram-v2';
-        return mermaidStateDiagramVersion + '\n' + stateDefinitions + transitions;
-    }
+    const mermaidStateDiagramVersion = 'stateDiagram-v2';
+    return mermaidStateDiagramVersion + '\n' + stateDefinitions + transitions;
+  }
 }

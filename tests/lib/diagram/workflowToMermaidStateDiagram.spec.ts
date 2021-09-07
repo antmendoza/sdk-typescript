@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Workflow} from '../../../src/lib/definitions/workflow';
-import {WorkflowToMermaidStateDiagram} from "../../../src/lib/diagram/workflowToMermaidStateDiagram";
-
+import { Workflow } from '../../../src/lib/definitions/workflow';
+import { WorkflowToMermaidStateDiagram } from '../../../src/lib/diagram/workflowToMermaidStateDiagram';
 
 describe('mermaid', () => {
-    it('should generate basic output', () => {
-
-        expect(new WorkflowToMermaidStateDiagram().transform(Workflow.fromSource(
-            '{\n' +
+  it('should generate basic output', () => {
+    expect(
+      new WorkflowToMermaidStateDiagram().transform(
+        Workflow.fromSource(
+          '{\n' +
             '  "id": "applicantrequest",\n' +
             '  "version": "1.0",\n' +
             '  "specVersion": "0.7",\n' +
@@ -79,8 +79,10 @@ describe('mermaid', () => {
             '    }\n' +
             '  ]\n' +
             '}\n'
-        ))).toBe(
-            `stateDiagram-v2
+        )
+      )
+    ).toBe(
+      `stateDiagram-v2
 CheckApplication : CheckApplication
 CheckApplication : type = switch
 
@@ -95,15 +97,15 @@ CheckApplication --> StartApplication : \${ .applicants | .age >= 18 }
 CheckApplication --> RejectApplication : \${ .applicants | .age < 18 }
 StartApplication --> [*]
 RejectApplication --> [*]
-`);
+`
+    );
+  });
 
-    });
-
-
-    it('should generate basic output', () => {
-
-        expect(new WorkflowToMermaidStateDiagram().transform(Workflow.fromSource(
-            '{\n' +
+  it('should generate basic output', () => {
+    expect(
+      new WorkflowToMermaidStateDiagram().transform(
+        Workflow.fromSource(
+          '{\n' +
             '  "id": "provisionorders",\n' +
             '  "version": "1.0",\n' +
             '  "specVersion": "0.7",\n' +
@@ -202,8 +204,10 @@ RejectApplication --> [*]
             '    }\n' +
             '  ]\n' +
             '}'
-        ))).toBe(
-            `stateDiagram-v2
+        )
+      )
+    ).toBe(
+      `stateDiagram-v2
 ProvisionOrder : ProvisionOrder
 ProvisionOrder : type = operation
 
@@ -228,11 +232,9 @@ MissingId --> [*]
 MissingItem --> [*]
 MissingQuantity --> [*]
 ApplyOrder --> [*]
-`);
+`
+    );
+  });
 
-    });
-
-    xit('should validate workflow before doing the transformation', () => {
-
-    });
+  xit('should validate workflow before doing the transformation', () => {});
 });
