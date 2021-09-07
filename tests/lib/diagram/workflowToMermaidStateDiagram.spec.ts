@@ -235,72 +235,72 @@ ApplyOrder --> [*]
 `
     );
   });
-    it('should generate basic output', () => {
-        expect(
-            new WorkflowToMermaidStateDiagram().transform(
-                Workflow.fromSource(
-                    '{\n' +
-                    '  "id": "checkcarvitals",\n' +
-                    '  "name": "Check Car Vitals Workflow",\n' +
-                    '  "version": "1.0",\n' +
-                    '  "specVersion": "0.7",\n' +
-                    '  "start": "WhenCarIsOn",\n' +
-                    '  "states": [\n' +
-                    '    {\n' +
-                    '      "type": "event",\n' +
-                    '      "name": "WhenCarIsOn",\n' +
-                    '      "onEvents": [\n' +
-                    '        {\n' +
-                    '          "eventRefs": ["CarTurnedOnEvent"]\n' +
-                    '        }\n' +
-                    '      ],\n' +
-                    '      "transition": "DoCarVitalChecks"\n' +
-                    '    },\n' +
-                    '    {\n' +
-                    '      "type": "operation",\n' +
-                    '      "name": "DoCarVitalChecks",\n' +
-                    '      "actions": [\n' +
-                    '        {\n' +
-                    '          "subFlowRef": "vitalscheck",\n' +
-                    '          "sleep": {\n' +
-                    '            "after": "PT1S"\n' +
-                    '          }\n' +
-                    '        }\n' +
-                    '      ],\n' +
-                    '      "transition": "CheckContinueVitalChecks"\n' +
-                    '    },\n' +
-                    '    {\n' +
-                    '      "type": "switch",\n' +
-                    '      "name": "CheckContinueVitalChecks",\n' +
-                    '      "eventConditions": [\n' +
-                    '        {\n' +
-                    '          "name": "Car Turned Off Condition",\n' +
-                    '          "eventRef": "CarTurnedOffEvent",\n' +
-                    '          "end": true\n' +
-                    '        }\n' +
-                    '      ],\n' +
-                    '      "defaultCondition": {\n' +
-                    '        "transition": "DoCarVitalsChecks"\n' +
-                    '      }\n' +
-                    '    }\n' +
-                    '  ],\n' +
-                    '  "events": [\n' +
-                    '    {\n' +
-                    '      "name": "CarTurnedOnEvent",\n' +
-                    '      "type": "car.events",\n' +
-                    '      "source": "my/car"\n' +
-                    '    },\n' +
-                    '    {\n' +
-                    '      "name": "CarTurnedOffEvent",\n' +
-                    '      "type": "car.events",\n' +
-                    '      "source": "my/car"\n' +
-                    '    }\n' +
-                    '  ]\n' +
-                    '}\n'
-                )
-            )
-        ).toBe(
-            `stateDiagram-v2
+  it('should generate basic output', () => {
+    expect(
+      new WorkflowToMermaidStateDiagram().transform(
+        Workflow.fromSource(
+          '{\n' +
+            '  "id": "checkcarvitals",\n' +
+            '  "name": "Check Car Vitals Workflow",\n' +
+            '  "version": "1.0",\n' +
+            '  "specVersion": "0.7",\n' +
+            '  "start": "WhenCarIsOn",\n' +
+            '  "states": [\n' +
+            '    {\n' +
+            '      "type": "event",\n' +
+            '      "name": "WhenCarIsOn",\n' +
+            '      "onEvents": [\n' +
+            '        {\n' +
+            '          "eventRefs": ["CarTurnedOnEvent"]\n' +
+            '        }\n' +
+            '      ],\n' +
+            '      "transition": "DoCarVitalChecks"\n' +
+            '    },\n' +
+            '    {\n' +
+            '      "type": "operation",\n' +
+            '      "name": "DoCarVitalChecks",\n' +
+            '      "actions": [\n' +
+            '        {\n' +
+            '          "subFlowRef": "vitalscheck",\n' +
+            '          "sleep": {\n' +
+            '            "after": "PT1S"\n' +
+            '          }\n' +
+            '        }\n' +
+            '      ],\n' +
+            '      "transition": "CheckContinueVitalChecks"\n' +
+            '    },\n' +
+            '    {\n' +
+            '      "type": "switch",\n' +
+            '      "name": "CheckContinueVitalChecks",\n' +
+            '      "eventConditions": [\n' +
+            '        {\n' +
+            '          "name": "Car Turned Off Condition",\n' +
+            '          "eventRef": "CarTurnedOffEvent",\n' +
+            '          "end": true\n' +
+            '        }\n' +
+            '      ],\n' +
+            '      "defaultCondition": {\n' +
+            '        "transition": "DoCarVitalsChecks"\n' +
+            '      }\n' +
+            '    }\n' +
+            '  ],\n' +
+            '  "events": [\n' +
+            '    {\n' +
+            '      "name": "CarTurnedOnEvent",\n' +
+            '      "type": "car.events",\n' +
+            '      "source": "my/car"\n' +
+            '    },\n' +
+            '    {\n' +
+            '      "name": "CarTurnedOffEvent",\n' +
+            '      "type": "car.events",\n' +
+            '      "source": "my/car"\n' +
+            '    }\n' +
+            '  ]\n' +
+            '}\n'
+        )
+      )
+    ).toBe(
+      `stateDiagram-v2
 WhenCarIsOn : WhenCarIsOn
 WhenCarIsOn : type = event
 
@@ -316,9 +316,8 @@ DoCarVitalChecks --> CheckContinueVitalChecks
 CarTurnedOffEvent --> CheckContinueVitalChecks : Car Turned Off Condition
 CheckContinueVitalChecks --> [*]
 `
-        );
-    });
-
+    );
+  });
 
   xit('should validate workflow before doing the transformation', () => {});
 });

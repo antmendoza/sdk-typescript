@@ -17,7 +17,7 @@ import { Transition } from '../definitions/transition';
 import { End } from '../definitions/end';
 import { Error } from '../definitions/error';
 import { Transitiondatacondition } from '../definitions/transitiondatacondition';
-import {Enddeventcondition} from "../definitions/enddeventcondition";
+import { Enddeventcondition } from '../definitions/enddeventcondition';
 
 export class MermaidState {
   constructor(
@@ -32,38 +32,34 @@ export class MermaidState {
   ) {}
 
   definition(): string {
-    return this.state.name + ' : ' + this.state.name + '\n'
-        + this.state.name + ' : type = ' + this.state.type + '\n\n';
-
-
+    return this.state.name + ' : ' + this.state.name + '\n' + this.state.name + ' : type = ' + this.state.type + '\n\n';
   }
 
   transitions(): string {
     let transitions = '';
-      const stateName = this.state.name;
-      if (this.isFirstState) {
+    const stateName = this.state.name;
+    if (this.isFirstState) {
       transitions += '[*]' + ' --> ' + stateName + '\n';
     }
 
-      const dataBasedSwitchState = this.state as { dataConditions: Transitiondatacondition[] };
-      if (dataBasedSwitchState.dataConditions) {
-          dataBasedSwitchState.dataConditions.forEach((dataCondition) => {
-              transitions += stateName + ' --> ' + dataCondition.transition + ' : ' + dataCondition.condition + '\n';
-          });
-      }
+    const dataBasedSwitchState = this.state as { dataConditions: Transitiondatacondition[] };
+    if (dataBasedSwitchState.dataConditions) {
+      dataBasedSwitchState.dataConditions.forEach((dataCondition) => {
+        transitions += stateName + ' --> ' + dataCondition.transition + ' : ' + dataCondition.condition + '\n';
+      });
+    }
 
+    const eventBasedSwitchState = this.state as { eventConditions: Enddeventcondition[] };
+    if (eventBasedSwitchState.eventConditions) {
+      eventBasedSwitchState.eventConditions.forEach((eventCondition) => {
+        transitions += eventCondition.eventRef + ' --> ' + stateName + ' : ' + eventCondition.name + '\n';
+        if (eventCondition.end) {
+          transitions += stateName + ' --> ' + '[*]' + '\n';
+        }
+      });
+    }
 
-      const eventBasedSwitchState = this.state as { eventConditions: Enddeventcondition[] };
-      if (eventBasedSwitchState.eventConditions) {
-          eventBasedSwitchState.eventConditions.forEach((eventCondition) => {
-              transitions += eventCondition.eventRef + ' --> ' + stateName + ' : ' + eventCondition.name + '\n';
-              if(eventCondition.end){
-                  transitions += stateName + ' --> ' + '[*]' + '\n';
-              }
-          });
-      }
-
-      if (this.state.onErrors) {
+    if (this.state.onErrors) {
       this.state.onErrors.forEach((error) => {
         transitions += stateName + ' --> ' + error.transition + ' : ' + error.errorRef + '\n';
       });
