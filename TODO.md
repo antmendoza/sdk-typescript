@@ -1,3 +1,4 @@
 - validate input- workflowToMermaid 
 - test examples in serverlessworkflow.io/editor
 - Improve implementation end: boolean | End
+- default, take into account 
