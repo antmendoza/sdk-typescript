@@ -17,6 +17,7 @@ import { Specification } from '../../../src/lib/definitions';
 import { Workflow } from '../../../src/lib/definitions/workflow';
 import { Transitiondatacondition } from '../../../src/lib/definitions/transitiondatacondition';
 import {End} from "../../../src/lib/definitions/end";
+import {Databasedswitch} from "../../../src/lib/definitions/databasedswitch";
 
 function validWorkflow(): Specification.Workflow {
   return Workflow.fromSource(
@@ -81,14 +82,14 @@ function validWorkflow(): Specification.Workflow {
   );
 }
 
-class MermaidState {
+class MermaidState{
   constructor(
-    private isFirstState: boolean,
-    private state: {
-      end?: boolean | End;
-      name?: string;
-      type?: string;
-    }
+       protected isFirstState: boolean,
+       protected  state: {
+        end?: boolean | End;
+        name?: string;
+        type?: string;
+      }
   ) {}
 
   definition(): string {
@@ -101,13 +102,6 @@ class MermaidState {
       transitions += '[*]' + ' --> ' + this.state.name + '\n';
     }
 
-    if (this.state.type === 'switch') {
-      const switchState = this.state as { dataConditions: Transitiondatacondition[] };
-      switchState.dataConditions.forEach((dataCondition) => {
-        transitions += this.state.name + ' --> ' + dataCondition.transition + '\n';
-      });
-    }
-
     if (this.state.end) {
       transitions += this.state.name + ' --> ' + '[*]' + '\n';
     }
@@ -116,11 +110,77 @@ class MermaidState {
   }
 }
 
+
+
+class MermaidDataBasedSwitchState extends MermaidState {
+  constructor(
+       isFirstState: boolean,
+       state: Databasedswitch
+  ) {
+
+    super(isFirstState, state)
+  }
+
+  definition(): string {
+    return this.state.name + ' : ' + this.state.name + '\n\n';
+  }
+
+  transitions(): string {
+    let transitions = super.transitions();
+
+
+      const switchState = this.state as { dataConditions: Transitiondatacondition[] };
+      switchState.dataConditions.forEach((dataCondition) => {
+        transitions += this.state.name + ' --> ' + dataCondition.transition + '\n';
+      });
+
+    return transitions;
+  }
+}
+
+
+
+
+
 class WorkflowToMermaid {
   transform(workflow: Specification.Workflow) {
     const states = workflow.states.map((state, index) => {
+
+
       const isFirstState = index === 0;
+
+      switch (state.type) {
+        // case 'sleep':
+        //   return new Specification.Sleep(state);
+        // case 'event':
+        //   return new Specification.Eventstate(state);
+        // case 'operation':
+        //   return new Specification.Operationstate(state);
+        case 'parallel':
+           return new Specification.Parallelstate(state);
+        case 'switch':
+          const switchState: any = state;
+          if (switchState.dataConditions) {
+            return new MermaidDataBasedSwitchState(isFirstState, state as Databasedswitch);
+          }
+          if (switchState.eventConditions) {
+            return new MermaidState(isFirstState, state);
+          }
+          throw new Error(`Unexpected switch type; \n state value= ${JSON.stringify(state, null, 4)}`);
+        // case 'inject':
+        //   return new Specification.Injectstate(state);
+        // case 'foreach':
+        //   return new Specification.Foreachstate(state);
+        // case 'callback':
+        //   return new Specification.Callbackstate(state);
+        // default:
+        //   throw new Error(`Unexpected type= ${state.type}; \n state value= ${JSON.stringify(state, null, 4)}`);
+      }
+
       return new MermaidState(isFirstState, state);
+
+
+
     });
 
     let stateDefinitions = '';
