@@ -224,8 +224,6 @@ export function overwriteStates(object: { states: Specification.States }) {
   object.states =
     object.states &&
     ((object.states as Specification.States).map((v) => {
-
-
       switch (v.type) {
         case 'sleep':
           return new Specification.Sleep(v);
@@ -252,9 +250,6 @@ export function overwriteStates(object: { states: Specification.States }) {
           return new Specification.Callbackstate(v);
         default:
           throw new Error(`Unexpected type= ${v.type}; \n state value= ${JSON.stringify(v, null, 4)}`);
-
-
-
       }
     }) as Specification.States);
 }
