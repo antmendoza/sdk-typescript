@@ -42,7 +42,7 @@ import {
   overwriteTimeoutsIfObject,
 } from './utils';
 import { Auth, Errors, Events, Functions, Retries, Secrets, States } from './types';
-import {WorkflowToMermaidStateDiagram} from "../diagram/workflowToMermaidStateDiagram";
+import {MermaidStateCode} from "../diagram/mermaidStateCode";
 
 export class Workflow {
   constructor(model: any) {
@@ -189,6 +189,6 @@ export class Workflow {
 
 
   static toSvg(workflow: Workflow): string {
-    return new WorkflowToMermaidStateDiagram().transform(workflow)
+    return new MermaidStateCode().transform(workflow)
   }
 }

@@ -18,6 +18,7 @@ import { End } from '../definitions/end';
 import { Error } from '../definitions/error';
 import { Transitiondatacondition } from '../definitions/transitiondatacondition';
 import { Enddeventcondition } from '../definitions/enddeventcondition';
+import {Parallelstate} from "../schema/types/workflow";
 
 export class MermaidState {
   constructor(
@@ -32,7 +33,15 @@ export class MermaidState {
   ) {}
 
   definition(): string {
-    return this.state.name + ' : ' + this.state.name + '\n' + this.state.name + ' : type = ' + this.state.type + '\n\n';
+    return this.state.name + ' : ' + this.state.name + '\n' +
+        this.typeDescription()+ '\n' +
+       // this.parallelStateDescription() + this.parallelStateDescription()?'\n':"" +
+        '\n';
+  }
+
+  private typeDescription() {
+    const type = this.state.type;
+    return this.state.name + ' : type = ' + type!.charAt(0).toUpperCase() + type!.slice(1) + " State";
   }
 
   transitions(): string {
@@ -52,7 +61,6 @@ export class MermaidState {
     const eventBasedSwitchState = this.state as { eventConditions: Enddeventcondition[] };
     if (eventBasedSwitchState.eventConditions) {
       eventBasedSwitchState.eventConditions.forEach((eventCondition) => {
-        //transitions += eventCondition.eventRef + ' --> ' + stateName + ' : ' + eventCondition.name + '\n';
         if (eventCondition.end) {
           transitions += stateName + ' --> ' + '[*]' + '\n';
         }
@@ -74,5 +82,15 @@ export class MermaidState {
     }
 
     return transitions;
+  }
+
+  // @ts-ignore
+  private parallelStateDescription() {
+    const parallelState = this.state as Parallelstate;
+
+    if(parallelState.completionType){
+      return "ParallelExec : Completion type \""+parallelState.completionType+"\"";
+    }
+    return undefined;
   }
 }

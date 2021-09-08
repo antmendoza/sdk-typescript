@@ -16,7 +16,7 @@
 import { Specification } from '../definitions';
 import { MermaidState } from './mermaidState';
 
-export class WorkflowToMermaidStateDiagram {
+export class MermaidStateCode {
   transform(workflow: Specification.Workflow) {
     const states = workflow.states.map((state, index) => {
       const isFirstState = index === 0;

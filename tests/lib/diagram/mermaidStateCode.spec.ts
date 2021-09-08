@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 import { Workflow } from '../../../src/lib/definitions/workflow';
-import { WorkflowToMermaidStateDiagram } from '../../../src/lib/diagram/workflowToMermaidStateDiagram';
+import { MermaidStateCode } from '../../../src/lib/diagram/mermaidStateCode';
+import fs from "fs";
 
 describe('mermaid', () => {
   it('should generate basic output', () => {
     expect(
-      new WorkflowToMermaidStateDiagram().transform(
+      new MermaidStateCode().transform(
         Workflow.fromSource(
           '{\n' +
             '  "id": "applicantrequest",\n' +
@@ -84,13 +85,13 @@ describe('mermaid', () => {
     ).toBe(
       `stateDiagram-v2
 CheckApplication : CheckApplication
-CheckApplication : type = switch
+CheckApplication : type = Switch State
 
 StartApplication : StartApplication
-StartApplication : type = operation
+StartApplication : type = Operation State
 
 RejectApplication : RejectApplication
-RejectApplication : type = operation
+RejectApplication : type = Operation State
 
 [*] --> CheckApplication
 CheckApplication --> StartApplication : \${ .applicants | .age >= 18 }
@@ -103,7 +104,7 @@ RejectApplication --> [*]
 
   it('should generate basic output', () => {
     expect(
-      new WorkflowToMermaidStateDiagram().transform(
+      new MermaidStateCode().transform(
         Workflow.fromSource(
           '{\n' +
             '  "id": "provisionorders",\n' +
@@ -209,19 +210,19 @@ RejectApplication --> [*]
     ).toBe(
       `stateDiagram-v2
 ProvisionOrder : ProvisionOrder
-ProvisionOrder : type = operation
+ProvisionOrder : type = Operation State
 
 MissingId : MissingId
-MissingId : type = operation
+MissingId : type = Operation State
 
 MissingItem : MissingItem
-MissingItem : type = operation
+MissingItem : type = Operation State
 
 MissingQuantity : MissingQuantity
-MissingQuantity : type = operation
+MissingQuantity : type = Operation State
 
 ApplyOrder : ApplyOrder
-ApplyOrder : type = operation
+ApplyOrder : type = Operation State
 
 [*] --> ProvisionOrder
 ProvisionOrder --> MissingId : Missing order id
@@ -237,7 +238,7 @@ ApplyOrder --> [*]
   });
   it('should generate basic output', () => {
     expect(
-      new WorkflowToMermaidStateDiagram().transform(
+      new MermaidStateCode().transform(
         Workflow.fromSource(
           '{\n' +
             '  "id": "checkcarvitals",\n' +
@@ -302,13 +303,13 @@ ApplyOrder --> [*]
     ).toBe(
       `stateDiagram-v2
 WhenCarIsOn : WhenCarIsOn
-WhenCarIsOn : type = event
+WhenCarIsOn : type = Event State
 
 DoCarVitalChecks : DoCarVitalChecks
-DoCarVitalChecks : type = operation
+DoCarVitalChecks : type = Operation State
 
 CheckContinueVitalChecks : CheckContinueVitalChecks
-CheckContinueVitalChecks : type = switch
+CheckContinueVitalChecks : type = Switch State
 
 [*] --> WhenCarIsOn
 WhenCarIsOn --> DoCarVitalChecks
@@ -319,5 +320,18 @@ CheckContinueVitalChecks --> [*]
   });
 
 
-  xit('should validate workflow before doing the transformation', () => {});
+  it('should validate workflow before doing the transformation', () => {
+
+      const expected = fs.readFileSync('./tests/examples/parallel.json', 'utf8');
+      expect(new MermaidStateCode().transform(Workflow.fromSource(expected))).toBe(`stateDiagram-v2
+ParallelExec : ParallelExec
+ParallelExec : type = Parallel State
+ParallelExec : Completion type "allOf"
+
+[*] --> ParallelExec
+ParallelExec --> [*]
+`)
+
+
+  });
 });
