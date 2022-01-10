@@ -23,6 +23,7 @@ export class MermaidState {
       type?: string;
       transition?: string | Specification.Transition;
       end?: boolean | Specification.End;
+      compensatedBy?: string;
       onErrors?: Specification.Error[];
     },
     private isFirstState: boolean = false
@@ -49,6 +50,12 @@ export class MermaidState {
     transitions.push(...this.eventConditionsTransition());
     transitions.push(...this.errorTransitions());
     transitions.push(...this.naturalTransition(this.stateKeyDiagram(this.state.name), this.state.transition));
+    transitions.push(...this.compensatedByTransition());
+
+    if (transitions.length === 0) {
+      this.state.end = true;
+    }
+
     transitions.push(...this.endTransition());
 
     return transitions.reduce((p, c) => {
@@ -174,6 +181,15 @@ export class MermaidState {
           ...this.naturalTransition(this.stateKeyDiagram(this.state.name), error.transition, error.errorRef)
         );
       });
+    }
+    return transitions;
+  }
+
+  private compensatedByTransition() {
+    const transitions: string[] = [];
+
+    if (this.state.compensatedBy) {
+      transitions.push(...this.naturalTransition(this.state.name, this.state.compensatedBy, 'compensated by'));
     }
     return transitions;
   }
