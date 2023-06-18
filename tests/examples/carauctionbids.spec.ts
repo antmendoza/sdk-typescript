@@ -21,6 +21,7 @@ import {
   functionBuilder,
   functionrefBuilder,
   oneventsBuilder,
+  startdefBuilder,
   workflowBuilder,
 } from '../../src';
 
@@ -32,10 +33,7 @@ describe('carauctionbids workflow example', () => {
       .specVersion('0.8')
       .name('Car Auction Bidding Workflow')
       .description('Store a single bid whole the car auction is active')
-      .start({
-        stateName: 'StoreCarAuctionBid',
-        schedule: 'R/PT2H',
-      })
+      .start(startdefBuilder().stateName('StoreCarAuctionBid').schedule('R/PT2H').build())
       .functions([
         functionBuilder().name('StoreBidFunction').operation('http://myapis.org/carauctionapi.json#storeBid').build(),
       ])

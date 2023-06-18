@@ -18,7 +18,7 @@ import * as fs from 'fs';
 import {
   actionBuilder,
   defaultconditiondefBuilder,
-  enddeventconditionBuilder,
+  endeventconditionBuilder,
   eventbasedswitchstateBuilder,
   eventdefBuilder,
   eventstateBuilder,
@@ -52,11 +52,7 @@ describe('checkcarvitals workflow example', () => {
         eventbasedswitchstateBuilder()
           .name('CheckContinueVitalChecks')
           .eventConditions([
-            enddeventconditionBuilder()
-              .name('Car Turned Off Condition')
-              .eventRef('CarTurnedOffEvent')
-              .end(true)
-              .build(),
+            endeventconditionBuilder().name('Car Turned Off Condition').eventRef('CarTurnedOffEvent').end(true).build(),
           ])
           .defaultCondition(defaultconditiondefBuilder().transition('DoCarVitalChecks').build())
           .build(),

@@ -20,22 +20,22 @@ import { validate } from '../utils';
 
 /**
  * The internal function used by the builder proxy to validate and return its underlying object
- * @param {Specification.Errors} data The underlying object
- * @returns {Specification.Errors} The validated underlying object
+ * @param {Specification.Extension} data The underlying object
+ * @returns {Specification.Extension} The validated underlying object
  */
-function errorsBuildingFn(data: Specification.Errors): () => Specification.Errors {
+function extensionBuildingFn(data: Specification.Extension): () => Specification.Extension {
   return () => {
-    const model = new Specification.Errors(data);
+    const model = new Specification.Extension(data);
 
-    validate('Errors', model.normalize());
+    validate('Extension', model.normalize());
     return model;
   };
 }
 
 /**
- * A factory to create a builder proxy for the type `Specification.Errors`
- * @returns {Specification.Errors} A builder for `Specification.Errors`
+ * A factory to create a builder proxy for the type `Specification.Extension`
+ * @returns {Specification.Extension} A builder for `Specification.Extension`
  */
-export function errorsBuilder(): Builder<Specification.Errors> {
-  return builder<Specification.Errors>(errorsBuildingFn);
+export function extensionBuilder(): Builder<Specification.Extension> {
+  return builder<Specification.Extension>(extensionBuildingFn);
 }

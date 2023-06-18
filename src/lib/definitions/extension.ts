@@ -14,17 +14,26 @@
  * limitations under the License.
  */
 
-export class StateExecTimeout {
+export class Extension {
   /**
-   * Single state execution timeout, not including retries (ISO 8601 duration format)
+   * Unique extension id
    */
-  single?: string;
+  extensionId: string;
   /**
-   * Total state execution timeout, including retries (ISO 8601 duration format)
+   * URI to a resource containing this workflow extension definitions (json or yaml)
    */
-  total: string;
+  resource: string;
 
   constructor(model: any) {
     Object.assign(this, model);
   }
+
+  /**
+   * Normalize the value of each property by recursively deleting properties whose value is equal to its default value. Does not modify the object state.
+   * @returns {Specification.Extension} without deleted properties.
+   */
+  normalize = (): Extension => {
+    const clone = new Extension(this);
+    return clone;
+  };
 }

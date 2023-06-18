@@ -25,6 +25,7 @@ import {
   operationstateBuilder,
   sleepstateBuilder,
   statedatafilterBuilder,
+  transitionBuilder,
   transitiondataconditionBuilder,
   workflowBuilder,
 } from '../../src';
@@ -67,7 +68,11 @@ describe('jobmonitoring workflow example', () => {
           .stateDataFilter(statedatafilterBuilder().output('${ .jobuid }').build())
           .transition('WaitForCompletion')
           .build(),
-        sleepstateBuilder().name('WaitForCompletion').duration('PT5S').transition('GetJobStatus').build(),
+        sleepstateBuilder()
+          .name('WaitForCompletion')
+          .duration('PT5S')
+          .transition(transitionBuilder().nextState('GetJobStatus').build())
+          .build(),
         operationstateBuilder()
           .name('GetJobStatus')
           .actionMode('sequential')

@@ -19,7 +19,7 @@ import { Schedule } from '../../../src/lib/definitions/schedule';
 
 describe('schedule ', () => {
   it('should convert non-primitive properties to the desired class', () => {
-    const data: Schedule = {
+    const data = {
       cron: { expression: '* * * ? * *' },
     };
 
@@ -28,7 +28,7 @@ describe('schedule ', () => {
   });
 
   it('should not convert primitive properties', () => {
-    const data: Schedule = {
+    const data = {
       cron: '* * * ? * *',
     };
 

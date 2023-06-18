@@ -114,7 +114,7 @@ export class MermaidState {
           ...this.naturalTransition(stateName, transitionEventCondition.transition, transitionEventCondition.eventRef)
         );
 
-        const endEventCondition = eventCondition as Specification.Enddeventcondition;
+        const endEventCondition = eventCondition as Specification.Endeventcondition;
         if (endEventCondition.end) {
           transitions.push(this.transitionDescription(stateName, '[*]'));
         }
