@@ -29,7 +29,7 @@ describe('carauctionbids workflow example', () => {
   it('should generate Workflow object', function () {
     const workflow = workflowBuilder()
       .id('handleCarAuctionBid')
-      .version('1.0')
+      .version('1.0.0')
       .specVersion('0.8')
       .name('Car Auction Bidding Workflow')
       .description('Store a single bid whole the car auction is active')

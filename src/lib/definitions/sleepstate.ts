@@ -52,7 +52,6 @@ export class Sleepstate {
       id: undefined,
       name: undefined,
       type: 'sleep',
-      usedForCompensation: false,
     };
     Object.assign(this, defaultModel, model);
 
