@@ -25,7 +25,6 @@ import {
   oneventsBuilder,
   operationstateBuilder,
   sleepstateBuilder,
-  transitionBuilder,
   transitiondataconditionBuilder,
   transitioneventconditionBuilder,
   workflowBuilder,
@@ -127,11 +126,7 @@ describe('booklending workflow example', () => {
           ])
           .transition('Sleep two weeks')
           .build(),
-        sleepstateBuilder()
-          .name('Sleep two weeks')
-          .duration('PT2W')
-          .transition(transitionBuilder().nextState('Get Book Status').build())
-          .build(),
+        sleepstateBuilder().name('Sleep two weeks').duration('PT2W').transition('Get Book Status').build(),
         operationstateBuilder()
           .name('Check Out Book')
           .actions([

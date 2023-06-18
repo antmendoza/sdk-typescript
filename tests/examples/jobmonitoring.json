@@ -32,9 +32,7 @@
       "name": "WaitForCompletion",
       "type": "sleep",
       "duration": "PT5S",
-      "transition": {
-        "nextState": "GetJobStatus"
-      }
+      "transition": "GetJobStatus"
     },
     {
       "name": "GetJobStatus",

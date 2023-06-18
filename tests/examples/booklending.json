@@ -106,9 +106,7 @@
       "name": "Sleep two weeks",
       "type": "sleep",
       "duration": "PT2W",
-      "transition": {
-        "nextState": "Get Book Status"
-      }
+      "transition": "Get Book Status"
     },
     {
       "name": "Check Out Book",

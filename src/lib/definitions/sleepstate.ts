@@ -42,7 +42,9 @@ export class Sleepstate {
    * Duration (ISO 8601 duration format) to sleep
    */
   duration?: string;
-  transition?: Transition;
+
+  transition?: string | Transition;
+
   metadata?: /* Metadata information */ Metadata;
 
   constructor(model: any) {
