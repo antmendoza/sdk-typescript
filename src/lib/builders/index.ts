@@ -1,18 +1,18 @@
 /*
- * Copyright 2021-Present The Serverless Workflow Specification Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+* Copyright 2021-Present The Serverless Workflow Specification Authors
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
 
 export * from './workflow-builder';
 export * from './action-builder';
@@ -32,7 +32,7 @@ export * from './databasedswitchstate-builder';
 export * from './defaultconditiondef-builder';
 export * from './end-builder';
 export * from './enddatacondition-builder';
-export * from './endeventcondition-builder';
+export * from './enddeventcondition-builder';
 export * from './error-builder';
 export * from './errordef-builder';
 export * from './errors-builder';
@@ -42,8 +42,6 @@ export * from './eventdatafilter-builder';
 export * from './eventdef-builder';
 export * from './eventref-builder';
 export * from './eventstate-builder';
-export * from './extension-builder';
-export * from './extensions-builder';
 export * from './foreachstate-builder';
 export * from './function-builder';
 export * from './functionref-builder';

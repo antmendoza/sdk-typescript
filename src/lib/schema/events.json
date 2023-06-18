@@ -74,21 +74,22 @@
       "additionalProperties": false,
       "if": {
         "properties": {
-          "source": {
-            "type": "null"
+          "kind": {
+            "const": "consumed"
           }
         }
       },
       "then": {
         "required": [
           "name",
+          "source",
           "type"
         ]
       },
       "else": {
         "required": [
           "name",
-          "source"
+          "type"
         ]
       }
     },

@@ -2004,60 +2004,105 @@
       "additionalProperties": false,
       "required": []
     },
-    "retrydef": {
+    "errordef": {
       "type": "object",
       "properties": {
         "name": {
           "type": "string",
-          "description": "Unique retry strategy name",
+          "description": "Domain-specific error name",
           "minLength": 1
         },
-        "delay": {
+        "code": {
           "type": "string",
-          "description": "Time delay between retry attempts (ISO 8601 duration format)"
+          "description": "Error code. Can be used in addition to the name to help runtimes resolve to technical errors/exceptions. Should not be defined if error is set to '*'",
+          "minLength": 1
         },
-        "maxDelay": {
+        "description": {
           "type": "string",
-          "description": "Maximum time delay between retry attempts (ISO 8601 duration format)"
-        },
-        "increment": {
-          "type": "string",
-          "description": "Static value by which the delay increases during each attempt (ISO 8601 time format)"
-        },
-        "multiplier": {
-          "type": [
-            "number",
-            "string"
-          ],
-          "minimum": 0,
-          "minLength": 1,
-          "multipleOf": 0.01,
-          "description": "Numeric value, if specified the delay between retries is multiplied by this value."
-        },
-        "maxAttempts": {
-          "type": [
-            "number",
-            "string"
-          ],
-          "minimum": 1,
-          "minLength": 0,
-          "description": "Maximum number of retry attempts."
-        },
-        "jitter": {
-          "type": [
-            "number",
-            "string"
-          ],
-          "minimum": 0,
-          "maximum": 1,
-          "description": "If float type, maximum amount of random time added or subtracted from the delay between each retry relative to total delay (between 0 and 1). If string type, absolute maximum amount of random time added or subtracted from the delay between each retry (ISO 8601 duration format)"
+          "description": "Error description"
         }
       },
       "additionalProperties": false,
       "required": [
-        "name",
-        "maxAttempts"
+        "name"
       ]
+    },
+    "workflowExecTimeout": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Workflow execution timeout duration (ISO 8601 duration format). If not specified should be 'unlimited'",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "properties": {
+            "duration": {
+              "type": "string",
+              "description": "Workflow execution timeout duration (ISO 8601 duration format). If not specified should be 'unlimited'",
+              "minLength": 1
+            },
+            "interrupt": {
+              "type": "boolean",
+              "description": "If `false`, workflow instance is allowed to finish current execution. If `true`, current workflow execution is abrupted.",
+              "default": true
+            },
+            "runBefore": {
+              "type": "string",
+              "description": "Name of a workflow state to be executed before workflow instance is terminated",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "duration"
+          ]
+        }
+      ]
+    },
+    "stateExecTimeout": {
+      "oneOf": [
+        {
+          "type": "string",
+          "description": "Total state execution timeout (including retries) (ISO 8601 duration format)",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "description": "Workflow default timeouts",
+          "properties": {
+            "single": {
+              "type": "string",
+              "description": "Single state execution timeout, not including retries (ISO 8601 duration format)",
+              "minLength": 1
+            },
+            "total": {
+              "type": "string",
+              "description": "Total state execution timeout, including retries (ISO 8601 duration format)",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false,
+          "required": [
+            "total"
+          ]
+        }
+      ]
+    },
+    "actionExecTimeout": {
+      "type": "string",
+      "description": "Single actions definition execution timeout duration (ISO 8601 duration format)",
+      "minLength": 1
+    },
+    "branchExecTimeout": {
+      "type": "string",
+      "description": "Single branch execution timeout duration (ISO 8601 duration format)",
+      "minLength": 1
+    },
+    "eventTimeout": {
+      "type": "string",
+      "description": "Timeout duration to wait for consuming defined events (ISO 8601 duration format)",
+      "minLength": 1
     },
     "function": {
       "type": "object",
@@ -2100,13 +2145,6 @@
         "name",
         "operation"
       ]
-    },
-    "metadata": {
-      "type": "object",
-      "description": "Metadata information",
-      "additionalProperties": {
-        "type": "string"
-      }
     },
     "authdef": {
       "type": "object",
@@ -2275,82 +2313,67 @@
         "clientId"
       ]
     },
-    "workflowExecTimeout": {
-      "oneOf": [
-        {
+    "metadata": {
+      "type": "object",
+      "description": "Metadata information",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "retrydef": {
+      "type": "object",
+      "properties": {
+        "name": {
           "type": "string",
-          "description": "Workflow execution timeout duration (ISO 8601 duration format). If not specified should be 'unlimited'",
+          "description": "Unique retry strategy name",
           "minLength": 1
         },
-        {
-          "type": "object",
-          "properties": {
-            "duration": {
-              "type": "string",
-              "description": "Workflow execution timeout duration (ISO 8601 duration format). If not specified should be 'unlimited'",
-              "minLength": 1
-            },
-            "interrupt": {
-              "type": "boolean",
-              "description": "If `false`, workflow instance is allowed to finish current execution. If `true`, current workflow execution is abrupted.",
-              "default": true
-            },
-            "runBefore": {
-              "type": "string",
-              "description": "Name of a workflow state to be executed before workflow instance is terminated",
-              "minLength": 1
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "duration"
-          ]
-        }
-      ]
-    },
-    "stateExecTimeout": {
-      "oneOf": [
-        {
+        "delay": {
           "type": "string",
-          "description": "Total state execution timeout (including retries) (ISO 8601 duration format)",
-          "minLength": 1
+          "description": "Time delay between retry attempts (ISO 8601 duration format)"
         },
-        {
-          "type": "object",
-          "description": "Workflow default timeouts",
-          "properties": {
-            "single": {
-              "type": "string",
-              "description": "Single state execution timeout, not including retries (ISO 8601 duration format)",
-              "minLength": 1
-            },
-            "total": {
-              "type": "string",
-              "description": "Total state execution timeout, including retries (ISO 8601 duration format)",
-              "minLength": 1
-            }
-          },
-          "additionalProperties": false,
-          "required": [
-            "total"
-          ]
+        "maxDelay": {
+          "type": "string",
+          "description": "Maximum time delay between retry attempts (ISO 8601 duration format)"
+        },
+        "increment": {
+          "type": "string",
+          "description": "Static value by which the delay increases during each attempt (ISO 8601 time format)"
+        },
+        "multiplier": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "minimum": 0,
+          "minLength": 1,
+          "multipleOf": 0.01,
+          "description": "Numeric value, if specified the delay between retries is multiplied by this value."
+        },
+        "maxAttempts": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "minimum": 1,
+          "minLength": 0,
+          "description": "Maximum number of retry attempts."
+        },
+        "jitter": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "minimum": 0,
+          "maximum": 1,
+          "description": "If float type, maximum amount of random time added or subtracted from the delay between each retry relative to total delay (between 0 and 1). If string type, absolute maximum amount of random time added or subtracted from the delay between each retry (ISO 8601 duration format)"
         }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "maxAttempts"
       ]
-    },
-    "actionExecTimeout": {
-      "type": "string",
-      "description": "Single actions definition execution timeout duration (ISO 8601 duration format)",
-      "minLength": 1
-    },
-    "branchExecTimeout": {
-      "type": "string",
-      "description": "Single branch execution timeout duration (ISO 8601 duration format)",
-      "minLength": 1
-    },
-    "eventTimeout": {
-      "type": "string",
-      "description": "Timeout duration to wait for consuming defined events (ISO 8601 duration format)",
-      "minLength": 1
     },
     "eventdef": {
       "type": "object",
@@ -2437,29 +2460,6 @@
       "additionalProperties": false,
       "required": [
         "contextAttributeName"
-      ]
-    },
-    "errordef": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Domain-specific error name",
-          "minLength": 1
-        },
-        "code": {
-          "type": "string",
-          "description": "Error code. Can be used in addition to the name to help runtimes resolve to technical errors/exceptions. Should not be defined if error is set to '*'",
-          "minLength": 1
-        },
-        "description": {
-          "type": "string",
-          "description": "Error description"
-        }
-      },
-      "additionalProperties": false,
-      "required": [
-        "name"
       ]
     },
     "secrets": {

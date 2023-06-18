@@ -21,24 +21,24 @@ import { validate } from '../utils';
 
 /**
  * The internal function used by the builder proxy to validate and return its underlying object
- * @param {Specification.Workflow} data The underlying object
- * @returns {Specification.Workflow} The validated underlying object
+ * @param {Specification.BranchExecTimeout} data The underlying object
+ * @returns {Specification.BranchExecTimeout} The validated underlying object
  */
-function workflowBuildingFn(data: Specification.Workflow): (() => Specification.Workflow) {
+function branchExecTimeoutBuildingFn(data: Specification.BranchExecTimeout): (() => Specification.BranchExecTimeout) {
   return () => {
-    const model = new Specification.Workflow(data);
+    const model = new Specification.BranchExecTimeout(data);
 
     
     
-    validate('Workflow', model.normalize());
+    validate('BranchExecTimeout', model.normalize());
     return model;
   };
 }
 
 /**
- * A factory to create a builder proxy for the type `Specification.Workflow`
- * @returns {Specification.Workflow} A builder for `Specification.Workflow`
+ * A factory to create a builder proxy for the type `Specification.BranchExecTimeout`
+ * @returns {Specification.BranchExecTimeout} A builder for `Specification.BranchExecTimeout`
  */
-export function workflowBuilder(): Builder<Specification.Workflow> {
-  return builder<Specification.Workflow>(workflowBuildingFn);
+export function branchExecTimeoutBuilder(): Builder<Specification.BranchExecTimeout> {
+  return builder<Specification.BranchExecTimeout>(branchExecTimeoutBuildingFn);
 }

@@ -21,24 +21,24 @@ import { validate } from '../utils';
 
 /**
  * The internal function used by the builder proxy to validate and return its underlying object
- * @param {Specification.Workflow} data The underlying object
- * @returns {Specification.Workflow} The validated underlying object
+ * @param {Specification.Enddeventcondition} data The underlying object
+ * @returns {Specification.Enddeventcondition} The validated underlying object
  */
-function workflowBuildingFn(data: Specification.Workflow): (() => Specification.Workflow) {
+function enddeventconditionBuildingFn(data: Specification.Enddeventcondition): (() => Specification.Enddeventcondition) {
   return () => {
-    const model = new Specification.Workflow(data);
+    const model = new Specification.Enddeventcondition(data);
 
     
     
-    validate('Workflow', model.normalize());
+    validate('Enddeventcondition', model.normalize());
     return model;
   };
 }
 
 /**
- * A factory to create a builder proxy for the type `Specification.Workflow`
- * @returns {Specification.Workflow} A builder for `Specification.Workflow`
+ * A factory to create a builder proxy for the type `Specification.Enddeventcondition`
+ * @returns {Specification.Enddeventcondition} A builder for `Specification.Enddeventcondition`
  */
-export function workflowBuilder(): Builder<Specification.Workflow> {
-  return builder<Specification.Workflow>(workflowBuildingFn);
+export function enddeventconditionBuilder(): Builder<Specification.Enddeventcondition> {
+  return builder<Specification.Enddeventcondition>(enddeventconditionBuildingFn);
 }
