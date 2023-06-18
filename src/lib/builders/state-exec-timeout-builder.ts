@@ -27,7 +27,7 @@ function stateExecTimeoutBuildingFn(data: Specification.StateExecTimeout): () =>
   return () => {
     const model = new Specification.StateExecTimeout(data);
 
-    validate('StateExecTimeout', model);
+    validate('StateExecTimeout', model.normalize());
     return model;
   };
 }

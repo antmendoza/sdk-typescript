@@ -27,7 +27,7 @@ function metadataBuildingFn(data: Specification.Metadata): () => Specification.M
   return () => {
     const model = new Specification.Metadata(data);
 
-    validate('Metadata', model);
+    validate('Metadata', model.normalize());
     return model;
   };
 }

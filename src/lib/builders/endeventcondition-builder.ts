@@ -20,22 +20,22 @@ import { validate } from '../utils';
 
 /**
  * The internal function used by the builder proxy to validate and return its underlying object
- * @param {Specification.CorrelationDef} data The underlying object
- * @returns {Specification.CorrelationDef} The validated underlying object
+ * @param {Specification.Endeventcondition} data The underlying object
+ * @returns {Specification.Endeventcondition} The validated underlying object
  */
-function correlationDefBuildingFn(data: Specification.CorrelationDef): () => Specification.CorrelationDef {
+function endeventconditionBuildingFn(data: Specification.Endeventcondition): () => Specification.Endeventcondition {
   return () => {
-    const model = new Specification.CorrelationDef(data);
+    const model = new Specification.Endeventcondition(data);
 
-    validate('CorrelationDef', model.normalize());
+    validate('Endeventcondition', model.normalize());
     return model;
   };
 }
 
 /**
- * A factory to create a builder proxy for the type `Specification.CorrelationDef`
- * @returns {Specification.CorrelationDef} A builder for `Specification.CorrelationDef`
+ * A factory to create a builder proxy for the type `Specification.Endeventcondition`
+ * @returns {Specification.Endeventcondition} A builder for `Specification.Endeventcondition`
  */
-export function correlationDefBuilder(): Builder<Specification.CorrelationDef> {
-  return builder<Specification.CorrelationDef>(correlationDefBuildingFn);
+export function endeventconditionBuilder(): Builder<Specification.Endeventcondition> {
+  return builder<Specification.Endeventcondition>(endeventconditionBuildingFn);
 }

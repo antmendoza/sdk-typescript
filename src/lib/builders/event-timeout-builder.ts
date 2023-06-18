@@ -20,22 +20,22 @@ import { validate } from '../utils';
 
 /**
  * The internal function used by the builder proxy to validate and return its underlying object
- * @param {Specification.Enddeventcondition} data The underlying object
- * @returns {Specification.Enddeventcondition} The validated underlying object
+ * @param {Specification.EventTimeout} data The underlying object
+ * @returns {Specification.EventTimeout} The validated underlying object
  */
-function enddeventconditionBuildingFn(data: Specification.Enddeventcondition): () => Specification.Enddeventcondition {
+function eventTimeoutBuildingFn(data: Specification.EventTimeout): () => Specification.EventTimeout {
   return () => {
-    const model = new Specification.Enddeventcondition(data);
+    const model = new Specification.EventTimeout(data);
 
-    validate('Enddeventcondition', model.normalize());
+    validate('EventTimeout', model.normalize());
     return model;
   };
 }
 
 /**
- * A factory to create a builder proxy for the type `Specification.Enddeventcondition`
- * @returns {Specification.Enddeventcondition} A builder for `Specification.Enddeventcondition`
+ * A factory to create a builder proxy for the type `Specification.EventTimeout`
+ * @returns {Specification.EventTimeout} A builder for `Specification.EventTimeout`
  */
-export function enddeventconditionBuilder(): Builder<Specification.Enddeventcondition> {
-  return builder<Specification.Enddeventcondition>(enddeventconditionBuildingFn);
+export function eventTimeoutBuilder(): Builder<Specification.EventTimeout> {
+  return builder<Specification.EventTimeout>(eventTimeoutBuildingFn);
 }

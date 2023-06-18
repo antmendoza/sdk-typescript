@@ -13,8 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import {Specification} from '../definitions';
-import {isObject} from '../utils';
+import { Specification } from '../definitions';
+import { isObject } from '../utils';
 
 export class MermaidState {
   constructor(
