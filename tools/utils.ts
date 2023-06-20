@@ -19,9 +19,9 @@ import { promises as fsPromises } from 'fs';
 import * as path from 'path';
 import rimraf from 'rimraf';
 import { readMeDisclaimer } from './consts';
-import {URL} from "url";
-import yargs from "yargs";
-import {schemaVersion} from "../package.json";
+import { URL } from 'url';
+import yargs from 'yargs';
+import { schemaVersion } from '../package.json';
 
 const { writeFile, mkdir } = fsPromises;
 
