@@ -17,9 +17,10 @@ import $RefParser from '@apidevtools/json-schema-ref-parser';
 import { promises as fsPromises } from 'fs';
 import * as path from 'path';
 import { URL } from 'url';
-import { schemaDir, mergeDefinitions, mergeSchemas, schemaUrl } from './utils';
+import {schemaDir, mergeDefinitions, mergeSchemas, schemaUrl} from './utils';
 
-const { writeFile } = fsPromises;
+const { writeFile} = fsPromises;
+
 
 /**
  * Generate a merged schema `__merged.json` from schemas in schemas directory
