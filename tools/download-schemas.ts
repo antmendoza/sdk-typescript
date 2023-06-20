@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 import $RefParser from '@apidevtools/json-schema-ref-parser';
-import { promises as fsPromises } from 'fs';
+import {promises as fsPromises} from 'fs';
 import * as path from 'path';
-import { URL } from 'url';
-import { schemaDir, reset, schemaUrl } from './utils';
+import {URL} from 'url';
+import {schemaDir, reset, schemaUrl} from './utils';
 
 const { writeFile, mkdir } = fsPromises;
 
